@@ -1,0 +1,17 @@
+.search {
+    background-image: url('../img/search2.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 20em;           
+}
+
+#map {
+    height: 20em; 
+}
+
+#map2 {
+    height: 45em; 
+    width: 40em;
+}
