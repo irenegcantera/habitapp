@@ -6,7 +6,8 @@ use App\Models\Piso;
 use App\Models\User;
 use App\Models\UserRentPiso;
 use Illuminate\Http\Request;
-use OpenCage\Geocoder\Geocoder;
+
+// use OpenCage\Geocoder\Geocoder;
 
 class PisoController extends Controller
 {
@@ -17,18 +18,19 @@ class PisoController extends Controller
      */
     public function index()
     {
-        $pisos=Piso::paginate(10);
+        $pisosPagina=Piso::paginate(8);
+        $pisos=Piso::all();
         $fotos=Foto::all();
 
-        $geocoder = new Geocoder('469ef009f74d4177a741647ec1b41a1f');
+        // $geocoder = new Geocoder('469ef009f74d4177a741647ec1b41a1f');
+        // $result = $geocoder->geocode('6 Rue Massillon, 30020 Nîmes', ['language' => 'fr', 'countrycode' => 'fr']);
+        // if ($result && $result['total_results'] > 0) {
+        //     $first = $result['results'][0];
+        //     //print $first['geometry']['lng'] . ';' . $first['geometry']['lat'] . ';' . $first['formatted'] . "\n";
+        //     # 4.360081;43.8316276;6 Rue Massillon, 30020 Nîmes, Frankreich
+        // }
 
-        $result = $geocoder->geocode('6 Rue Massillon, 30020 Nîmes', ['language' => 'fr', 'countrycode' => 'fr']);
-        if ($result && $result['total_results'] > 0) {
-            $first = $result['results'][0];
-            //print $first['geometry']['lng'] . ';' . $first['geometry']['lat'] . ';' . $first['formatted'] . "\n";
-            # 4.360081;43.8316276;6 Rue Massillon, 30020 Nîmes, Frankreich
-        }
-        return view('piso.index',compact('pisos','fotos','first'));
+        return view('piso.index',compact('pisosPagina', 'pisos', 'fotos'));
     }
 
     // /**
@@ -76,8 +78,8 @@ class PisoController extends Controller
      */
     public function show(Piso $piso)
     {
-        $inquilino_id[] = [];
         $inquilinos[] = [];
+        $usersRentPiso[] = [];
 
         // BUSCAR EL USUARIO QUE ES PROPIETARIO
         $user_id = $piso->user_id;
@@ -85,16 +87,14 @@ class PisoController extends Controller
         
         // BUSCAR LOS USUARIOS INQUILINOS
         $piso_id = $piso->id;
-        $userRentPiso = UserRentPiso::where('piso_id','=',$piso_id)->get();
-
-        foreach ($userRentPiso as $urp){
-            $inquilino_id[] = $urp->user_id;
-        }
-
-        foreach ($inquilino_id as $id){
-            $inquilinos[] = User::find($id);
-        }
+        // $usersRentPiso = DB::table('user_rent_pisos')->select('user_id')->where('piso_id','=',$piso_id)->get();
+        $usersRentPiso = UserRentPiso::where('piso_id','=',$piso_id)->get();
         
+        foreach ($usersRentPiso as $rents){
+            $inquilino_id = $rents->user_id;
+            $inquilinos[] = User::find($inquilino_id);
+        }
+
         // ENVIAR LA INFORMACIÓN A VIEW SHOW
         return view('piso.show',compact('piso','arrendatario','inquilinos'));
     }

@@ -24,6 +24,9 @@ return new class extends Migration
             $table->tinyInteger('num_habitaciones')->nullable();
             $table->tinyInteger('num_aseos')->nullable();
             $table->integer('m2')->nullable();
+            $table->enum('sexo', ['mujer','hombre','mixto'])->nullable();
+            $table->boolean('fumadores')->nullable();
+            $table->boolean('animales')->nullable();
             $table->double('precio')->default(0);
             $table->timestamps();
         });

@@ -19,15 +19,14 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'dni'=> $this->faker->regexify('[0-9]{8}[A-Z]'),
             'username'=> $this->faker->word(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'rol' => $this->faker->randomElement(['admin','arrendatario','inquilino']),
             'nombre' => $this->faker->name(),
-            'apellido1' => $this->faker->name(),
-            'apellido2' => $this->faker->name(),
+            'apellidos' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'info' => $this->faker-> paragraph(true),
         ];
     }
 

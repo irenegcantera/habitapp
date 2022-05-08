@@ -27,6 +27,9 @@ class PisoFactory extends Factory
             'num_habitaciones' => $this->faker->numberBetween(1,6),
             'num_aseos' => $this->faker->numberBetween(1,3),
             'm2' => $this->faker->numberBetween(30,300),
+            'sexo' => $this->faker->randomElement(['mujer', 'hombre', 'mixto']),
+            'fumadores' => $this->faker->randomElement([true, false]),
+            'animales' => $this->faker->randomElement([true, false]),
             'precio' => $this->faker->numberBetween(150,1000),
             'user_id' => function(){
                 return User::factory()->create()->id;

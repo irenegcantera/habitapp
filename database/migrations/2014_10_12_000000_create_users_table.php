@@ -15,15 +15,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-	        $table->string('dni');
             $table->string('username');
             $table->string('password');
-            $table->enum('rol', ['admin','arrendatario','inquilino'])->default('inquilino');
+            $table->enum('rol', ['admin', 'arrendatario', 'inquilino'])->default('inquilino');
             $table->string('nombre');
-            $table->string('apellido1');
-            $table->string('apellido2')->nullable();
+            $table->string('apellidos')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('info');
             $table->string('avatar')->default('logo/perfil.png');
             $table->timestamps();
         });
