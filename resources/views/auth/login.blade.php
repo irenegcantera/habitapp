@@ -50,6 +50,18 @@
                     {{ __('Log in') }}
                 </x-button>
             </div>
+            <br>
+            <x-a href="{{ route('index') }}"> 
+                <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
+                    <use xlink:href="#bi-arrow-left"/>
+                </svg>&nbsp;Volver atrás
+            </x-a>
         </form>
     </x-auth-card>
 </x-guest-layout>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-arrow-left">
+    <symbol id="bi-arrow-left" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </symbol>
+</svg>

@@ -11,6 +11,8 @@
   {{-- JQuery --}}
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui-1.13.1/jquery-ui.min.css') }}"/>
+  {{-- DataTables --}}
+  @yield('css')
   {{-- Propia hoja de estilos --}}
   <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}"/>
   {{-- Leaflet --}}
@@ -59,6 +61,7 @@
               @if (auth()->check())
                 <li><a class="dropdown-item" href="{{ route('perfil.index') }}">Ver perfil</a></li>
                 <li><a class="dropdown-item" href="{{ route('mensajes.index') }}">Mensajes</a></li>
+                <li><a class="dropdown-item" href="{{ route('perfil.edit', auth()->user()) }}">Configuración</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{ route('login.destroy') }}">Cerrar sesión</a></li>
               @else
@@ -105,6 +108,8 @@
   </footer>
 
   @yield('scripts')
+  {{-- DataTables --}}
+  @yield('js')
 
   {{-- Livewire --}}
   @livewireScripts

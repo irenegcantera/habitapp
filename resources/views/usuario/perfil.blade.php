@@ -1,70 +1,31 @@
 @extends('nav-foot')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-3">
-            <form action="">
-                <img src="{{ asset('logo/perfil.png') }}" alt="" width="250">
-                <br>
-                <button type="button" class="btn btn-danger" value="Eliminar">Eliminar</button>
+@section('title','Pisos App - Perfil')
 
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Cambiar</button>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Cambiar foto perfil</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <label for="formFile" class="form-label">Default file input example</label>
-                            <input class="form-control" type="file" id="formFile">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Guardar cambios</button>
-                        </div>
-                    </div>
-                    </div>
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
+@endsection
+
+@section('content')
+<br>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <img src="{{ asset('logo/perfil.png') }}" alt="" width="250">
                 </div>
-            </form>
-        </div>
-        <div class="col-9 mt-5">
-            <div class="row gx-5">
-                <div class="col-5">
+                <div class="col-9 mt-5">
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre">
+                        <h1>{{ $user->nombre." ".$user->apellidos }}</h1>
                     </div>
                     <div class="mb-3">
-                        <label for="apellidos" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="apellidos">
-                    </div>
-                    <div class="mb-3">
-                        <label for="info" class="form-label">Sobre mí</label>
-                        <textarea class="form-control" placeholder="" id="info"></textarea>
-                    </div>
-                </div>
-                <div class="col-7">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email">
+                        <h1>{{ $user->info }}</h1>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-success" value="Modificar">Modificar</button>
         </div>
     </div>
 </div>
@@ -85,50 +46,56 @@
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">TABLA 2</div>
     </div>
 </div>
-@else
+@elseif(auth()->user()->rol == 'inquilino')
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>LISTADO DE PISOS:</h1>
+    <div class="card">
+        <div class="card-header">
+            <h3>LISTADO DE PISOS</h3>
+        </div>
+        <div class="card-body">
+            <table id="tabla" class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Título</th>
+                        {{-- Dirección: calle+municipio+codPostal+provincia+comunidad --}}
+                        <th>Dirección</th> 
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Propietario</th>
+                        {{-- <th colspan="2">Acciones</th> --}}
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                @if(isset($pisos) && isset($rents) && isset($arrendatarios))
+                    @foreach($pisos as $piso)
+                        <tr>
+                            <td>{{ $piso->titulo }}</td>
+                            {{-- Dirección: calle+municipio+codPostal+provincia+comunidad --}}
+                            <td>{{ $piso->calle.', '.$piso->cod_postal }}</td> 
+                            @foreach ($rents as $rent)
+                                @if($rent->piso_id == $piso->id)
+                                    <td>{{ $rent->fecha_inicio }}</td>
+                                    <td>{{ $rent->fecha_fin }}</td>
+                                @endif
+                            @endforeach
+                            @foreach ($arrendatarios as $arrendatario)
+                                @if($arrendatario->id == $piso->user_id)
+                                    <td>{{ $arrendatario->nombre.' '.$arrendatario->apellidos }}</td>
+                                @endif
+                            @endforeach
+                            <td>
+                                <form action="" method="get">
+                                    @csrf
+                                    <button type="submit" class="btn btn-info btn-sm fw-bold">Ver Piso</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </table>
         </div>
     </div>
-    
-    <br>
-    <table class="table table-bordered table-hover">
-        <thead class="table-light">
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                {{-- Dirección: calle+municipio+codPostal+provincia+comunidad --}}
-                <th>Dirección</th> 
-                <th>Fecha Inicio</th>
-                <th>Fecha Fin</th>
-                <th>Propietario</th>
-                {{-- <th colspan="2">Acciones</th> --}}
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        {{-- @foreach($clientes as $cliente) --}}
-            <tr>
-                <td>ID</td>
-                <td>Título</td>
-                <td>Dirección</td> 
-                <td>Fecha Inicio</td>
-                <td>Fecha Fin</td>
-                <td>Propietario</td>
-                <td>
-                    <form action="" method="get">
-                        @csrf
-                        <button type="submit" class="btn btn-info btn-sm fw-bold">Ver Piso</button>
-                    </form>
-                </td>
-            </tr>
-        {{-- @endforeach --}}
-    </table>
-    {{-- <br>
-    <div class="d-flex justify-content-center">
-        {{ $clientes->links() }}
-    </div> --}}
+    <br> 
 </div>
 
 @endif
@@ -154,6 +121,31 @@
 
             modalTitle.textContent = 'New message to ' + recipient
             modalBodyInput.value = recipient
+        });
+    </script>
+@endsection
+
+@section('js')
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
+    <script>
+        $('#tabla').DataTable({
+            responsive: true,
+            autoWidth: false,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No hay registros",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
         });
     </script>
 @endsection

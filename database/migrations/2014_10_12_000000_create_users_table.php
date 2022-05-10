@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('apellidos')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('info');
+            $table->string('info')->nullable();
             $table->string('avatar')->default('logo/perfil.png');
             $table->timestamps();
         });
