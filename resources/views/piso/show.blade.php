@@ -69,27 +69,21 @@
                             @endif
                             
                             <p class="card-text fs-5 fw-bold mt-3">Ubicación</p>
-                            <p class="card-text">{{ $piso->calle }}, {{ $piso->cod_postal }}</p>
+                            {{-- <p class="card-text">{{ $piso->calle }}, {{ $piso->cod_postal }}</p> --}}
                             <div class="mt-3 mb-5" id="map"></div>
                         </div>
                         <div class="col-lg-5">
                             <div class="card border-light mb-3">
                                 <div class="card-header fs-4 fw-bold">Datos arrendatario</div>
                                 <div class="card-body">
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <img src="{{ asset('logo/perfil.png') }}" alt="..." width="100">
-                                        </div>
-                                        <div class="col-8">
-                                            <p class="card-text">{{ $arrendatario->nombre." ".$arrendatario->apellidos }}</p>
-                                        </div>
-                                        <p class="card-text fs-5 fw-bold">Sobre mí</p>
-                                        <p class="card-text">{{ $arrendatario->info }}</p>
-                                    </div>
-                                {{-- <p class="card-text"><a href="{{ route('pisos.index') }}">Ver más pisos</a></p> --}}
+                                    <img src="{{ asset('logo/perfil.png') }}" class="card-img-top" alt="...">
+                                    <p class="card-text">{{ $arrendatario->nombre." ".$arrendatario->apellidos }}</p>
+                                    <p class="card-text fs-5 fw-bold">Sobre mí</p>
+                                    <p class="card-text">{{ $arrendatario->info }}</p>
                                 </div>
+                                {{-- <p class="card-text"><a href="{{ route('pisos.index') }}">Ver más pisos</a></p> --}}
                             </div>
+                        </div>
                             <form action="{{ route('mensajes.store') }}" method="post" enctype="multipart/form-data">
                                 @if (auth()->check())
                                     @csrf

@@ -30,8 +30,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('pisos', PisoController::class);
-Route::get('filter/{ciudad}', [FilterController::class, 'searchedCities'])->name('pisos.searched');
-Route::resource('filter', FilterController::class);
+
+Route::get('filter', [FilterController::class, 'index'])->name('filter.index');
+Route::get('busqueda', [FilterController::class, 'search'])->name('filter.search');
+Route::get('busqueda/{ciudad}', [FilterController::class, 'searchedCities'])->name('filter.searched');
+
 Route::resource('mensajes', MensajeController::class);
 Route::resource('perfil', UserController::class);
 

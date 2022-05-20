@@ -1,11 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Comunidad;
 use App\Models\Foto;
-use App\Models\Municipio;
 use App\Models\Piso;
-use App\Models\Provincia;
 use App\Models\User;
 use App\Models\UserRentPiso;
 use Illuminate\Http\Request;
@@ -121,10 +118,6 @@ class PisoController extends Controller
      */
     public function edit(Piso $piso)
     {
-        $comunidades = Comunidad::all();
-        $provincias = Provincia::all();
-        $municipios = Municipio::all();
-
         return view('piso.edit',compact('piso','comunidades','provincias','municipios'));
     }
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comunidad extends Model
+class Direccion extends Model
 {
     use HasFactory;
 
@@ -14,9 +14,9 @@ class Comunidad extends Model
      *
      * @var string
      */
-    protected $table = 'comunidades';
+    protected $table = "direcciones";
 
-    public function provincias(){
-        return $this->hasMany('App\Models\Provincia');
-    }
+
 }
+
+

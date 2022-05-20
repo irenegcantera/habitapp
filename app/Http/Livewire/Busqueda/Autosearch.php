@@ -44,6 +44,7 @@ class Autosearch extends Component
             ])->json()['data'];
 
         $this->selectedProvincia = $this->provincias[0]['CPRO'] ?? null;
+        $this->selectedMunicipio = $this->municipios[0]['CPRO'] ?? null;
     }
 
     public function updatedSelectedProvincia($CPRO)
@@ -60,26 +61,6 @@ class Autosearch extends Component
     public function render()
     {
         return view('livewire.busqueda.zonaSelect');
-    }
-
-    public function search()
-    {
-        $geoApi = new GeoApiController();
-
-        $this->nombreComunidad = $geoApi->getNombreComunidad($this->selectedComunidad);
-        $this->nombreProvincia = $geoApi->getNombreProvincia($this->selectedComunidad, $this->selectedProvincia);
-        $this->nombreMunicipio = $geoApi->getNombreMunicipio($this->selectedProvincia, $this->selectedMunicipio);
-
-        $geocoder = new Geocoder('469ef009f74d4177a741647ec1b41a1f');
-        $result = $geocoder->geocode($this->nombreComunidad);
-
-        if ($result && $result['total_results'] > 0) {
-            $coordenadas = $result['results'][0];
-            //print $coordenadas['geometry']['lng'] . ';' . $coordenadas['geometry']['lat'] . ';' . $first['formatted'] . "\n";
-            # 4.360081;43.8316276;6 Rue Massillon, 30020 Nîmes, Frankreich
-        }
-        
-        return view('index');
     }
     
 }

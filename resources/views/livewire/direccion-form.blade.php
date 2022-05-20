@@ -25,7 +25,7 @@
         @endif
     </select>
     {{ "selectedMunicipio ->".$selectedMunicipio }}
-    <select class="form-select mb-3" name="poblaciones" wire:model="selectedPoblacion">
+    {{-- <select class="form-select mb-3" name="poblaciones" wire:model="selectedPoblacion">
         <option value="0" selected>Población...</option>
         @if(!is_null($selectedMunicipio))
             @foreach($poblaciones as $poblacion)
@@ -63,7 +63,7 @@
                 @endif
             </select>
             {{ "selectedCalle ->".$selectedCalle }}
-        </div>
+        </div> --}}
         <div class="col">
             <input class="form-control" type="number" name="num_piso" id="num_piso">
         </div>

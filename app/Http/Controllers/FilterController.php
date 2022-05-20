@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Direccion;
 use App\Models\Foto;
 use App\Models\Piso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use OpenCage\Geocoder\Geocoder;
 
 class FilterController extends Controller
 {
@@ -75,7 +75,6 @@ class FilterController extends Controller
         }
 
         $pisosFiltrados = $pisosFiltrados->orderBy('precio','asc')->get();
-        
 
         $fotos=Foto::all();
 
@@ -89,8 +88,6 @@ class FilterController extends Controller
                 $piso->longitud = $pisoFiltrado->longitud;
                 $piso->latitud = $pisoFiltrado->latitud;
                 $piso->titulo = $pisoFiltrado->titulo;
-                $piso->calle = $pisoFiltrado->calle;
-                $piso->cod_postal = $pisoFiltrado->cod_postal;
     
                 $piso->descripcion = $pisoFiltrado->descripcion;
                 $piso->num_habitaciones = $pisoFiltrado->num_habitaciones;
@@ -126,24 +123,68 @@ class FilterController extends Controller
      * @param  String  $ciudad
      * @return \Illuminate\Http\Response
      */
-    public function searchedCities($ciudad)
+    public function searchedCities(String $ciudad)
     {
-        $geocoder = new Geocoder('469ef009f74d4177a741647ec1b41a1f');
-        $result = $geocoder->geocode($ciudad);
-        if ($result && $result['total_results'] > 0) {
-            $first = $result['results'][0];
-            //print $first['geometry']['lng'] . ';' . $first['geometry']['lat'] . ';' . $first['formatted'] . "\n";
-            # 4.360081;43.8316276;6 Rue Massillon, 30020 Nîmes, Frankreich
-            $pisos = Piso::whereBetween('longitud', [$first['geometry']['lat'] - 0.10, $first['geometry']['lat'] + 0.10])
-                    ->whereBetween('latitud', [$first['geometry']['lng'] - 0.10, $first['geometry']['lng'] + 0.10])
-                    ->get();
-        }else{
-            $pisos = Piso::all();
+        $pisos_id = DB::table('direcciones')->select('piso_id')->where('municipio', $ciudad)->get(); // recoge direccion->id pisos
+        
+        foreach($pisos_id as $piso_id){
+            $pisos[] = Piso::find($piso_id);
+        }
+        
+        $fotos = Foto::all();
+
+        return view('piso.index',compact('pisos', 'fotos'));
+    }
+
+    /**
+     * Display the specified search resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $geoApi = new GeoApiController();
+
+        $pisosBuscados = DB::table('direcciones')->where('id', '>', 0); // recoge identificador del piso
+
+        if(!empty($request->comunidades))
+        {
+            $nombreComunidad = $geoApi->getNombreComunidad($request->comunidades);
+            $pisosBuscados = $pisosBuscados->where('comunidad', '=' , $nombreComunidad);
         }
 
-        $pisosPagina = $pisos->paginate(8);
+        if(!empty($request->comunidades) && !empty($request->provincias))
+        {
+            $nombreProvincia = $geoApi->getNombreProvincia($request->comunidades, $request->provincias);
+            $pisosBuscados = $pisosBuscados->where('provincia', '=' , $nombreProvincia);
+        }
+
+        if(!empty($request->provincias) && !empty($request->municipios))
+        {
+            $nombreMunicipio = $geoApi->getNombreMunicipio($request->provincias, $request->municipios);
+            $pisosBuscados = $pisosBuscados->where('municipio', '=' , $nombreMunicipio);
+        }
+        
+        $pisosBuscados = $pisosBuscados->orderBy('piso_id','asc')->get();
+
         $fotos=Foto::all();
 
-        return view('piso.index',compact('pisosPagina', 'pisos', 'fotos'));
+        if(sizeof($pisosBuscados) != 0){
+
+            foreach ($pisosBuscados as $pisoBuscado){
+                $pisos[] = Piso::find($pisoBuscado->piso_id);
+            }
+
+            return view('piso.index',compact('pisos', 'fotos'));
+
+        }else{
+
+            $pisos = Piso::all();
+            $pisosPagina=Piso::paginate(8);
+            return view('piso.index',compact('pisos', 'pisosPagina', 'fotos'));
+
+        }
     }
+
 }

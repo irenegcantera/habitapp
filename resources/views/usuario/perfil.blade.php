@@ -56,7 +56,7 @@
         </div>
         <div class="card-body">
             <form class="mb-3" action="{{ route('pisos.create') }}" method="get">
-                <button type="submit" class="btn btn-success btn-sm fw-bold">Añadir piso</button>
+                <button type="submit" class="btn btn-success fw-bold">Añadir piso</button>
             </form>
             <table id="tabla" class="table table-bordered table-hover">
                 <thead class="table-light">

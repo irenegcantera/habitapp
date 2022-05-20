@@ -71,7 +71,7 @@
                         ease-in-out
                         m-0
                         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
+                    <option selected>Selecciona tipo de usuario</option>
                     <option value="inquilino">Inquilino</option>
                     <option value="arrendatario">Arrendatario</option>
                 </select>
@@ -79,13 +79,25 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('¿Ya se encuentra registrado?') }}
                 </a>
 
                 <x-button class="ml-4">
-                    {{ __('Register') }}
+                    {{ __('Registrar') }}
                 </x-button>
             </div>
+            <br>
+            <x-a href="{{ route('index') }}"> 
+                <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
+                    <use xlink:href="#bi-arrow-left"/>
+                </svg>&nbsp;Volver atrás
+            </x-a>
         </form>
     </x-auth-card>
 </x-guest-layout>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-arrow-left">
+    <symbol id="bi-arrow-left" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </symbol>
+</svg>

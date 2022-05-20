@@ -18,8 +18,6 @@ return new class extends Migration
 	        $table->string('longitud')->nullable();
             $table->string('latitud')->nullable();
             $table->string('titulo')->default('Piso en alquiler');
-            $table->string('calle');
-            $table->string('cod_postal');
             $table->string('descripcion')->nullable();
             $table->tinyInteger('num_habitaciones')->nullable();
             $table->tinyInteger('num_aseos')->nullable();
