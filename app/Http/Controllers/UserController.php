@@ -16,9 +16,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        $pisos[] = [];
-        $inquilinos[] = [];
-        $arrendatarios[] = [];
 
         $user_id = auth()->user()->id;
         $user = User::find($user_id);
@@ -31,14 +28,15 @@ class UserController extends Controller
             if(!$rents->isEmpty()){
 
                 foreach($rents as $rent){
-                    $pisos[] = Piso::where('piso_id', '=', $rent->piso_id)->get();
+                    $pisos[] = Piso::find($rent->piso_id);
                 }
                 
                 foreach ($pisos as $piso){
                     $arrendatarios[] = User::find($piso->user_id);
                 }
-                
+
                 return view('usuario.perfil',compact('user','rents','pisos','arrendatarios'));
+
             }
 
             return view('usuario.perfil',compact('user'));
@@ -46,12 +44,18 @@ class UserController extends Controller
         }elseif(auth()->user()->rol == 'arrendatario'){
 
             $pisos = Piso::where('user_id', '=', $user_id)->get();
-
+            
             foreach($pisos as $piso){
-                $inquilinos[] = UserRentPiso::where('user_id', '=', $user_id)->get();
+                $rent = UserRentPiso::where('piso_id', '=', $piso->id)->get();
+                // $inquilinos[] = User::find($rent->user_id);
             }
 
-            return view('usuario.perfil',compact('user','pisos','inquilinos'));
+            // if(!empty($inquilinos)){
+            //     return view('usuario.perfil',compact('user','pisos','inquilinos'));
+            // }
+
+            return view('usuario.perfil',compact('user','pisos'));
+            
         }
     }
 
@@ -64,36 +68,33 @@ class UserController extends Controller
     public function edit($id)
     {
         $user=User::find($id);
-        return view('usuario.config',compact('user'));
+        return view('usuario.edit',compact('user'));
     }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $num
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request,$numero)
-    // {
-    //     $factura = Factura::find($numero);
-    //     $cliente = Cliente::find($request->id_cliente);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $user = User::find($request->id);
+        dump($user);
+        // if (!$request->hasFile('avatar')) {
+            $user->nombre = $request->nombre;
+            $user->apellidos = $request->apellidos;
+            $user->info = $request->info;
+            $user->username = $request->username;
+            $user->password = $request->password;
+            $user->email = $request->email;
+        // }else {
+        //     $user->avatar = $request->avatar;
+        // }
 
-    //     $factura->fecha = $request->fecha;
-    //     $factura-> nombre = $cliente->nombre;
-    //     $factura-> direccion = $cliente->direccion;
-    //     $factura->cpostal = $cliente->cod_postal;
-    //     $factura->poblacion = $cliente->poblacion;
-    //     $factura->provincia = $cliente->provincia;
-    //     $factura->telefono = $cliente->telefono;
-    //     $factura->cliente_id = $request->id_cliente;
-        
-    //     // var_dump($factura);
-    //     $factura->update();
+        $user->update();
 
-    //     $productos=Producto::all();
-    //     $clientes=Cliente::all();
-    //     return redirect()->route('facturas.edit', compact('factura','productos','clientes'));
-    // }
+        return view('usuario.perfil',compact('user'));
+    }
 
 }

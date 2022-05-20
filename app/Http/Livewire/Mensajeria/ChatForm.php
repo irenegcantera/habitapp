@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Mensajeria;
 
 use Livewire\Component;
 
@@ -16,6 +16,10 @@ class ChatForm extends Component
     
     public function render()
     {
-        return view('livewire.chat-form');
+        return view('livewire.mensajeria.chat-form');
+    }
+
+    public function enviarMensaje(){
+        $this->emit("mensajeEnviado");
     }
 }

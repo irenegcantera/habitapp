@@ -4,60 +4,92 @@
 
 @section('content')
 <section class="d-flex justify-content-center align-items-center search">
-    <h2 class="text-white">Busca tu próximo piso</h2><br><br>
-    <form action="#" method="get">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" name="place" id="place" placeholder="CP, localidad, provincia" aria-describedby="button-addon2">
-            <button type="submit" class="btn btn-secondary" type="button" id="button-addon2" value="Search">Button</button>
-        </div>
-    </form>
+    <div class="container w-75">
+        <div class="card">
+            <div class="card-body">
+              <form action="{{ route('pisos.index') }}" method="get">
+                <h5 class="card-title">Buscador de pisos</h5>
+                @livewire('busqueda.autosearch')
+                <button type="submit" class="btn btn-primary">Buscar</button>
+              </form>
+          </div>
+    </div>
 </section>
 
-<section class = "container">
-    <h3>INFORMACIÓN WEB</h3>
+<section id="bg-white" class="container m-5 p-5 h-75">
+    <h3>¿Quieres publicar tu piso o buscar tu próximo alquiler?</h3>
+    <a class="btn btn-lg btn-primary" href="{{ route('registrar') }}">¡Registrate ahora!</a>
 </section>
 
-<section class = "container">
-    <h3>INFORMACIÓN ARRENDATARIOS</h3>
+<section id="bg-white" class="container m-5 p-5 h-75">
+    <div class="row d-flex justify-content-end">
+      <h3>Administra tus pisos y contacta con tus inquilinos.</h3><br>
+    </div>
+    <a class="btn btn-lg btn-primary" href="{{ route('login') }}">¡Inicia sesión!</a>
 </section>
 
-<section class = "container">
-    <h3>INFORMACIÓN INQUILINOS</h3>
+<section id="bg-white" class="container m-5 p-5 h-75">
+    <h3>Busca tu próximo piso y contacta con el propietario de forma rápida y sencilla.</h3>
+    <a class="btn btn-lg btn-primary" href="{{ route('login') }}">¡Inicia sesión!</a>
 </section>
 
 <section>
-    <div class="container">
+    <div class="container mb-3">
         <h3>Enlaces a ciudades más buscadas</h3>
-        <ul>
-            <li>Barcelona</li>
-            <li>Madrid</li>
-            <li>Valencia</li>
-            <li>Bilbao</li>
-            <li>Sevilla</li>
-        </ul>
+        <br>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+              <div class="card">
+                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                <div class="card-body">
+                  <a href="{{ route('pisos.searched','Barcelona') }}">Barcelona</a>
+                  {{-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> --}}
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                <div class="card-body">
+                    <a href="{{ route('pisos.searched','Madrid') }}">Madrid</a>
+                  {{-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> --}}
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                <div class="card-body">
+                    <a href="{{ route('pisos.searched','Valencia') }}">Valencia</a>
+                  {{-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p> --}}
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card">
+                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                <div class="card-body">
+                    <a href="{{ route('pisos.searched','Bilbao') }}">Bilbao</a>
+                  {{-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> --}}
+                </div>
+              </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                  {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                  <div class="card-body">
+                    <a href="{{ route('pisos.searched','Sevilla') }}">Sevilla</a>
+                    {{-- <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> --}}
+                  </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('vendor/jquery-ui-1.13.1/jquery-ui.min.js') }}"></script>
-    <script>
-        $('#place').autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: "{{ route('search.places') }}"",
-                    dataType: 'json',
-                    data: {
-                        term: request.term
-                    },
-                    success: function(data){
-                        response(data);
-                    }
-                });
-            }
-        });
-    </script>
     <script>
         let map = L.map('map').setView([40.463667, -3.74922], 6);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

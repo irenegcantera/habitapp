@@ -10,19 +10,37 @@
 
 @section('content')
 <br>
+
 <div class="container">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-3">
-                    <img src="{{ asset('logo/perfil.png') }}" alt="" width="250">
+    <div class="row">
+        <div class="col-2 h-100">
+            <div class="card">
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="{{ route('mensajes.index') }}" class="list-group-item list-group-item-action" aria-current="true">
+                          Ver mensajes
+                        </a>
+                        <a href="{{ route('perfil.edit', auth()->user()) }}" class="list-group-item list-group-item-action">Editar perfil</a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">A third link item</a>
+                      </div>
                 </div>
-                <div class="col-9 mt-5">
-                    <div class="mb-3">
-                        <h1>{{ $user->nombre." ".$user->apellidos }}</h1>
-                    </div>
-                    <div class="mb-3">
-                        <h1>{{ $user->info }}</h1>
+            </div>
+        </div>
+        <div class="col-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row d-flex justify-content-evenly">
+                        <div class="col-md-3">
+                            <img src="{{ asset('logo/perfil.png') }}" alt="" width="250">
+                        </div>
+                        <div class="col-md-5 mt-5">
+                            <div class="mb-3">
+                                <h1>{{ $user->nombre." ".$user->apellidos }}</h1>
+                            </div>
+                            <div class="mb-3">
+                                <h1>{{ $user->info }}</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -30,24 +48,62 @@
     </div>
 </div>
 <br>
-@if(auth()->user()->rol == 'arrendatario')
-<div class="container">
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Listado pisos</button>
-        </li>
-        <li class="nav-item" role="presentation">
-        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Listado inquilinos</button>
-        </li>
-    </ul>
-
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">TABLA1 1</div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">TABLA 2</div>
+@if($user->rol == 'arrendatario')
+<div class="container mb-3">
+    <div class="card">
+        <div class="card-header">
+            <h3>LISTADO DE PISOS</h3>
+        </div>
+        <div class="card-body">
+            <form class="mb-3" action="{{ route('pisos.create') }}" method="get">
+                <button type="submit" class="btn btn-success btn-sm fw-bold">Añadir piso</button>
+            </form>
+            <table id="tabla" class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Título</th>
+                        {{-- Dirección: calle+municipio+codPostal+provincia+comunidad --}}
+                        <th>Dirección</th> 
+                        <th colspan="4">Inquilinos</th>
+                        <th colspan="2">Acciones</th>
+                    </tr>
+                </thead>
+                @if(isset($pisos) && isset($inquilinos))
+                    @foreach($pisos as $piso)
+                        <tr>
+                            <td>{{ $piso->titulo }}</td>
+                            {{-- Dirección: calle+municipio+codPostal+provincia+comunidad --}}
+                            <td>{{ $piso->calle.', '.$piso->cod_postal }}</td> 
+                            <td>INQUILINOS</td> 
+                            <td>INQUILINOS</td> 
+                            <td>INQUILINOS</td> 
+                            <td>INQUILINOS</td> 
+                            {{-- @foreach ($inquilinos as $inquilino)
+                            <td><img src="{{ asset($inquilino->avatar) }}" alt="" width="50">{{ $inquilino->nombre.' '.$inquilino->apellidos }}</td> 
+                            @endforeach --}}
+                            <td>
+                                <form action="{{ route('pisos.edit', $piso) }}" method="get">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning btn-sm fw-bold">Editar</button>
+                                </form>
+                            </td>
+                            <td>
+                                {{-- <form action="{{ route('clientes.destroy', $piso) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger btn-sm fw-bold">Eliminar</button>
+                                </form> --}}
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </table>
+        </div>
+        <br>
     </div>
 </div>
-@elseif(auth()->user()->rol == 'inquilino')
-<div class="container">
+@elseif($user->rol == 'inquilino')
+<div class="container mb-3">
     <div class="card">
         <div class="card-header">
             <h3>LISTADO DE PISOS</h3>

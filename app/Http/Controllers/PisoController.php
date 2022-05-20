@@ -1,11 +1,15 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Comunidad;
 use App\Models\Foto;
+use App\Models\Municipio;
 use App\Models\Piso;
+use App\Models\Provincia;
 use App\Models\User;
 use App\Models\UserRentPiso;
 use Illuminate\Http\Request;
+use OpenCage\Geocoder\Geocoder;
 
 // use OpenCage\Geocoder\Geocoder;
 
@@ -22,53 +26,63 @@ class PisoController extends Controller
         $pisos=Piso::all();
         $fotos=Foto::all();
 
-        // $geocoder = new Geocoder('469ef009f74d4177a741647ec1b41a1f');
-        // $result = $geocoder->geocode('6 Rue Massillon, 30020 Nîmes', ['language' => 'fr', 'countrycode' => 'fr']);
-        // if ($result && $result['total_results'] > 0) {
-        //     $first = $result['results'][0];
-        //     //print $first['geometry']['lng'] . ';' . $first['geometry']['lat'] . ';' . $first['formatted'] . "\n";
-        //     # 4.360081;43.8316276;6 Rue Massillon, 30020 Nîmes, Frankreich
-        // }
+        // dump($pisosPagina);
 
         return view('piso.index',compact('pisosPagina', 'pisos', 'fotos'));
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function create()
-    // {
-    //     $clientes = Cliente::all();
-    //     return view('factura.create',compact('clientes'));
-    // }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('piso.create');
+    }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     $factura = new Factura();
-    //     $cliente=Cliente::find($request->nombre);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $piso = new Piso();
 
-    //     $factura->fecha = $request->fecha;
-    //     $factura-> nombre = $cliente->nombre;
-    //     $factura-> direccion = $request->direccion;
-    //     $factura->cpostal = $request->cpostal;
-    //     $factura->poblacion = $request->poblacion;
-    //     $factura->provincia = $request->provincia;
-    //     $factura->telefono = $request->telefono;
-    //     $factura->cliente_id = $request->nombre;
-    //     $factura->save();
+        $geocoder = new Geocoder('469ef009f74d4177a741647ec1b41a1f');
+        // $direccion =$request->calles.", ".$request->codPostales.", ".$request->poblaciones.", ".
+                    // $request->provincias.", ".$request->comunidades;
+        $direccion ="Severo Ochoa 11, 30564, Lorquí".
+                    $request->provincias.", ".$request->comunidades;
+        $result = $geocoder->geocode($direccion);
 
-    //     $productos=Producto::all();
-    //     $clientes=Cliente::all();
-    //     return redirect()->route('facturas.edit', compact('factura','productos','clientes'));
-    // }
+        if ($result && $result['total_results'] > 0) {
+            $coordenadas = $result['results'][0];
+            //print $coordenadas['geometry']['lng'] . ';' . $coordenadas['geometry']['lat'] . ';' . $first['formatted'] . "\n";
+            # 4.360081;43.8316276;6 Rue Massillon, 30020 Nîmes, Frankreich
+        }
+
+        $piso->titulo = $request->titulo;
+        $piso->longitud = $coordenadas['geometry']['lng'];
+        $piso->latitud = $coordenadas['geometry']['lat'];
+        $piso->calle = $request->calles;
+        $piso->cod_postal = $request->codPostales;
+        $piso->descripcion = $request->descripcion;
+        $piso->num_habitaciones = $request->num_habitaciones;
+        $piso->num_aseos = $request->num_aseos;
+        $piso->m2 = $request->m2;
+        $piso->sexo = $request->sexo;
+        $piso->fumadores = $request->fumadores;
+        $piso->animales = $request->animales;
+        $piso->precio = $request->precio;
+        $piso->user_id = $request->user_id;
+
+        $piso->save();
+
+        return redirect()->route('perfil.index');
+    }
 
     /**
      * Display the specified resource.
@@ -99,19 +113,20 @@ class PisoController extends Controller
         return view('piso.show',compact('piso','arrendatario','inquilinos'));
     }
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($num)
-    // {
-    //     $factura=Factura::find($num);
-    //     $productos=Producto::all();
-    //     $clientes=Cliente::all();
-    //     return view('factura.factura',['factura'=>$factura,'productos'=>$productos,'clientes'=>$clientes]);
-    // }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  Piso  $piso
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Piso $piso)
+    {
+        $comunidades = Comunidad::all();
+        $provincias = Provincia::all();
+        $municipios = Municipio::all();
+
+        return view('piso.edit',compact('piso','comunidades','provincias','municipios'));
+    }
 
     // /**
     //  * Update the specified resource in storage.

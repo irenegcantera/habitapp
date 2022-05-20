@@ -3,7 +3,7 @@
 @section('title','Pisos')
 
 @section('content')
-
+{{-- <h1>{{ $first['geometry']['lat'] . ';' . $first['geometry']['lng']  }}</h1> --}}
 <div class="me-4 ms-4 mt-3 mb-2">
     <div class="d-block d-lg-block d-xxl-none">
       <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
@@ -18,26 +18,12 @@
       <div class="col-lg-2 card h-100 d-none d-xxl-block">
         <div class="card-body">
           <form action="{{ route('filter.index') }}" method="get">          
-            <select class="form-select form-select-sm mb-3" name="comunidad">
-              <option selected>Comunidad...</option>
-              <option value="1">Región de Murcia</option>
-              <option value="1">Comunidad valenciana</option>
-            </select>
-
-            <select class="form-select form-select-sm mb-3" name="provincia">
-              <option selected>Provincia...</option>
-              <option value="1">Murcia</option>
-            </select>
-
-            <select class="form-select form-select-sm mb-3" name="municipio">
-                <option selected>Municipio...</option>
-                <option value="1">Mula</option>
-            </select>
-
+            {{-- Livewire select dynamic zonas geográficas--}}
+            @livewire('busqueda.autosearch')
             {{-- <h1>{{ $first['geometry']['lng'] . ';' . $first['geometry']['lat'] }}</h1> --}}
             <label for="precio" class="form-label fw-bold">Precio</label>
-            <input type="text" class="form-control form-control-sm" name="place" name="precioMin" placeholder="Mín. 150 €">
-            <input type="text" class="form-control form-control-sm mt-2" name="place" name="precioMax" placeholder="Máx. 1000 €">
+            <input type="number" class="form-control form-control-sm" name="precioMin" min="150" max="999">
+            <input type="number" class="form-control form-control-sm mt-2" name="precioMax" min="151" max="1000">
 
             <label for="num_habitaciones" class="form-label fw-bold mt-2">Número de habitaciones</label>
             <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones" value="0">
@@ -65,7 +51,7 @@
               <label class="form-check-label" for="animalesNO">No</label>
             </div>
 
-            <br><label for="animales" class="form-label fw-bold">Compañeros de piso</label><br>
+            <br><label for="sexo" class="form-label fw-bold">Compañeros de piso</label><br>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" name="sexoHombre" value="hombre">
               <label class="form-check-label" for="sexoHombre">Hombre</label>
@@ -90,13 +76,56 @@
           </form>
         </div>
       </div>
-      <div class="col-lg-5 d-none d-xxl-block ">
+      <div class="col-lg-5 d-none d-xxl-block">
         <div id="map2"></div>
       </div>
-      <div class="col-lg-5">
+      <div class="col-lg-5" id="global">
+
+        @if(isset($pisosPagina))
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-4">
+
+            @foreach($pisosPagina as $piso)
+              <div class="col">
+                <div class="card h-100">
+                  <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                        <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                        <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="{{ route('pisos.show', $piso) }}">{{ $piso->titulo }}</a></h5>
+                    <p class="card-text"><small class="text-muted">{{ $piso->num_habitaciones }} habitaciones · {{ $piso->num_aseos }} aseos · {{ $piso->m2 }} m2</small></p>
+                    <p class="card-text">{{ $piso->precio }} €/mes</p>
+                  </div>
+                </div>
+              </div>
+            @endforeach
+        
+          </div>
+          <div class="d-flex justify-content-center mt-4">
+            {{ $pisosPagina->links() }}
+          </div>
+        @else
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-4">
 
-          @foreach($pisosPagina as $piso)
+          @foreach($pisos as $piso)
             <div class="col">
               <div class="card h-100">
                 <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -122,17 +151,19 @@
                   </button>
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title"><a href="{{ route('pisos.show', $piso) }}">{{ $piso->titulo }}</a></h5>
+                  <h5 class="card-title"><a href="{{ route('pisos.show', $piso) }}"> {{ $piso->titulo }}</a></h5> 
                   <p class="card-text"><small class="text-muted">{{ $piso->num_habitaciones }} habitaciones · {{ $piso->num_aseos }} aseos · {{ $piso->m2 }} m2</small></p>
                   <p class="card-text">{{ $piso->precio }} €/mes</p>
                 </div>
               </div>
             </div>
           @endforeach
-        </div>
-        <div class="d-flex justify-content-center mt-4">
-          {{ $pisosPagina->links() }}
-        </div>
+      
+          </div>
+          {{-- <div class="d-flex justify-content-center mt-4">
+            {{ $pisos->links() }}
+          </div> --}}
+        @endif
       </div>
     </div>
 
@@ -150,7 +181,6 @@
                 <input type="text" class="form-control" name="place" id="place" placeholder="CP, localidad, provincia" aria-describedby="button-addon2">
                 <button type="submit" class="btn btn-secondary" type="button" id="button-addon2" value="Search">Buscar</button>
             </div>
-            {{-- <h1>{{ $first['geometry']['lng'] . ';' . $first['geometry']['lat'] }}</h1> --}}
             <label for="num_habitaciones" class="form-label">Número de habitaciones</label>
             <input type="range" class="form-range" min="1" max="6" step="1" id="num_habitaciones">
             <label for="num_aseos" class="form-label">Número de aseos</label>

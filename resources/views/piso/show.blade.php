@@ -90,11 +90,12 @@
                                 {{-- <p class="card-text"><a href="{{ route('pisos.index') }}">Ver más pisos</a></p> --}}
                                 </div>
                             </div>
-                            <form action="{{ route('mensajes.create') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('mensajes.store') }}" method="post" enctype="multipart/form-data">
                                 @if (auth()->check())
+                                    @csrf
                                     <h6 class="card-title">Enviar mensaje</h6>
                                     <label for="from_user" class="form-label">User</label>
-                                    <input type="text" name="from_user" class="form-control" value="{{ auth()->user()->username }}" readonly>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->username }}" readonly>
                                     <label for="contenido" class="form-label">Mensaje</label>
                                     <textarea name="contenido" class="form-control" rows="7"></textarea>
                                     {{-- Div notificacion --}}
@@ -108,7 +109,8 @@
                                         o <a href="{{ route('registrar') }}" class="alert-link">registrarse</a>.
                                     </div>                                    
                                 @endif
-                                <input type="hidden" name="to_user" value="{{ $arrendatario->username }}">
+                                <input type="hidden" name="from_user" value="{{ auth()->check() == null ? null : auth()->user()->id }}">
+                                <input type="hidden" name="to_user" value="{{ $arrendatario->id }}">
                                 <input type="hidden" name="piso_id" value="{{ $piso->id }}">
                             </form>
                         </div>

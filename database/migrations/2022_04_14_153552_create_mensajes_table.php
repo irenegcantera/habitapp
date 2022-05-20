@@ -19,7 +19,6 @@ return new class extends Migration
             $table->dateTime('fecha_enviado');
             $table->dateTime('fecha_recibido');
             $table->boolean('leido')->default(false);
-            $table->timestamps();
         });
     }
 
