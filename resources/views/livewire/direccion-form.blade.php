@@ -1,30 +1,42 @@
-<div class="col-lg-6">
-    <label class="fw-bold mb-2" for="direccion">Dirección</label>
+<div>
+    <label class="fw-bold mb-2" for="direccion">Dirección</label><br>
+    <label class="form-label" for="comunidades">Comunidad</label>
     <select class="form-select mb-3" name="comunidades" wire:model="selectedComunidad">
-        <option class="text-white-50" value="0" selected>Comunidad...</option>
+        <option value="0" selected>Seleccione...</option>
         @foreach($comunidades as $comunidad)
             <option value="{{ $comunidad['CCOM'] }}">{{ $comunidad['COM'] }}</option>
         @endforeach
     </select>
-    {{ "selectedComunidad ->".$selectedComunidad }}
+    {{-- {{ "selectedComunidad ->".$selectedComunidad }} --}}
+    <label class="form-label" for="provincias">Provincia</label>
     <select class="form-select mb-3" name="provincias" wire:model="selectedProvincia">
-        <option value="0" selected>Provincia...</option>
+        <option value="0" selected>Seleccione...</option>
         @if(!is_null($selectedComunidad))
             @foreach($provincias as $provincia)
                 <option value="{{ $provincia['CPRO'] }}">{{ $provincia['PRO'] }}</option>
             @endforeach
         @endif
     </select>
-    {{ "selectedProvincia ->".$selectedProvincia }}
-    <select class="form-select mb-3" name="municipios" wire:model="selectedMunicipio">
-        <option value="0" selected>Municipio...</option>
-        @if(!is_null($selectedProvincia))
-            @foreach($municipios as $municipio)
-                <option value="{{ $municipio['CMUM'] }}">{{ $municipio['DMUN50'] }}</option>
-            @endforeach
-        @endif
-    </select>
-    {{ "selectedMunicipio ->".$selectedMunicipio }}
+    {{-- {{ "selectedProvincia ->".$selectedProvincia }} --}}
+    <div class="row">
+        <div class="col">
+            <label class="form-label" for="municipios">Municipio</label>
+            <select class="form-select mb-3" name="municipios" wire:model="selectedMunicipio">
+                <option value="0" selected>Seleccione...</option>
+                @if(!is_null($selectedProvincia))
+                    @foreach($municipios as $municipio)
+                        <option value="{{ $municipio['CMUM'] }}">{{ $municipio['DMUN50'] }}</option>
+                    @endforeach
+                @endif
+            </select>
+        </div>
+        <div class="col">
+            <label class="form-label" for="cod_postal">Código postal</label>
+            <input class="form-control" type="text" name="cod_postal" id="cod_postal" required>
+        </div>
+    </div>
+    
+    {{-- {{ "selectedMunicipio ->".$selectedMunicipio }} --}}
     {{-- <select class="form-select mb-3" name="poblaciones" wire:model="selectedPoblacion">
         <option value="0" selected>Población...</option>
         @if(!is_null($selectedMunicipio))
@@ -64,8 +76,20 @@
             </select>
             {{ "selectedCalle ->".$selectedCalle }}
         </div> --}}
-        <div class="col">
-            <input class="form-control" type="number" name="num_piso" id="num_piso">
+        <div class="row">
+            <div class="col-8">
+                <label class="form-label" for="calle">Calle</label>
+                <input class="form-control" type="text" name="calle" id="calle" required>
+            </div>
+            <div class="col-2">
+                <label class="form-label" for="numero">Número</label>
+                <input class="form-control" type="text" name="numero" id="numero" required>
+            </div>
+            <div class="col-2">
+                <label class="form-label" for="portal">Portal</label>
+                <input class="form-control" type="text" name="portal" id="portal">
+            </div>
         </div>
+        
     </div>        
 <div>

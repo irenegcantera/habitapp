@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-10">
-            <div class="card">
+            <div class="card rounded-3 border border-2">
                 <div class="card-body">
                     <div class="row d-flex justify-content-evenly">
                         <div class="col-md-3">
@@ -68,7 +68,7 @@
                         <th colspan="2">Acciones</th>
                     </tr>
                 </thead>
-                @if(isset($pisos) && isset($inquilinos))
+                {{-- @if(isset($pisos) && isset($inquilinos)) --}}
                     @foreach($pisos as $piso)
                         <tr>
                             <td>{{ $piso->titulo }}</td>
@@ -88,15 +88,15 @@
                                 </form>
                             </td>
                             <td>
-                                {{-- <form action="{{ route('clientes.destroy', $piso) }}" method="post">
+                                <form action="" method="post">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-danger btn-sm fw-bold">Eliminar</button>
-                                </form> --}}
+                                </form>
                             </td>
                         </tr>
                     @endforeach
-                @endif
+                {{-- @endif --}}
             </table>
         </div>
         <br>

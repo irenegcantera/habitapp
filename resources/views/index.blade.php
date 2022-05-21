@@ -77,7 +77,7 @@
               <div class="card" id="card-shadow">
                 <img src="{{ asset('img/bilbao.jpg') }}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <p class="text-center fw-light fs-4"><a id="no-style" href="{{ route('filter.searched','Bilbao') }}">Bilbao</a></p>
+                  <p class="text-center fw-light fs-4"><a id="ciudad-link" href="{{ route('filter.searched','Bilbao') }}">Bilbao</a></p>
                 </div>
               </div>
             </div>
@@ -85,7 +85,7 @@
                 <div class="card" id="card-shadow">
                   <img src="{{ asset('img/sevilla.jpg') }}" class="card-img-top" alt="...">
                   <div class="card-body">
-                    <p class="text-center fw-light fs-4"><a id="no-style" href="{{ route('filter.searched','Sevilla') }}">Sevilla</a></p>
+                    <p class="text-center fw-light fs-4"><a id="ciudad-link" href="{{ route('filter.searched','Sevilla') }}">Sevilla</a></p>
                   </div>
                 </div>
             </div>

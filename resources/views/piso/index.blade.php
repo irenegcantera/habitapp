@@ -33,22 +33,22 @@
 
             <label for="fumadores" class="form-label fw-bold">Fumadores</label><br>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="fumadoresSI" value="true">
-              <label class="form-check-label" for="fumadoresSI">Sí</label>
+              <input class="form-check-input" type="checkbox" name="fumadores" value="1">
+              <label class="form-check-label" for="fumadores">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="fumadoresNO" value="false">
-              <label class="form-check-label" for="fumadoresNO">No</label>
+              <input class="form-check-input" type="checkbox" name="fumadores" value="0">
+              <label class="form-check-label" for="fumadores">No</label>
             </div>
 
             <br><label for="animales" class="form-label fw-bold">Animales domésticos</label><br>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="animalesSI" value="true">
-              <label class="form-check-label" for="animalesSI">Sí</label>
+              <input class="form-check-input" type="checkbox" name="animales" value="1">
+              <label class="form-check-label" for="animales">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="animalesNO" value="false">
-              <label class="form-check-label" for="animalesNO">No</label>
+              <input class="form-check-input" type="checkbox" name="animales" value="0">
+              <label class="form-check-label" for="animales">No</label>
             </div>
 
             <br><label for="sexo" class="form-label fw-bold">Compañeros de piso</label><br>
@@ -125,40 +125,40 @@
         @else
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-4">
 
-          @foreach($pisos as $piso)
-            <div class="col">
-              <div class="card h-100">
-                <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                  <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            @foreach($pisos as $piso)
+              <div class="col">
+                <div class="card h-100">
+                  <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                        <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                        <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                   </div>
-                  <div class="carousel-inner">
-                      <div class="carousel-item active">
-                      <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                      <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
-                      </div>
+                  <div class="card-body">
+                    <h5 class="card-title"><a href="{{ route('pisos.show', $piso) }}"> {{ $piso->titulo }}</a></h5> 
+                    <p class="card-text"><small class="text-muted">{{ $piso->num_habitaciones }} habitaciones · {{ $piso->num_aseos }} aseos · {{ $piso->m2 }} m2</small></p>
+                    <p class="card-text">{{ $piso->precio }} €/mes</p>
                   </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="visually-hidden">Next</span>
-                  </button>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title"><a href="{{ route('pisos.show', $piso) }}"> {{ $piso->titulo }}</a></h5> 
-                  <p class="card-text"><small class="text-muted">{{ $piso->num_habitaciones }} habitaciones · {{ $piso->num_aseos }} aseos · {{ $piso->m2 }} m2</small></p>
-                  <p class="card-text">{{ $piso->precio }} €/mes</p>
                 </div>
               </div>
-            </div>
-          @endforeach
-      
+            @endforeach
+            
           </div>
           {{-- <div class="d-flex justify-content-center mt-4">
             {{ $pisos->links() }}
@@ -184,29 +184,29 @@
             <input type="number" class="form-control form-control-sm mt-2" name="precioMax" min="151" max="1000">
 
             <label for="num_habitaciones" class="form-label fw-bold mt-2">Número de habitaciones</label>
-            <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones" value="0">
+            <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones">
 
             <label for="num_aseos" class="form-label fw-bold">Número de aseos</label>
-            <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos" value="0">
+            <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos">
 
             <label for="fumadores" class="form-label fw-bold">Fumadores</label><br>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="fumadoresSI" value="true">
-              <label class="form-check-label" for="fumadoresSI">Sí</label>
+              <input class="form-check-input" type="checkbox" name="fumadores" value="1">
+              <label class="form-check-label" for="fumadores">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="fumadoresNO" value="false">
-              <label class="form-check-label" for="fumadoresNO">No</label>
+              <input class="form-check-input" type="checkbox" name="fumadores" value="0">
+              <label class="form-check-label" for="fumadores">No</label>
             </div>
 
             <br><label for="animales" class="form-label fw-bold">Animales domésticos</label><br>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="animalesSI" value="true">
-              <label class="form-check-label" for="animalesSI">Sí</label>
+              <input class="form-check-input" type="checkbox" name="animales" value="1">
+              <label class="form-check-label" for="animales">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="animalesNO" value="false">
-              <label class="form-check-label" for="animalesNO">No</label>
+              <input class="form-check-input" type="checkbox" name="animales" value="0">
+              <label class="form-check-label" for="animales">No</label>
             </div>
 
             <br><label for="sexo" class="form-label fw-bold">Compañeros de piso</label><br>
@@ -251,7 +251,9 @@
     }
 
     @foreach($pisos as $piso)
-      var marker = L.marker([{{ $piso->longitud }}, {{ $piso->latitud }}], markerOptions).addTo(map);
+      @if($loop)
+        var marker = L.marker([{{ $piso->longitud }}, {{ $piso->latitud }}], markerOptions).addTo(map);
+      @endif
     @endforeach
     
     map.addControl(new L.Control.Fullscreen());

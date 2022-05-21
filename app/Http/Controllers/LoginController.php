@@ -44,6 +44,6 @@ class LoginController extends Controller
     public function destroy()
     {
         auth()->logout();
-        return redirect()->route('home');
+        return redirect()->route('index');
     }
 }

@@ -66,7 +66,7 @@
                 @if (auth()->check())
                   <li><a class="dropdown-item" href="{{ route('perfil.index') }}">Perfil</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="{{ route('login.destroy') }}">Cerrar sesión</a></li>
+                  <li><a class="dropdown-item" href="{{ route('logout') }}">Cerrar sesión</a></li>
                 @else
                   <li><a class="dropdown-item" href="{{ route('login') }}">Iniciar sesión</a></li>
                   <li><a class="dropdown-item" href="{{ route('registrar') }}">Registrarse</a></li>

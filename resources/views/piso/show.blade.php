@@ -73,7 +73,7 @@
                             <div class="mt-3 mb-5" id="map"></div>
                         </div>
                         <div class="col-lg-5">
-                            <div class="card border-light mb-3">
+                            <div class="card border-light mb-3" id="card-shadow">
                                 <div class="card-header fs-4 fw-bold">Datos arrendatario</div>
                                 <div class="card-body">
                                     <img src="{{ asset('logo/perfil.png') }}" class="card-img-top" alt="...">
@@ -83,7 +83,6 @@
                                 </div>
                                 {{-- <p class="card-text"><a href="{{ route('pisos.index') }}">Ver más pisos</a></p> --}}
                             </div>
-                        </div>
                             <form action="{{ route('mensajes.store') }}" method="post" enctype="multipart/form-data">
                                 @if (auth()->check())
                                     @csrf
@@ -107,6 +106,8 @@
                                 <input type="hidden" name="to_user" value="{{ $arrendatario->id }}">
                                 <input type="hidden" name="piso_id" value="{{ $piso->id }}">
                             </form>
+                        </div>
+                            
                         </div>
                     </div>
                 </div>

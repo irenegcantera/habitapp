@@ -73,16 +73,21 @@
                         </select>
                     </div>
                 </div>
+                
+            </div>
+            <div class="col-lg-6">
                 <div class="mb-3">
                     <label class="form-label fw-bold" for="fotos">Subir fotos</label>
                     <input class="form-control" type="file" id="fotos" multiple>
                 </div>
-                <button type="submit" class="btn btn-primary">Crear piso</button>
+                @livewire('direccion-form')
+                <br>
+                <div class="d-flex flex-row-reverse">
+                    <button type="submit" class="btn btn-lg btn-primary">Crear piso</button>
+                </div>
+                
             </div>
-            {{-- Va dentro de un div --}}
-            @livewire('direccion-form')
         </div>
-        
     </form>
 </div>
 
