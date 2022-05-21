@@ -12,7 +12,7 @@
             <div class="col-lg-6">
                 <div class="mb-3">
                     <label class="form-label fw-bold" for="titulo">Título</label>
-                    <input class="form-control" type="text" name="titulo" id="titulo">
+                    <input class="form-control" type="text" name="titulo" id="titulo" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label fw-bold" for="descripcion">Descripción</label>
@@ -21,7 +21,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label fw-bold" for="num_habitaciones">Número de habitaciones</label>
-                        <select class="form-select" name="num_habitaciones" id="num_habitaciones">
+                        <select class="form-select" name="num_habitaciones" id="num_habitaciones" required>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="col">
                         <label class="form-label fw-bold" for="num_aseos">Número de aseos</label>
-                        <select class="form-select" name="num_aseos" id="num_aseos">
+                        <select class="form-select" name="num_aseos" id="num_aseos" required>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -42,11 +42,11 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label fw-bold" for="m2">Superficie m2</label>
-                        <input class="form-control" type="number" name="m2" id="m2">
+                        <input class="form-control" type="number" name="m2" id="m2" required>
                     </div>
                     <div class="col">
                         <label class="form-label fw-bold" for="precio">Precio €/mes</label>
-                        <input class="form-control" type="number" name="precio" id="precio">
+                        <input class="form-control" type="number" name="precio" id="precio" required>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -82,7 +82,12 @@
                 </div>
                 @livewire('direccion-form')
                 <br>
-                <div class="d-flex flex-row-reverse">
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-lg btn-outline-primary me-3" href="{{ route('perfil.index') }}">
+                        <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
+                            <use xlink:href="#bi-arrow-left"/>
+                        </svg>&nbsp;Volver atrás
+                    </a>
                     <button type="submit" class="btn btn-lg btn-primary">Crear piso</button>
                 </div>
                 
@@ -92,3 +97,9 @@
 </div>
 
 @endsection
+
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-arrow-left">
+    <symbol id="bi-arrow-left" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </symbol>
+</svg>

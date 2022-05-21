@@ -184,30 +184,25 @@ class FilterController extends Controller
      */
     public function filterByGeography(Request $request)
     {
-        $geoApi = new GeoApiController();
-        
         $pisosBuscados = DB::table('direcciones')->where('id', '>', 0); // recoge identificador del piso
         
         if($request->comunidades != "null")
         {
-            $nombreComunidad = $geoApi->getNombreComunidad($request->comunidades);
+            $nombreComunidad = GeoApiController::getNombreComunidad($request->comunidades);
             $pisosBuscados = $pisosBuscados->where('comunidad', '=' , $nombreComunidad);
-            
         }
 
         if($request->provincias != "null")
         {
-            $nombreProvincia = $geoApi->getNombreProvincia($request->comunidades, $request->provincias);
+            $nombreProvincia = GeoApiController::getNombreProvincia($request->comunidades, $request->provincias);
             $pisosBuscados = $pisosBuscados->where('provincia', '=' , $nombreProvincia);
-            
         }
 
         if($request->municipios != "null")
         {
             echo "ENTRANDO";
-            $nombreMunicipio = $geoApi->getNombreMunicipio($request->provincias, $request->municipios);
+            $nombreMunicipio = GeoApiController::getNombreMunicipio($request->provincias, $request->municipios);
             $pisosBuscados = $pisosBuscados->where('municipio', '=' , $nombreMunicipio);
-           
         }
 
         $query = $pisosBuscados->orderBy('piso_id','asc');
@@ -217,7 +212,6 @@ class FilterController extends Controller
             
             foreach ($pisosBuscados as $pisoBuscado){
                 $pisos[] = Piso::find($pisoBuscado->piso_id);
-                
             }
             
             $pisos[] = $query; // añadimos la query builder para seguir filtrando

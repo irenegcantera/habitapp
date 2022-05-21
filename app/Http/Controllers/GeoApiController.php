@@ -2,14 +2,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
-use OpenCage\Geocoder\Geocoder;
-
-// use OpenCage\Geocoder\Geocoder;
 
 class GeoApiController extends Controller
 {
 
-    public function getNombreComunidad($CCOM)
+    public static function getNombreComunidad($CCOM)
     {
         $comunidades = Http::get(env('GEO_API_URL')."comunidades?",[
             "type" => env('GEO_API_TYPE'),
@@ -25,7 +22,7 @@ class GeoApiController extends Controller
         return null;
     }
 
-    public function getNombreProvincia($CCOM,$CPRO)
+    public static function getNombreProvincia($CCOM,$CPRO)
     {
         $provincias = Http::get(env('GEO_API_URL')."provincias?",[
             "CCOM" => $CCOM,
@@ -42,7 +39,7 @@ class GeoApiController extends Controller
         return null;
     }
 
-    public function getNombreMunicipio($CPRO,$CMUM){
+    public static function getNombreMunicipio($CPRO,$CMUM){
         $municipios = Http::get(env('GEO_API_URL')."municipios?",[
             "CPRO" => $CPRO,
             "type" => env('GEO_API_TYPE'),

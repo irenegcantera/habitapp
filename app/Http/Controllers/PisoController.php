@@ -1,14 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Direccion;
 use App\Models\Foto;
 use App\Models\Piso;
 use App\Models\User;
 use App\Models\UserRentPiso;
-use Illuminate\Http\Request;
-use OpenCage\Geocoder\Geocoder;
 
-// use OpenCage\Geocoder\Geocoder;
+use Illuminate\Http\Request;
 
 class PisoController extends Controller
 {
@@ -39,33 +38,33 @@ class PisoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource (piso y direccion) in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        $direccion = new Direccion();
+
+        $direccion->calle = $request->calle;
+        $direccion->numero = $request->numero;
+        $direccion->portal = $request->portal;
+        $direccion->cod_postal = $request->cod_postal;
+
+        ($request->comunidades != "null") ? $direccion->comunidad = GeoApiController::getNombreComunidad($request->comunidades) : "";
+        ($request->provincias != "null") ? $direccion->provincia = GeoApiController::getNombreProvincia($request->comunidades, $request->provincias) : "";
+        ($request->municipios != "null") ? $direccion->municipio = GeoApiController::getNombreMunicipio($request->provincias, $request->municipios) : "";
+
+        $direccion->save();
+
+        $coordenadas = GeocoderApiController::getCoordenadas($direccion);
+
         $piso = new Piso();
 
-        $geocoder = new Geocoder('469ef009f74d4177a741647ec1b41a1f');
-        // $direccion =$request->calles.", ".$request->codPostales.", ".$request->poblaciones.", ".
-                    // $request->provincias.", ".$request->comunidades;
-        $direccion ="Severo Ochoa 11, 30564, Lorquí".
-                    $request->provincias.", ".$request->comunidades;
-        $result = $geocoder->geocode($direccion);
-
-        if ($result && $result['total_results'] > 0) {
-            $coordenadas = $result['results'][0];
-            //print $coordenadas['geometry']['lng'] . ';' . $coordenadas['geometry']['lat'] . ';' . $first['formatted'] . "\n";
-            # 4.360081;43.8316276;6 Rue Massillon, 30020 Nîmes, Frankreich
-        }
-
         $piso->titulo = $request->titulo;
-        $piso->longitud = $coordenadas['geometry']['lng'];
-        $piso->latitud = $coordenadas['geometry']['lat'];
-        $piso->calle = $request->calles;
-        $piso->cod_postal = $request->codPostales;
+        $piso->longitud = $coordenadas['geometry']['lat'];
+        $piso->latitud = $coordenadas['geometry']['lng'];
         $piso->descripcion = $request->descripcion;
         $piso->num_habitaciones = $request->num_habitaciones;
         $piso->num_aseos = $request->num_aseos;
@@ -77,6 +76,9 @@ class PisoController extends Controller
         $piso->user_id = $request->user_id;
 
         $piso->save();
+
+        $direccion->piso_id = $piso->id;
+        $direccion->update();
 
         return redirect()->route('perfil.index');
     }

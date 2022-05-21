@@ -1,7 +1,7 @@
 <div>
     <label class="fw-bold mb-2" for="direccion">Dirección</label><br>
     <label class="form-label" for="comunidades">Comunidad</label>
-    <select class="form-select mb-3" name="comunidades" wire:model="selectedComunidad">
+    <select class="form-select mb-3" name="comunidades" wire:model="selectedComunidad" required>
         <option value="0" selected>Seleccione...</option>
         @foreach($comunidades as $comunidad)
             <option value="{{ $comunidad['CCOM'] }}">{{ $comunidad['COM'] }}</option>
@@ -9,7 +9,7 @@
     </select>
     {{-- {{ "selectedComunidad ->".$selectedComunidad }} --}}
     <label class="form-label" for="provincias">Provincia</label>
-    <select class="form-select mb-3" name="provincias" wire:model="selectedProvincia">
+    <select class="form-select mb-3" name="provincias" wire:model="selectedProvincia" required>
         <option value="0" selected>Seleccione...</option>
         @if(!is_null($selectedComunidad))
             @foreach($provincias as $provincia)

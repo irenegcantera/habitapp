@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('pisos', function (Blueprint $table) {
             $table->id();
-	        $table->string('longitud')->nullable();
-            $table->string('latitud')->nullable();
+	        $table->string('latitud')->nullable();
+            $table->string('longitud')->nullable();
             $table->string('titulo')->default('Piso en alquiler');
             $table->string('descripcion')->nullable();
             $table->tinyInteger('num_habitaciones')->nullable();

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('direcciones', function (Blueprint $table) {
-            $table->unsignedBigInteger('piso_id');
+            $table->unsignedBigInteger('piso_id')->nullable();
             $table->foreign('piso_id')
                   ->references('id')
                   ->on('direcciones')

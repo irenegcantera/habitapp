@@ -16,6 +16,17 @@ class Direccion extends Model
      */
     protected $table = "direcciones";
 
+    /**
+     * Convert the model to its string representation.
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        return $this->calle.", ".$this->numero.", ".$this->portal.", ".$this->cod_postal.", "
+                .$this->municipio.", ".$this->provincia.", ".$this->comunidad;
+    }
+
 
 }
 
