@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Direccion;
 use App\Models\Piso;
 use App\Models\User;
 use App\Models\UserRentPiso;
@@ -46,15 +47,17 @@ class UserController extends Controller
             $pisos = Piso::where('user_id', '=', $user_id)->get();
             
             foreach($pisos as $piso){
-                $rent = UserRentPiso::where('piso_id', '=', $piso->id)->get();
+                // $rent = UserRentPiso::where('piso_id', '=', $piso->id)->get();
+                $direcciones[] = Direccion::where('piso_id', '=', $piso->id)->get();
+                
                 // $inquilinos[] = User::find($rent->user_id);
             }
-
+            // dd($direcciones);
             // if(!empty($inquilinos)){
             //     return view('usuario.perfil',compact('user','pisos','inquilinos'));
             // }
 
-            return view('usuario.perfil',compact('user','pisos'));
+            return view('usuario.perfil',compact('user','pisos','direcciones'));
             
         }
     }

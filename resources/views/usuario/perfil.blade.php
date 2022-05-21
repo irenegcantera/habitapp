@@ -48,6 +48,7 @@
     </div>
 </div>
 <br>
+
 @if($user->rol == 'arrendatario')
 <div class="container mb-3">
     <div class="card">
@@ -58,7 +59,7 @@
             <form class="mb-3" action="{{ route('pisos.create') }}" method="get">
                 <button type="submit" class="btn btn-success fw-bold">Añadir piso</button>
             </form>
-            <table id="tabla" class="table table-bordered table-hover">
+            <table id="tabla2" class="table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
                         <th>Título</th>
@@ -69,11 +70,18 @@
                     </tr>
                 </thead>
                 {{-- @if(isset($pisos) && isset($inquilinos)) --}}
-                    @foreach($pisos as $piso)
+                    @for($i = 0; $i < sizeof($pisos); $i++)
                         <tr>
-                            <td>{{ $piso->titulo }}</td>
+                            <td>{{ $pisos[$i]->titulo }}</td>
                             {{-- Dirección: calle+municipio+codPostal+provincia+comunidad --}}
-                            <td>{{ $piso->calle.', '.$piso->cod_postal }}</td> 
+                            @if($direcciones[$i][0]->portal == null)
+                                <td>{{ $direcciones[$i][0]->calle.", ".$direcciones[$i][0]->numero.", ".$direcciones[$i][0]->cod_postal.", "
+                                .$direcciones[$i][0]->municipio.", ".$direcciones[$i][0]->provincia.", ".$direcciones[$i][0]->comunidad; }}</td> 
+                            @else
+                                <td>{{ $direcciones[$i][0]->calle.", ".$direcciones[$i][0]->numero.", ".$direcciones[$i][0]->cod_postal.", "
+                                .$direcciones[$i][0]->cod_postal.", ".$direcciones[$i][0]->municipio.", ".$direcciones[$i][0]->provincia.", "
+                                .$direcciones[$i][0]->comunidad; }}</td> 
+                            @endif
                             <td>INQUILINOS</td> 
                             <td>INQUILINOS</td> 
                             <td>INQUILINOS</td> 
@@ -82,7 +90,7 @@
                             <td><img src="{{ asset($inquilino->avatar) }}" alt="" width="50">{{ $inquilino->nombre.' '.$inquilino->apellidos }}</td> 
                             @endforeach --}}
                             <td>
-                                <form action="{{ route('pisos.edit', $piso) }}" method="get">
+                                <form action="{{ route('pisos.edit', $pisos[$i]) }}" method="get">
                                     @csrf
                                     <button type="submit" class="btn btn-warning btn-sm fw-bold">Editar</button>
                                 </form>
@@ -95,7 +103,7 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @endfor
                 {{-- @endif --}}
             </table>
         </div>
@@ -188,6 +196,25 @@
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
     <script>
         $('#tabla').DataTable({
+            responsive: true,
+            autoWidth: false,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No hay registros",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "search": "Buscar",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            }
+        });
+        
+    </script>
+    <script>
+        $('#tabla2').DataTable({
             responsive: true,
             autoWidth: false,
             "language": {
