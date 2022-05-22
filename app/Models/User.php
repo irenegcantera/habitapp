@@ -52,7 +52,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Mensaje');
     }
 
-    public function user_rent_pisos(){
-        return $this->hasMany('App\Models\UserRentPiso');
+    public function rentPisos()
+    {
+        return $this->belongsToMany('App\Models\Piso','user_rent_pisos','user_id','piso_id');
     }
 }

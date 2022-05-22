@@ -120,47 +120,45 @@ class PisoController extends Controller
      */
     public function edit(Piso $piso)
     {
-        return view('piso.edit',compact('piso','comunidades','provincias','municipios'));
+        $direccion = Direccion::find($piso->id);
+        return view('piso.edit',compact('piso','direccion'));
     }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $num
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request,$numero)
-    // {
-    //     $factura = Factura::find($numero);
-    //     $cliente = Cliente::find($request->id_cliente);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
 
-    //     $factura->fecha = $request->fecha;
-    //     $factura-> nombre = $cliente->nombre;
-    //     $factura-> direccion = $cliente->direccion;
-    //     $factura->cpostal = $cliente->cod_postal;
-    //     $factura->poblacion = $cliente->poblacion;
-    //     $factura->provincia = $cliente->provincia;
-    //     $factura->telefono = $cliente->telefono;
-    //     $factura->cliente_id = $request->id_cliente;
+        $piso = Piso::find($request->id);
+
+        $piso->titulo = $request->titulo;
+        $piso->descripcion = $request->descripcion;
+        $piso->num_habitaciones = $request->num_habitaciones;
+        $piso->num_aseos = $request->num_aseos;
+        $piso->m2 = $request->m2;
+        $piso->precio = $request->precio;
+        $piso->fumadores = $request->fumadores;
+        $piso->animales = $request->animales;
+        $piso->sexo = $request->sexo;
         
-    //     // var_dump($factura);
-    //     $factura->update();
+        $piso->update();
 
-    //     $productos=Producto::all();
-    //     $clientes=Cliente::all();
-    //     return redirect()->route('facturas.edit', compact('factura','productos','clientes'));
-    // }
+        return redirect()->route('perfil.index');
+    }
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  \App\Models\Factura $factura
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy(Factura $factura)
-    // {
-    //     $factura->delete();
-    //     return redirect()->back();
-    // }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Piso $piso
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Piso $piso)
+    {
+        $piso->delete();
+        return redirect()->route('perfil.index');
+    }
 }

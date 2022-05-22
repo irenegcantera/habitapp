@@ -1,111 +1,135 @@
 @extends('nav-foot')
 
-@section('title','Pisos App - Editar perfil')
+@section('title','Pisos App - Editar piso')
 
 @section('content')
-<br>
-<div class="container">
-    <div class="card">
-        <div class="card-body">
-            <div class="col-9 mt-5">
-                <form action="{{ route('pisos.update', $piso) }}" method="post">
-                    @method('put')
-                    @csrf
-                    <div class="row gx-5">
-                        <div class="col-5">
-                            <div class="mb-3">
-                                <label for="titulo" class="form-label">Título</label>
-                                <input type="text" class="form-control" name="titulo" value="{{ $piso->titulo }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="apellidos" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" name="apellidos" value="{{ $user->apellidos }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="info" class="form-label">Sobre mí</label>
-                                <textarea class="form-control" placeholder="{{ $user->info }}" name="info">{{ $user->info }}</textarea>
-                            </div>
-                        </div>
-                        <div class="col-7">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" name="username" value="{{ $user->username }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" name="password" value="{{ $user->password }}">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" value="{{ $user->email }}">
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-success" value="Modificar">Modificar</button>
-                </form>
+
+<div class="container mt-3 mb-3">
+  <form action="{{ route('pisos.update', $piso) }}" method="post">
+    @method('put')
+    @csrf
+    <input type="hidden" name="id" value="{{ $piso->id }}">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="mb-3">
+                <label class="form-label fw-bold" for="titulo">Título</label>
+                <input class="form-control" type="text" name="titulo" id="titulo" value="{{ $piso->titulo }}" required>
             </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold" for="descripcion">Descripción</label>
+                <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="3">{{ $piso->descripcion }}</textarea>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label fw-bold" for="num_habitaciones">Número de habitaciones</label>
+                    <select class="form-select" name="num_habitaciones" id="num_habitaciones" required>
+                      @for($i = 1; $i < 7; $i++)
+                        @if($piso->num_habitaciones == "$i")
+                          <option value="{{ $i }}" selected>{{ $i }}</option>
+                        @else
+                          <option value="{{ $i }}">{{ $i }}</option>
+                        @endif
+                      @endfor                      
+                    </select>
+                </div>
+                <div class="col">
+                    <label class="form-label fw-bold" for="num_aseos">Número de aseos</label>
+                    <select class="form-select" name="num_aseos" id="num_aseos" required>
+                      @for($i = 1; $i < 4; $i++)
+                        @if($piso->num_aseos == "$i")
+                          <option value="{{ $i }}" selected>{{ $i }}</option>
+                        @else
+                          <option value="{{ $i }}">{{ $i }}</option>
+                        @endif
+                      @endfor    
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label fw-bold" for="m2">Superficie m2</label>
+                    <input class="form-control" type="number" name="m2" id="m2" value="{{ $piso->m2 }}" required>
+                </div>
+                <div class="col">
+                    <label class="form-label fw-bold" for="precio">Precio €/mes</label>
+                    <input class="form-control" type="number" name="precio" id="precio" value="{{ $piso->precio }}" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label fw-bold" for="fumadores">Fumadores</label>
+                    <select class="form-select" name="fumadores" id="fumadores">
+                      @if($piso->fumadores == "0")
+                        <option value="0" selected>No</option>
+                        <option value="1">Sí</option>
+                      @endif
+                      @if($piso->fumadores == "1")
+                        <option value="0">No</option>
+                        <option value="1" selected>Sí</option>
+                      @endif
+                    </select>
+                </div>
+                <div class="col">
+                    <label class="form-label fw-bold" for="animales">Animales domésticos</label>
+                    <select class="form-select" name="animales" id="animales">
+                      @if($piso->animales == "0")
+                        <option value="0" selected>No</option>
+                        <option value="1">Sí</option>
+                      @endif
+                      @if($piso->animales == "1")
+                        <option value="0">No</option>
+                        <option value="1" selected>Sí</option>
+                      @endif
+                    </select>
+                </div>
+                <div class="col">
+                    <label class="form-label fw-bold" for="sexo">Compañeros de piso</label>
+                    <select class="form-select" name="sexo" id="sexo">
+                      @if($piso->sexo == "hombre")
+                        <option value="hombre" selected>Hombre</option>
+                        <option value="mujer">Mujer</option>
+                        <option value="mixto">Mixto</option>
+                      @endif
+                      @if($piso->sexo == "mujer")
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer" selected>Mujer</option>
+                        <option value="mixto">Mixto</option>
+                      @endif
+                      @if($piso->sexo == "mixto")
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer">Mujer</option>
+                        <option value="mixto" selected>Mixto</option>
+                      @endif
+                    </select>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-3">
+                <label class="form-label fw-bold" for="fotos">Subir fotos</label>
+                <input class="form-control" type="file" id="fotos" multiple>
+            </div>
+            {{-- @livewire('direccion-form') --}}
+            <br>
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-lg btn-outline-primary me-3" href="{{ route('perfil.index') }}">
+                    <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
+                        <use xlink:href="#bi-arrow-left"/>
+                    </svg>&nbsp;Volver atrás
+                </a>
+                <button type="submit" class="btn btn-lg btn-primary">Modificar</button>
+            </div>
+            
         </div>
     </div>
+  </form>
 </div>
+
 @endsection
 
-<select class="form-select form-select-sm mb-3" name="comunidad">
-    <option selected>Comunidad...</option>
-    <option value="1">Región de Murcia</option>
-    <option value="1">Comunidad valenciana</option>
-  </select>
-
-  <select class="form-select form-select-sm mb-3" name="provincia">
-    <option selected>Provincia...</option>
-    <option value="1">Murcia</option>
-  </select>
-
-  <select class="form-select form-select-sm mb-3" name="municipio">
-      <option selected>Municipio...</option>
-      <option value="1">Mula</option>
-  </select>
-
-  {{-- <h1>{{ $first['geometry']['lng'] . ';' . $first['geometry']['lat'] }}</h1> --}}
-  <label for="precio" class="form-label fw-bold">Precio</label>
-  <input type="text" class="form-control form-control-sm" name="place" name="precioMin" placeholder="Mín. 150 €">
-  <input type="text" class="form-control form-control-sm mt-2" name="place" name="precioMax" placeholder="Máx. 1000 €">
-
-  <label for="num_habitaciones" class="form-label fw-bold mt-2">Número de habitaciones</label>
-  <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones" value="0">
-
-  <label for="num_aseos" class="form-label fw-bold">Número de aseos</label>
-  <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos" value="0">
-
-  <label for="fumadores" class="form-label fw-bold">Fumadores</label><br>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" name="fumadoresSI" value="true">
-    <label class="form-check-label" for="fumadoresSI">Sí</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" name="fumadoresNO" value="false">
-    <label class="form-check-label" for="fumadoresNO">No</label>
-  </div>
-
-  <br><label for="animales" class="form-label fw-bold">Animales domésticos</label><br>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" name="animalesSI" value="true">
-    <label class="form-check-label" for="animalesSI">Sí</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="checkbox" name="animalesNO" value="false">
-    <label class="form-check-label" for="animalesNO">No</label>
-  </div>
-
-  <br><label for="animales" class="form-label fw-bold">Compañeros de piso</label><br>
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="sexoHombre" value="hombre">
-    <label class="form-check-label" for="sexoHombre">Hombre</label>
-  </div>
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="sexoMujer" value="mujer">
-    <label class="form-check-label" for="sexoMujer">Mujer</label>
-  </div>
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" name="sexoMixto" value="mixto">
-    <label class="form-check-label" for="sexoMixto">Mixto</label>
-  </div>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-arrow-left">
+    <symbol id="bi-arrow-left" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </symbol>
+</svg>

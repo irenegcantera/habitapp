@@ -59,7 +59,7 @@
             <form class="mb-3" action="{{ route('pisos.create') }}" method="get">
                 <button type="submit" class="btn btn-success fw-bold">Añadir piso</button>
             </form>
-            <table id="tabla2" class="table table-bordered table-hover">
+            <table id="" class="display table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
                         <th>Título</th>
@@ -91,17 +91,18 @@
                             @endforeach --}}
                             <td>
                                 <form action="{{ route('pisos.edit', $pisos[$i]) }}" method="get">
-                                    @csrf
                                     <button type="submit" class="btn btn-warning btn-sm fw-bold">Editar</button>
                                 </form>
                             </td>
-                            <td>
-                                <form action="" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger btn-sm fw-bold">Eliminar</button>
-                                </form>
-                            </td>
+                            {{-- @if(!empty($inquilinos)) --}}
+                                <td>
+                                    <form action="{{ route('pisos.destroy', $pisos[$i]) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm fw-bold">Eliminar</button>
+                                    </form>
+                                </td>
+                            {{-- @endif --}}
                         </tr>
                     @endfor
                 {{-- @endif --}}
@@ -117,11 +118,10 @@
             <h3>LISTADO DE PISOS</h3>
         </div>
         <div class="card-body">
-            <table id="tabla" class="table table-bordered table-hover">
+            <table id="" class="display table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
                         <th>Título</th>
-                        {{-- Dirección: calle+municipio+codPostal+provincia+comunidad --}}
                         <th>Dirección</th> 
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
@@ -130,7 +130,7 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                @if(isset($pisos) && isset($rents) && isset($arrendatarios))
+                @if(isset($pisos) && isset($rents) && isset($propietarios))
                     @foreach($pisos as $piso)
                         <tr>
                             <td>{{ $piso->titulo }}</td>
@@ -142,14 +142,13 @@
                                     <td>{{ $rent->fecha_fin }}</td>
                                 @endif
                             @endforeach
-                            @foreach ($arrendatarios as $arrendatario)
-                                @if($arrendatario->id == $piso->user_id)
-                                    <td>{{ $arrendatario->nombre.' '.$arrendatario->apellidos }}</td>
+                            @foreach ($propietarios as $propietario)
+                                @if($propietario->id == $piso->user_id)
+                                    <td>{{ $propietario->nombre.' '.$propietario->apellidos }}</td>
                                 @endif
                             @endforeach
                             <td>
-                                <form action="" method="get">
-                                    @csrf
+                                <form action="{{ route('pisos.show', $piso)}}" method="get">
                                     <button type="submit" class="btn btn-info btn-sm fw-bold">Ver Piso</button>
                                 </form>
                             </td>
@@ -166,36 +165,13 @@
 
 @endsection
 
-
-@section('scripts')
-    <script>
-        var exampleModal = document.getElementById('exampleModal');
-
-        exampleModal.addEventListener('show.bs.modal', function (event) {
-            // Button that triggered the modal
-            var button = event.relatedTarget;
-            // Extract info from data-bs-* attributes
-            var recipient = button.getAttribute('data-bs-whatever');
-            // If necessary, you could initiate an AJAX request here
-            // and then do the updating in a callback.
-            //
-            // Update the modal's content.
-            var modalTitle = exampleModal.querySelector('.modal-title')
-            var modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-            modalTitle.textContent = 'New message to ' + recipient
-            modalBodyInput.value = recipient
-        });
-    </script>
-@endsection
-
 @section('js')
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
     <script>
-        $('#tabla').DataTable({
+        $('table.display').DataTable({
             responsive: true,
             autoWidth: false,
             "language": {
@@ -212,23 +188,5 @@
             }
         });
         
-    </script>
-    <script>
-        $('#tabla2').DataTable({
-            responsive: true,
-            autoWidth: false,
-            "language": {
-                "lengthMenu": "Mostrar _MENU_ registros por página",
-                "zeroRecords": "No hay registros",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "No hay registros disponibles",
-                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                "search": "Buscar",
-                "paginate": {
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                }
-            }
-        });
     </script>
 @endsection

@@ -35,7 +35,24 @@
             <input class="form-control" type="text" name="cod_postal" id="cod_postal" required>
         </div>
     </div>
-    
+    <div class="row">
+        <div class="col-8">
+            <label class="form-label" for="calle">Calle</label>
+            <input class="form-control" type="text" name="calle" id="calle" required>
+        </div>
+        <div class="col-2">
+            <label class="form-label" for="numero">Número</label>
+            <input class="form-control" type="text" name="numero" id="numero" required>
+        </div>
+        <div class="col-2">
+            <label class="form-label" for="portal">Portal</label>
+            <input class="form-control" type="text" name="portal" id="portal">
+        </div>
+    </div>   
+</div>        
+
+
+
     {{-- {{ "selectedMunicipio ->".$selectedMunicipio }} --}}
     {{-- <select class="form-select mb-3" name="poblaciones" wire:model="selectedPoblacion">
         <option value="0" selected>Población...</option>
@@ -76,20 +93,3 @@
             </select>
             {{ "selectedCalle ->".$selectedCalle }}
         </div> --}}
-        <div class="row">
-            <div class="col-8">
-                <label class="form-label" for="calle">Calle</label>
-                <input class="form-control" type="text" name="calle" id="calle" required>
-            </div>
-            <div class="col-2">
-                <label class="form-label" for="numero">Número</label>
-                <input class="form-control" type="text" name="numero" id="numero" required>
-            </div>
-            <div class="col-2">
-                <label class="form-label" for="portal">Portal</label>
-                <input class="form-control" type="text" name="portal" id="portal">
-            </div>
-        </div>
-        
-    </div>        
-<div>

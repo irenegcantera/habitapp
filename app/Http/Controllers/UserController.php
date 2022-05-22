@@ -7,6 +7,7 @@ use App\Models\Piso;
 use App\Models\User;
 use App\Models\UserRentPiso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -30,13 +31,18 @@ class UserController extends Controller
 
                 foreach($rents as $rent){
                     $pisos[] = Piso::find($rent->piso_id);
+                    // $pisos[] = DB::table('pisos')->where('pisos.id', '=', $rent->piso_id)
+                    //                 ->join('direcciones', 'pisos.id', '=', 'direcciones.piso_id')
+                    //                 ->get();
                 }
-                
+                // dd($pisos);
                 foreach ($pisos as $piso){
-                    $arrendatarios[] = User::find($piso->user_id);
+                    // dd($piso);
+                    $propietarios[] = User::find($piso->user_id);
+                    // $propietarios[] = DB::table('users')->where('id', '=', $piso->user_id);
                 }
-
-                return view('usuario.perfil',compact('user','rents','pisos','arrendatarios'));
+                // dd($direcciones);
+                return view('usuario.perfil',compact('user','rents','pisos','propietarios'));
 
             }
 
@@ -46,18 +52,14 @@ class UserController extends Controller
 
             $pisos = Piso::where('user_id', '=', $user_id)->get();
             
-            foreach($pisos as $piso){
-                // $rent = UserRentPiso::where('piso_id', '=', $piso->id)->get();
-                $direcciones[] = Direccion::where('piso_id', '=', $piso->id)->get();
-                
-                // $inquilinos[] = User::find($rent->user_id);
+            if(sizeof($pisos) != 0){
+                foreach($pisos as $piso){
+                    $direcciones[] = Direccion::where('piso_id', '=', $piso->id)->get();
+                    // FALTA PASAR INQUILINOS
+                }
+                return view('usuario.perfil',compact('user','pisos','direcciones'));
             }
-            // dd($direcciones);
-            // if(!empty($inquilinos)){
-            //     return view('usuario.perfil',compact('user','pisos','inquilinos'));
-            // }
-
-            return view('usuario.perfil',compact('user','pisos','direcciones'));
+            return view('usuario.perfil',compact('user','pisos'));
             
         }
     }

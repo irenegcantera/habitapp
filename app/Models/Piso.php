@@ -45,7 +45,8 @@ class Piso extends Model
         return $this->hasMany('App\Models\Foto');
     }
 
-    public function user_rent_pisos(){
-        return $this->hasMany('App\Models\UserRentPiso');
+    public function usersRent()
+    {
+        return $this->belongsToMany('App\Models\User','user_rent_pisos','user_id','piso_id');
     }
 }
