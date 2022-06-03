@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('direcciones', function (Blueprint $table) {
             $table->id();
             $table->string('calle');
-            $table->string('numero');
+            $table->integer('numero');
             $table->string('portal')->nullable();
-            $table->string('cod_postal');
-            $table->string('municipio');
+            $table->integer('cod_postal');
+            $table->string('municipio')->nullable();
             $table->string('provincia');
             $table->string('comunidad');
             $table->timestamps();

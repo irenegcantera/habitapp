@@ -24,26 +24,19 @@ class UserController extends Controller
 
         if(auth()->user()->rol == 'inquilino'){
 
-            $user = User::find($user_id);
             $rents = UserRentPiso::where('user_id', '=', $user_id)->get();
 
             if(!$rents->isEmpty()){
-
                 foreach($rents as $rent){
-                    $pisos[] = Piso::find($rent->piso_id);
-                    // $pisos[] = DB::table('pisos')->where('pisos.id', '=', $rent->piso_id)
-                    //                 ->join('direcciones', 'pisos.id', '=', 'direcciones.piso_id')
-                    //                 ->get();
+                    $pisos[] = DB::table('pisos')
+                                    ->join('direcciones', 'direcciones.piso_id', '=', 'pisos.id')
+                                    ->join('users', 'users.id', '=', 'pisos.user_id')
+                                    ->where('pisos.id', '=', $rent->piso_id)
+                                    ->get();
+                    $pisosShow[] = Piso::find($rent->piso_id);
                 }
-                // dd($pisos);
-                foreach ($pisos as $piso){
-                    // dd($piso);
-                    $propietarios[] = User::find($piso->user_id);
-                    // $propietarios[] = DB::table('users')->where('id', '=', $piso->user_id);
-                }
-                // dd($direcciones);
-                return view('usuario.perfil',compact('user','rents','pisos','propietarios'));
-
+                
+                return view('usuario.perfil',compact('user','rents','pisos','pisosShow'));
             }
 
             return view('usuario.perfil',compact('user'));
@@ -55,9 +48,14 @@ class UserController extends Controller
             if(sizeof($pisos) != 0){
                 foreach($pisos as $piso){
                     $direcciones[] = Direccion::where('piso_id', '=', $piso->id)->get();
-                    // FALTA PASAR INQUILINOS
+                    $inquilinos[] = DB::table('users')
+                                    ->join('user_rent_pisos', 'users.id', '=', 'user_rent_pisos.user_id')
+                                    ->where('user_rent_pisos.piso_id', '=', $piso->id)
+                                    ->get();
+                    
                 }
-                return view('usuario.perfil',compact('user','pisos','direcciones'));
+                // dd($inquilinos);
+                return view('usuario.perfil',compact('user','pisos','direcciones','inquilinos'));
             }
             return view('usuario.perfil',compact('user','pisos'));
             
@@ -72,8 +70,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user=User::find($id);
-        return view('usuario.edit',compact('user'));
+        //
     }
 
     /**
@@ -84,22 +81,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $user = User::find($request->id);
-        dump($user);
-        // if (!$request->hasFile('avatar')) {
-            $user->nombre = $request->nombre;
-            $user->apellidos = $request->apellidos;
-            $user->info = $request->info;
-            $user->username = $request->username;
-            $user->password = $request->password;
-            $user->email = $request->email;
-        // }else {
-        //     $user->avatar = $request->avatar;
-        // }
-
-        $user->update();
-
-        return view('usuario.perfil',compact('user'));
+        //
     }
 
 }

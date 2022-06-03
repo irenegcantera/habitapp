@@ -57,7 +57,7 @@ class DireccionController extends Controller
      */
     public function edit(Direccion $direccion)
     {
-        //
+        return view('direccion.edit',compact('direccion'));
     }
 
     /**

@@ -9,6 +9,18 @@ class Piso extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        "id", "longitud", "latitud",
+        "titulo", "descripcion", "num_habitaciones",
+        "num_aseos", "m2", "sexo", "fumadores", 
+        "animales", "precio", "user_id"
+    ];
+
 
     public static function create($collection)
     {

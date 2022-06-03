@@ -52,7 +52,7 @@ class DireccionForm extends Component
             "key" => env('GEO_API_KEY')
             ])->json()['data'];
 
-        $this->selectedProvincia = $this->provincias[0]['CPRO'] ?? null;
+        // $this->selectedProvincia = $this->provincias[0]['CPRO'] ?? null;
     }
 
     public function updatedSelectedProvincia($CPRO)
@@ -63,7 +63,7 @@ class DireccionForm extends Component
             "key" => env('GEO_API_KEY')
             ])->json()['data'];
 
-        $this->selectedMunicipio = $this->municipios[0]['CMUM'] ?? null;
+        // $this->selectedMunicipio = $this->municipios[0]['CMUM'] ?? null;
     }
 
     public function updatedSelectedMunicipio($CMUM)
@@ -77,7 +77,7 @@ class DireccionForm extends Component
 
         // dump($this->poblaciones);
 
-        $this->selectedPoblacion = $this->poblaciones[0]['NENTSI50'] ?? null;
+        // $this->selectedPoblacion = $this->poblaciones[0]['NENTSI50'] ?? null;
     }
 
     public function updatedSelectedPoblacion($NENTSI50)
@@ -92,7 +92,7 @@ class DireccionForm extends Component
 
         // dump($this->nucleos);
 
-        $this->selectedNucleo = $this->nucleos[0]['CUN'] ?? null;
+        // $this->selectedNucleo = $this->nucleos[0]['CUN'] ?? null;
     }
 
     public function updatedSelectedNucleo($CUN)
@@ -107,7 +107,7 @@ class DireccionForm extends Component
 
         // dump($this->codPostales);
 
-        $this->selectedCodPostal = $this->codPostales[0]['CPOS'] ?? null;
+        // $this->selectedCodPostal = $this->codPostales[0]['CPOS'] ?? null;
     }
 
     public function updatedSelectedCodPostal($CPOS)
@@ -123,7 +123,7 @@ class DireccionForm extends Component
 
         // dump($this->calles);
 
-        $this->selectedCalle = $this->calles[0]['CUN'] ?? null;
+        // $this->selectedCalle = $this->calles[0]['CUN'] ?? null;
     }
 
 }

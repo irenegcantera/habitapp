@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
             'rol' => $request->rol,
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         Auth::login($user);
 

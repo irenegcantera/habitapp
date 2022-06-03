@@ -17,6 +17,21 @@ class Direccion extends Model
     protected $table = "direcciones";
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'calle',
+        'numero',
+        'portal',
+        'cod_postal',
+        'municipio',
+        'provincia',
+        'comunidad',
+    ];
+
+    /**
      * Convert the model to its string representation.
      *
      * @return string

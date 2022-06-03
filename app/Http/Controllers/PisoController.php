@@ -45,21 +45,30 @@ class PisoController extends Controller
      */
     public function store(Request $request)
     {
+        // Guardando dirección
         $direccion = new Direccion();
 
         $direccion->calle = $request->calle;
         $direccion->numero = $request->numero;
         $direccion->portal = $request->portal;
         $direccion->cod_postal = $request->cod_postal;
-
-        ($request->comunidades != "null") ? $direccion->comunidad = GeoApiController::getNombreComunidad($request->comunidades) : "";
-        ($request->provincias != "null") ? $direccion->provincia = GeoApiController::getNombreProvincia($request->comunidades, $request->provincias) : "";
-        ($request->municipios != "null") ? $direccion->municipio = GeoApiController::getNombreMunicipio($request->provincias, $request->municipios) : "";
+        
+        if($request->comunidades != 0 && $request->provincias != 0){
+            $direccion->comunidad = GeoApiController::getNombreComunidad($request->comunidades);
+            $direccion->provincia = GeoApiController::getNombreProvincia($request->comunidades, $request->provincias);
+            ($request->municipios != 0) ? $direccion->municipio = GeoApiController::getNombreMunicipio($request->provincias, $request->municipios) : null;
+        }else{
+            return redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors(['Debe seleccionar la comunidad y la provincia como mínimo.', 'error']);
+        }
 
         $direccion->save();
 
         $coordenadas = GeocoderApiController::getCoordenadas($direccion);
 
+        // Guardando piso
         $piso = new Piso();
 
         $piso->titulo = $request->titulo;
@@ -80,7 +89,24 @@ class PisoController extends Controller
         $direccion->piso_id = $piso->id;
         $direccion->update();
 
-        return redirect()->route('perfil.index');
+        // Guardando fotos multiples
+        if($request->has('fotos')){
+            $i = 0;
+            foreach($request->file('fotos') as $file)
+            {
+                $nombre = time().'_'.$i.'.'.$file->extension();
+                $file->storeAs('public/img/pisos', $nombre);
+                
+                $foto = new Foto();
+                $foto->nombre = $nombre;
+                $foto->piso_id = $piso->id;
+                $foto->save();
+
+                $i++;
+            }
+        }
+        
+        return redirect()->route('perfil.index')->with('informacion','Se ha creado correctamente.');
     }
 
     /**
@@ -147,7 +173,7 @@ class PisoController extends Controller
         
         $piso->update();
 
-        return redirect()->route('perfil.index');
+        return redirect()->route('perfil.index')->with('informacion','Se ha actualizado correctamente.');
     }
 
     /**
@@ -158,7 +184,9 @@ class PisoController extends Controller
      */
     public function destroy(Piso $piso)
     {
+        $direccion = Direccion::where('piso_id', '=', $piso->id);
         $piso->delete();
-        return redirect()->route('perfil.index');
+        $direccion->index();
+        return redirect()->route('perfil.index')->with('informacion','Se eliminado correctamente.');
     }
 }

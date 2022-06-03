@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('piso_id')->nullable();
             $table->foreign('piso_id')
                   ->references('id')
-                  ->on('direcciones')
+                  ->on('pisos')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
         });

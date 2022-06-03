@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\DireccionController;
 use App\Http\Controllers\FilterController;
-use App\Http\Controllers\GeoApiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MensajeController;
 use App\Http\Controllers\PisoController;
@@ -30,13 +29,19 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('pisos', PisoController::class);
+Route::get('direcciones/{direcciones}/edit', [DireccionController::class,'edit'])->name('direccion.edit');
 
 Route::get('filter', [FilterController::class, 'index'])->name('filter.index');
 Route::get('busqueda', [FilterController::class, 'search'])->name('filter.search');
+
 Route::get('busqueda/{ciudad}', [FilterController::class, 'searchedCities'])->name('filter.searched');
+// Route::get('busqueda/{ciudad}/filter', [FilterController::class, 'filterCity'])->name('filter.ciudad');
+
+// Route::get('madrid', [FilterController::class, 'searchMadrid'])->name('search.madrid');
+// Route::get('madrid/filter', [FilterController::class, 'filterCity'])->name('filter.ciudad');
 
 Route::resource('mensajes', MensajeController::class);
-Route::resource('perfil', UserController::class);
+Route::resource('perfil', UserController::class)->middleware('auth');
 
 // RUTAS LIVEWIRE
 Route::get('buscar', Autosearch::class);

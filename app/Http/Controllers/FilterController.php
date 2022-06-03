@@ -6,6 +6,7 @@ use App\Models\Direccion;
 use App\Models\Foto;
 use App\Models\Piso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class FilterController extends Controller
@@ -19,58 +20,71 @@ class FilterController extends Controller
     {
 
         $pisosFiltrados = DB::table('pisos');
-
+        
         if(!empty($request->precioMin))
         {
             $pisosFiltrados = $pisosFiltrados->where('precio', '>=' , $request->precioMin);
+            $filtros[] = ['Precio', '>=' , $request->precioMin];
         }
 
         if(!empty($request->precioMax))
         {
             $pisosFiltrados = $pisosFiltrados->where('precio', '<=' , $request->precioMax);
+            $filtros[] = ['Precio', '<=' , $request->precioMax];
         }
 
         if(!empty($request->num_habitaciones) || $request->num_habitaciones != 0)
         {
             $pisosFiltrados = $pisosFiltrados->where('num_habitaciones', '=' , $request->num_habitaciones);
+            $filtros[] = ['Nº habitaciones' => $request->num_habitaciones];
         }
 
         if(!empty($request->num_aseos) || $request->num_aseos != 0)
         {
             $pisosFiltrados = $pisosFiltrados->where('num_aseos', '=' , $request->num_aseos);
+            $filtros[] = ['Nº aseos' => $request->num_aseos];
         }
 
         if(isset($request->fumadores))
         {
             if($request->fumadores == 1){
                 $pisosFiltrados = $pisosFiltrados->where('fumadores', $request->fumadores);
+                $filtros[] = ['Fumadores' => 'Permitido'];
             }else{
                 $pisosFiltrados = $pisosFiltrados->where('fumadores', $request->fumadores);
+                $filtros[] = ['Fumadores' => 'No permitido'];
             }
         }
 
         if(isset($request->animales))
         {
-            if($request->fumadores == 1){
+            if($request->animales == 1){
                 $pisosFiltrados = $pisosFiltrados->where('animales', $request->animales);
+                $filtros[] = ['Animales' => 'Permitidos'];
             }else{
-                $pisosFiltrados = $pisosFiltrados->where('animales', $request->animales);
+                $pisosFiltrados = $pisosFiltrados->where('animales', $request->animales); 
+                $filtros[] = ['Animales' => 'No permitidos'];  
             }
+
+            
         }
 
         if(!empty($request->sexoHombre))
         {
             $pisosFiltrados = $pisosFiltrados->where('sexo', $request->sexoHombre);
+            $filtros[] = ['Compañeros' => 'Hombre'];
         }
 
         if(!empty($request->sexoMujer))
         {
             $pisosFiltrados = $pisosFiltrados->where('sexo', $request->sexoMujer);
+            $filtros[] = ['Compañeros' => 'Mujer'];            
         }
 
         if(!empty($request->sexoMixto))
         {
             $pisosFiltrados = $pisosFiltrados->where('sexo', $request->sexoMixto);
+            $filtros[] = ['Compañeros' => 'Mixto'];
         }
         
         $pisosFiltrados = $pisosFiltrados->orderBy('precio','asc')->get();
@@ -81,7 +95,6 @@ class FilterController extends Controller
         
         if(!empty($direcciones))
         {
-            
             $direcciones = $direcciones[sizeof($direcciones) - 1]->get();
             
             if(sizeof($pisosFiltrados) != 0){
@@ -92,9 +105,7 @@ class FilterController extends Controller
                         {
                             $pisos[] = Piso::create($pisoFiltrado);
                         }
-    
                     }        
-                    
                 }
                 // echo "direcciones y filtros";
                 return view('piso.index',compact('pisos', 'fotos'));
@@ -124,8 +135,7 @@ class FilterController extends Controller
         // echo "ni direcciones ni filtros";
         $pisos = Piso::all();
         $pisosPagina=Piso::paginate(8);
-        return view('piso.index',compact('pisos', 'pisosPagina', 'fotos'));
-        
+        return view('piso.index',compact('pisos', 'pisosPagina', 'fotos'));   
         
     }
 
@@ -137,15 +147,57 @@ class FilterController extends Controller
      */
     public function searchedCities(String $ciudad)
     {
-        $pisos_id = DB::table('direcciones')->select('piso_id')->where('municipio', $ciudad)->get(); // recoge direccion->id pisos
-        
-        foreach($pisos_id as $piso_id){
-            $pisos[] = Piso::find($piso_id);
-        }
-        
+        $data[] = DB::table('pisos')->join('direcciones','pisos.id', '=', 'direcciones.piso_id')
+                                    ->where('municipio', '=', $ciudad)->get();
+        //dd($data);
         $fotos = Foto::all();
 
-        return view('piso.index',compact('pisos', 'fotos'));
+        if(!$data){
+            dd($data);
+            foreach($data as $key => $value){
+                //dd($data);
+                foreach($value as $k => $v){
+                    
+    
+                    $atributos = [
+                        "id" => $v->id,
+                        "longitud" => $v->longitud,
+                        "latitud" => $v->latitud,
+                        "titulo" => $v->titulo,
+                        "descripcion" => $v->descripcion,
+                        "num_habitaciones" => $v->num_habitaciones,
+                        "num_aseos" => $v->num_aseos,
+                        "m2" => $v->m2,
+                        "sexo"=> $v->sexo,
+                        "fumadores" => $v->fumadores,
+                        "animales" => $v->animales,
+                        "precio"=> $v->precio,
+                        "user_id" => $v->user_id
+                    ];
+    
+                    $pisos[] = new Piso($atributos);
+    
+                    $atributos = [
+                        'calle' => $v->calle,
+                        'numero' => $v->numero,
+                        'portal' => $v->portal,
+                        'cod_postal' => $v->cod_postal,
+                        'municipio' => $v->municipio,
+                        'provincia' => $v->provincia,
+                        'comunidad' => $v->comunidad,
+                        'piso_id' => $v->piso_id,
+                    ];
+    
+                    $direcciones[] = new Direccion($atributos);
+                }
+            }
+
+            return view('ciudades.index',compact('pisos', 'direcciones', 'fotos'));
+        }
+
+        $informacion = "No se han encontrado pisos.";
+        return view('ciudades.index',compact('fotos','informacion'));  
+        
     }
 
     /**
@@ -156,23 +208,32 @@ class FilterController extends Controller
      */
     public function search(Request $request)
     {
-        $direcciones = FilterController::filterByGeography($request);
-        $direcciones = $direcciones[sizeof($direcciones) - 1]->get();
-        $fotos=Foto::all();
+        $pisosFiltrados = FilterController::filterByGeography($request);
+        if(!empty($pisosFiltrados)){
+            for($i = 0; $i < sizeof($pisosFiltrados) - 1; $i++){
+                $pisos[] = $pisosFiltrados[$i];
+            } 
 
-        if(!empty($direcciones)){
+            if(Cache::has('comunidad')){
+                Cache::pull('comunidad');
+            }
 
-            foreach ($direcciones as $direccion){
-                $pisos[] = Piso::find($direccion->piso_id);
-            }   
-            return view('piso.index',compact('pisos', 'fotos'));
+            if(Cache::has('provincia')){
+                Cache::pull('provincia');
+            }
 
+            if(Cache::has('municipio')){
+                Cache::pull('municipio');
+            }
+
+            Cache::put('comunidad',$request->comunidades);
+            Cache::put('provincia',$request->provincias);
+            Cache::put('municipio',$request->municipios);
+
+            return view('piso.index',compact('pisos'));
         }else{
-
-            $pisos = Piso::all();
-            $pisosPagina=Piso::paginate(8);
-            return view('piso.index',compact('pisos', 'pisosPagina', 'fotos'));
-
+            $informacion = "No se han encontrado pisos.";
+            return view('index',compact('informacion'));
         }
     }
 
@@ -183,6 +244,53 @@ class FilterController extends Controller
      * @return  Array $pisos -> pisos y query
      */
     public function filterByGeography(Request $request)
+    {
+        $pisosBuscados = DB::table('direcciones')->where('id', '>', 0); // recoge identificador del piso
+        
+        if($request->comunidades != 0)
+        {
+            $nombreComunidad = GeoApiController::getNombreComunidad($request->comunidades);
+            $pisosBuscados = $pisosBuscados->where('comunidad', '=' , $nombreComunidad);
+        }
+
+        if($request->provincias != 0)
+        {
+            $nombreProvincia = GeoApiController::getNombreProvincia($request->comunidades, $request->provincias);
+            $pisosBuscados = $pisosBuscados->where('provincia', '=' , $nombreProvincia);
+        }
+
+        if($request->municipios != 0)
+        {
+            $nombreMunicipio = GeoApiController::getNombreMunicipio($request->provincias, $request->municipios);
+            $pisosBuscados = $pisosBuscados->where('municipio', '=' , $nombreMunicipio);
+        }
+        
+        $query = $pisosBuscados->orderBy('piso_id','asc');
+        $pisosBuscados = $pisosBuscados->orderBy('piso_id','asc')->get();
+        
+        if(sizeof($pisosBuscados) != 0){
+            
+            foreach ($pisosBuscados as $pisoBuscado){
+                $pisos[] = Piso::find($pisoBuscado->piso_id);
+            }
+            
+            $pisos[] = $query; // añadimos la query builder para seguir filtrando
+            
+            return $pisos;
+
+        }
+
+        return null; 
+       
+    }
+
+    /**
+     * Devuelve pisos filtrados por características.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return  Array $pisos -> pisos y query
+     */
+    public function filterByFeatures(Request $request)
     {
         $pisosBuscados = DB::table('direcciones')->where('id', '>', 0); // recoge identificador del piso
         
@@ -200,7 +308,6 @@ class FilterController extends Controller
 
         if($request->municipios != "null")
         {
-            echo "ENTRANDO";
             $nombreMunicipio = GeoApiController::getNombreMunicipio($request->provincias, $request->municipios);
             $pisosBuscados = $pisosBuscados->where('municipio', '=' , $nombreMunicipio);
         }

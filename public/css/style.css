@@ -1,4 +1,4 @@
-.search {
+.img-search {
     background-image: url('../img/search.jpg');
     /* background-attachment: fixed; */
     background-position: center;
@@ -7,27 +7,128 @@
     height: 25em;           
 }
 
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    div#buscador-sm {
+        width:60%;
+    }
+}
+
+/* Medium  devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    div#buscador-md {
+        width:45%;
+    }
+}
+
+/* Large  devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    div#buscador-lg {
+        width:50%;
+    }
+}
+
+/* X-Large  devices (desktops, 992px and up) */
+@media (min-width: 1200px) {
+    div#buscador-xl {
+        width:50%;
+    }
+}
+
+/* XX-Large  devices (desktops, 992px and up) */
+@media (min-width: 1400px) {
+    div#buscador-xxl {
+        width:50%;
+    }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    div#buscador-md {
+        width:45%;
+    }
+}
+
+/* X-Small devices (landscape phones, 0px and up)*/
+div#btn-buscador-xs {
+    margin-left: 25%;
+}
+
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    div#btn-buscador-sm {
+        margin-left: 35%;
+    }
+}
+
+/* Medium  devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    div#buscador-md {
+        width:45%;
+    }
+}
+
+/* Large  devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    div#buscador-lg {
+        width:50%;
+    }
+}
+
+/* X-Large  devices (desktops, 992px and up) */
+@media (min-width: 1200px) {
+    div#buscador-xl {
+        width:50%;
+    }
+}
+
+/* XX-Large  devices (desktops, 992px and up) */
+@media (min-width: 1400px) {
+    div#buscador-xxl {
+        width:50%;
+    }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    div#buscador-md {
+        width:45%;
+    }
+}
+
 #map {
     height: 20em; 
 }
 
-a#social-media {
+a#social-media:link {
     color: black; 
-    background-color: transparent;
     text-decoration: none;
 }
 
-/* #map2 {
-    height: 45em; 
-    width: 40em;
-} */
+a#social-media:hover {
+    color: rgb(0, 76, 255);  
+    text-decoration: none;
+}
 
-body {
-    padding: 0;
-    margin: 0;
-  }
-html, body {
-    min-height: 100%;
+body{ 
+    height:auto; 
+    margin:0; 
+}
+
+header{ 
+    min-height:50px; 
+    background:lightcyan;
+}
+
+/* Trick */
+body{ 
+  display:flex; 
+  flex-direction:column; 
+}
+
+footer{
+  margin-top:auto; 
 }
 
 #map2 {
@@ -53,10 +154,6 @@ a#ciudad-link:visited {
 a#ciudad-link:hover {
     color: blue;
     text-decoration: none;
-}
-
-#card-shadow {
-    box-shadow: 10px 10px 30px grey;
 }
 
 .piso-card {
@@ -92,20 +189,20 @@ a#inicio-registro-btn:visited {
 }
 
 a#titulo-piso-link:link {
-    color: rgb(57, 57, 255);
+    color: white;
 }
 
 a#titulo-piso-link:visited {
-    color: rgb(57, 57, 255);
+    color: white;
 }
 
 a#titulo-piso-link:hover {
-    color: rgb(105, 105, 255);
+    text-decoration: underline;
 }
-
 
 .card-img-top {
     width: 100%;
     height: 15em;
-    object-fit: cover;
+    object-fit: contain;
 }
+
