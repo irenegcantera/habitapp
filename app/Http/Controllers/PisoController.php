@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserRentPiso;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PisoController extends Controller
 {
@@ -117,25 +118,22 @@ class PisoController extends Controller
      */
     public function show(Piso $piso)
     {
-        $inquilinos[] = [];
-        $usersRentPiso[] = [];
-
         // BUSCAR EL USUARIO QUE ES PROPIETARIO
         $user_id = $piso->user_id;
         $arrendatario = User::find($user_id);
         
-        // BUSCAR LOS USUARIOS INQUILINOS
-        $piso_id = $piso->id;
-        // $usersRentPiso = DB::table('user_rent_pisos')->select('user_id')->where('piso_id','=',$piso_id)->get();
-        $usersRentPiso = UserRentPiso::where('piso_id','=',$piso_id)->get();
+        // DIRECCIÓN
+        $direccion = Direccion::where('piso_id', $piso->id)->get();
         
-        foreach ($usersRentPiso as $rents){
-            $inquilino_id = $rents->user_id;
-            $inquilinos[] = User::find($inquilino_id);
-        }
+        // BUSCAR LOS USUARIOS INQUILINOS
+        $inquilinos = DB::table('users')
+                        ->join('user_rent_pisos','users.id', '=', 'user_rent_pisos.user_id')
+                        ->where('user_rent_pisos.piso_id', '=', $piso->id)
+                        ->get();
+        $habitaciones_libres = $piso->num_habitaciones - sizeof($inquilinos);
 
         // ENVIAR LA INFORMACIÓN A VIEW SHOW
-        return view('piso.show',compact('piso','arrendatario','inquilinos'));
+        return view('piso.show',compact('piso', 'direccion', 'arrendatario', 'inquilinos', 'habitaciones_libres'));
     }
 
     /**

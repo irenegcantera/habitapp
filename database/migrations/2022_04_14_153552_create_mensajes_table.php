@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('contenido');
             $table->dateTime('fecha_enviado');
-            $table->dateTime('fecha_recibido');
+            $table->dateTime('fecha_leido')->nullable();
             $table->boolean('leido')->default(false);
         });
     }
