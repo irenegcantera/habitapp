@@ -9,7 +9,7 @@
 @section('content')
 <div class="me-4 ms-4 mt-2 mb-2">
     <div class="row d-flex justify-content-around">  
-        <div class="col-8">
+        <div class="col-12 col-sm-10 col-md-10 col-lg-8">
             <div class="card white-card mb-3">
                 <div id="carouselExampleIndicators" class="carousel slide carousel-fade carousel-dark" data-bs-ride="carousel">
                     <div class="carousel-indicators">
@@ -36,57 +36,111 @@
                 <div class="card-body">
                     <div class="row mt-4">
                         <div class="col-lg-7">
-                            <h5 class="card-title fs-3">{{ $piso->titulo }}</h5>
+                            <h1 class="card-title mb-4">{{ $piso->titulo }}</h1>
+                            <p class="card-text fs-4 fw-bold">Descripción</p>
+                            <p class="card-text mb-3">{{ $piso->descripcion }}</p>
+                            <p class="card-text fs-4 fw-bold">Detalles del piso</p>
+                            <div class="row justify-content-around mb-3">
+                                <div class="col">
+                                    <img src="{{ asset('img/iconos/room.png') }}" alt="" width="40" height="40">
+                                    <p class="card-text fs-6 text-muted">
+                                    @if($piso->num_habitaciones == 1)
+                                        {{ $piso->num_habitaciones }} habitacion 
+                                    @else
+                                        {{ $piso->num_habitaciones }} habitaciones
+                                    @endif
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <img src="{{ asset('img/iconos/bath.png') }}" alt="" width="40" height="40">
+                                    <p class="card-text fs-6 text-muted">
+                                    @if($piso->num_aseos == 1)
+                                        {{ $piso->num_aseos }} aseo 
+                                    @else
+                                        {{ $piso->num_aseos }} aseos 
+                                    @endif
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    <img src="{{ asset('img/iconos/tiles.png') }}" alt="" width="40" height="40">
+                                    <p class="card-text fs-6 text-muted">
+                                        {{ $piso->m2 }} m2
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="card-text fs-4 fw-bold">Normas del piso</p>
+                            <div class="row justify-content-around mb-3">
+                                <div class="col">
+                                    @if($piso->sexo == "mujer")
+                                        <img src="{{ asset('img/iconos/woman.png') }}" alt="" width="40" height="40">
+                                        <p class="card-text fs-6 text-muted">Mujer</p>
+                                    @elseif($piso->sexo == "hombre")
+                                        <img src="{{ asset('img/iconos/man.png') }}" alt="" width="40" height="40">
+                                        <p class="card-text fs-6 text-muted">Hombre</p>
+                                    @else
+                                        <img src="{{ asset('img/iconos/user.png') }}" alt="" width="40" height="40">
+                                        <p class="card-text fs-6 text-muted">Mixto</p>
+                                    @endif
+                                </div>
+                                <div class="col">
+                                    @if($piso->fumadores == 1)
+                                        <img src="{{ asset('img/iconos/cigarrete.png') }}" alt="" width="40" height="40">
+                                        <p class="card-text fs-6 text-muted">Permitido fumar</p>
+                                    @else
+                                        <img src="{{ asset('img/iconos/no-smoking.png') }}" alt="" width="40" height="40">
+                                        <p class="card-text fs-6 text-muted">NO fumar</p>
+                                    @endif
+                                </div>
+                                <div class="col">
+                                    @if($piso->animales == 1)
+                                        <img src="{{ asset('img/iconos/paws.png') }}" alt="" width="40" height="40">
+                                        <p class="card-text fs-6 text-muted">Permitido animales</p>
+                                    @else
+                                        <img src="{{ asset('img/iconos/no-animal.png') }}" alt="" width="40" height="40">
+                                        <p class="card-text fs-6 text-muted">NO animales</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <p class="card-text fs-4 fw-bold">Alquiler mensual</p>
+                            <p class="card-text fw-bold">{{ $piso->precio }} €/mes</p>
 
-                            <p class="card-text fs-5 fw-bold">Descripción</p>
-                            <p class="card-text">{{ $piso->descripcion }}</p>
-
-                            <p class="card-text fs-5 fw-bold">Detalles del piso</p>
-                            <p class="card-text text-muted">{{ $piso->num_habitaciones }} habitaciones · {{ $piso->num_aseos }} aseos · {{ $piso->m2 }} m2</p>
-                            <p class="card-text fs-5 fw-bold">Normas del piso</p>
-                            <p class="card-text">{{ $piso->sexo }}</p>
-                            @if($piso->fumadores)
-                                <p class="card-text text-muted">Fumadores · 
-                            @else
-                                <p class="card-text text-muted">NO fumadores · 
-                            @endif
-                            @if($piso->animales)
-                                Animales domésticos</p>
-                            @else
-                                NO animales domésticos</p>
-                            @endif
-
-                            <p class="card-text fs-5 fw-bold">Precio mensual</p>
-                            <p class="card-text fs-6 fw-bold">{{ $piso->precio }} €/mes</p>
-
-                            <p class="card-text fs-5 fw-bold">Compañeros de piso</p>
-                            @if(!isset($inquilinos))
+                            <p class="card-text fs-4 fw-bold">Compañeros de piso</p>
+                            @if(isset($inquilinos))
                                 @foreach ($inquilinos as $inquilino)
-                                    <a href="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">
-                                        <img src="{{ asset('logo/perfil.png') }}" width="40">
-                                    </a>
+                                    <img src="{{ asset('logo/perfil.png') }}" width="40">
                                 @endforeach
-                            @else
-                                @for($i = 0; $i < $piso->num_habitaciones; $i++)
-                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                                        {{-- ICONO LIBRE --}}
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-plus-circle">
-                                            <symbol id="plus-circle" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                            </symbol>
-                                        </svg>
-                                        <use xlink:href="#plus-circle"/>
-                                    </svg>
-                                @endfor
                             @endif
+                            @for($i = 0; $i < $habitaciones_libres; $i++)
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+                                    {{-- ICONO LIBRE --}}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-plus-circle">
+                                        <symbol id="plus-circle" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </symbol>
+                                    </svg>
+                                    <use xlink:href="#plus-circle"/>
+                                </svg>
+                            @endfor
                             
-                            <p class="card-text fs-5 fw-bold mt-3">Ubicación</p>
-                            {{-- <p class="card-text">{{ $piso->calle }}, {{ $piso->cod_postal }}</p> --}}
+                            <p class="card-text fs-4 fw-bold mt-3">Ubicación</p>
+                            <p class="card-text fs-6 text-muted">
+                                {{ $direccion[0]->calle }},
+                                {{ $direccion[0]->numero }},
+                                @if(!empty($direccion[0]->portal))
+                                    {{ $direccion[0]->portal }},
+                                @endif
+                                {{ $direccion[0]->cod_postal }},
+                                @if(!empty($direccion[0]->municipio))
+                                    {{ $direccion[0]->municipio }},
+                                @endif
+                                {{ $direccion[0]->provincia }},
+                                {{ $direccion[0]->comunidad }},
+                            </p>
                             <div class="mt-3 mb-5" id="map"></div>
                         </div>
                         <div class="col-lg-5">
-                            <div class="card white-card border-light mb-3" id="card-shadow">
+                            <div class="card white-card border-light mb-5" id="card-shadow">
                                 <div class="card-header fs-4 fw-bold">Datos arrendatario</div>
                                 <div class="card-body">
                                     <img src="{{ asset('logo/perfil.png') }}" class="card-img-contain" alt="...">
@@ -99,13 +153,24 @@
                             <form action="{{ route('mensajes.store') }}" method="post" enctype="multipart/form-data">
                                 @if (auth()->check())
                                     @csrf
-                                    <h6 class="card-title">Enviar mensaje</h6>
+                                    <h6 class="card-title fs-5 fw-bold mb-4">Enviar mensaje</h6>
                                     <label for="from_user" class="form-label">User</label>
                                     <input type="text" class="form-control" value="{{ auth()->user()->username }}" readonly>
-                                    <label for="contenido" class="form-label">Mensaje</label>
+                                    <label for="contenido" class="form-label mt-3">Mensaje</label>
                                     <textarea name="contenido" class="form-control" rows="7"></textarea>
-                                    {{-- Div notificacion --}}
-                                    @livewire('mensaje.notificacion')
+                                    <button class="btn btn-primary mt-4" wire:click="enviarMensaje">Enviar</button>
+                                    @if(session('informacion'))
+                                        <div class="alert alert-success alert-dismissible fade show d-flex align-items-center mt-4" role="alert" id="aviso">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill me-2" viewBox="0 0 16 16">
+                                                <symbol id="check-circle-fill">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                                </symbol>
+                                                <use xlink:href="#check-circle-fill"/>
+                                            </svg>               
+                                            {{ session('informacion') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    @endif
                                 @else
                                     <div class="alert alert-warning mt-3" role="alert">
                                         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">

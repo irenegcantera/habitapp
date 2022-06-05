@@ -29,7 +29,7 @@
           </div>
           <div class="row mb-3">
               <div class="col">
-                  <label class="form-label fw-bold" for="num_habitaciones">Número de habitaciones</label>
+                  <label class="form-label fw-bold" for="num_habitaciones">Número de habitaciones <span class="text-danger fw-bold">(*)</span></label>
                   <select class="form-select" name="num_habitaciones" id="num_habitaciones">
                     @for($i = 1; $i < 7; $i++)
                       @if($piso->num_habitaciones == "$i")
@@ -41,7 +41,7 @@
                   </select>
               </div>
               <div class="col">
-                  <label class="form-label fw-bold" for="num_aseos">Número de aseos</label>
+                  <label class="form-label fw-bold" for="num_aseos">Número de aseos <span class="text-danger fw-bold">(*)</span></label>
                   <select class="form-select" name="num_aseos" id="num_aseos">
                     @for($i = 1; $i < 4; $i++)
                       @if($piso->num_aseos == "$i")
@@ -55,7 +55,7 @@
           </div>
           <div class="row mb-3">
               <div class="col">
-                  <label class="form-label fw-bold" for="m2">Superficie m2</label>
+                  <label class="form-label fw-bold" for="m2">Superficie m2 <span class="text-danger fw-bold">(*)</span></label>
                   <input class="form-control" type="number" name="m2" id="m2" value="{{ $piso->m2 }}" required>
               </div>
               <div class="col">
@@ -65,33 +65,47 @@
           </div>
           <div class="row mb-3">
               <div class="col">
-                  <label class="form-label fw-bold" for="fumadores">Fumadores</label>
+                  <label class="form-label fw-bold" for="fumadores">Fumadores <span class="text-danger fw-bold">(*)</span></label>
                   <select class="form-select" name="fumadores" id="fumadores">
                     @if($piso->fumadores == "0")
                       <option value="0" selected>No</option>
                       <option value="1">Sí</option>
+                      <option value="2">Indiferente</option>
                     @endif
                     @if($piso->fumadores == "1")
                       <option value="0">No</option>
                       <option value="1" selected>Sí</option>
+                      <option value="2">Indiferente</option>
+                    @endif
+                    @if($piso->fumadores == "2")
+                      <option value="0">No</option>
+                      <option value="1">Sí</option>
+                      <option value="2" selected>Indiferente</option>
                     @endif
                   </select>
               </div>
               <div class="col">
-                  <label class="form-label fw-bold" for="animales">Animales domésticos</label>
+                  <label class="form-label fw-bold" for="animales">Animales domésticos <span class="text-danger fw-bold">(*)</span></label>
                   <select class="form-select" name="animales" id="animales">
                     @if($piso->animales == "0")
                       <option value="0" selected>No</option>
                       <option value="1">Sí</option>
+                      <option value="2">Indiferente</option>
                     @endif
                     @if($piso->animales == "1")
                       <option value="0">No</option>
                       <option value="1" selected>Sí</option>
+                      <option value="2">Indiferente</option>
+                    @endif
+                    @if($piso->animales == "2")
+                      <option value="0">No</option>
+                      <option value="1">Sí</option>
+                      <option value="2" selected>Indiferente</option>
                     @endif
                   </select>
               </div>
               <div class="col">
-                  <label class="form-label fw-bold" for="sexo">Compañeros de piso</label>
+                  <label class="form-label fw-bold" for="sexo">Compañeros de piso <span class="text-danger fw-bold">(*)</span></label>
                   <select class="form-select" name="sexo" id="sexo">
                     @if($piso->sexo == "hombre")
                       <option value="hombre" selected>Hombre</option>

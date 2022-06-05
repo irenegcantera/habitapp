@@ -58,19 +58,24 @@
                 </li>
               @endif
               <li class="nav-item mt-2 me-3">
-                <a class="nav-link btn btn-outline-primary" id="localizar-pisos-btn" href="{{ route('pisos.index') }}">Localizar pisos</a>
+                <a class="nav-link btn btn-outline-primary p-2" id="localizar-pisos-btn" href="{{ route('pisos.index') }}">Localizar pisos</a>
               </li>
 
               @if (auth()->check())
-                <div class="row">
+                <li class="nav-item mt-2 me-3 d-md-block d-lg-none">
+                  <a class="nav-link btn" href="{{ route('perfil.index') }}">Perfil</a>
+                </li>
+                <li class="nav-item mt-2 me-3 d-md-block d-lg-none">
+                  <a class="nav-link btn" href="{{ route('logout') }}">Cerrar sesión</a>
+                </li>
+                <div class="row d-none d-lg-block">
                   <div class="col">
                     <p class="navbar-text mt-2 me-3">
                       Bienvenido/a, <span class="fw-bold">{{ auth()->user()->username }}</span>
                     </p>
                   </div>
                 </div>
-
-                <li class="nav-item dropdown me-5">
+                <li class="nav-item dropdown me-5 d-none d-lg-block">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="{{ asset('logo/perfil.png') }}" alt="" width="40">
                   </a>

@@ -15,88 +15,121 @@
           Filtrar
         </button>
       </div>
-      <div class="col-8 d-none d-xxl-block">
-        {{-- ESPACIO EN BLANCO --}}
-      </div>
-      <div class="col-2 d-flex justify-content-end">Ordenar por</div>
-      <div class="col-2">
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Relevancia</option>
-          <option value="1">Precio de menor a mayor</option>
-          <option value="2">Precio de mayor a menor</option>
-        </select>
-    {{-- @if(!empty($filtros))
-        @foreach($filtros as $filtro => $value)
-          @foreach($value as $f =>$v)
-            <div class="col-2">
-              <div class="border border-info rounded-pill p-2 text-center bg-light">{{ $f }}: {{ $v }}</div>
-            </div>
-          @endforeach
-        @endforeach
-    @endif --}}
-  </div>
+    </div>
     <br>
     <div class="row mt-3">
       <div class="col-lg-2 card white-card h-100 d-none d-xxl-block">
         <div class="card-body filter-card" >
-          <form action="{{ route('filter.index') }}" method="get">          
+          <form action="{{ route('filter.index') }}" method="post"> 
+            @csrf         
+            <div class="dropdown mb-3">
+              <button class="btn btn-primary btn-order" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill me-2" viewBox="0 0 16 16">
+                  <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"></path>
+                </svg>
+                Ordenar por...</button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li class="m-2">
+                  <input type="radio" class="btn-check" name="order" id="danger-outlined" value="0" autocomplete="off">
+                  <label class="btn btn-outline-lightblue btn-order" for="danger-outlined">Relevancia</label>
+                </li>
+                <li class="m-2">
+                  <input type="radio" class="btn-check" name="order" id="danger-outlined" value="1" autocomplete="off">
+                  <label class="btn btn-outline-lightblue btn-order" for="danger-outlined">Precio de menor a mayor</label>
+                </li>
+                <li class="m-2">
+                  <input type="radio" class="btn-check" name="order" id="danger-outlined" value="2" autocomplete="off">
+                  <label class="btn btn-outline-lightblue btn-order" for="danger-outlined">Precio de mayor a menor</label>
+                </li>
+              </ul>
+            </div>
             {{-- Livewire select dynamic zonas geográficas--}}
             @livewire('busqueda.autosearch')
 
             <label for="precio" class="form-label fw-bold">Precio</label>
-            <input type="number" class="form-control form-control-sm" name="precioMin" min="150" max="999">
-            <input type="number" class="form-control form-control-sm mt-2" name="precioMax" min="151" max="1000">
+            <p>Mín. <input type="number" class="form-control form-control-sm" name="precioMin" min="1" 
+              @if(isset($filtros['precioMin'])) value={{$filtros['precioMin'];}} @endif></p>
+            <p>Máx. <input type="number" class="form-control form-control-sm mt-1" name="precioMax" min="1"
+               @if(isset($filtros['precioMax'])) value={{$filtros['precioMax'];}} @endif></p>
 
-            <label for="num_habitaciones" class="form-label fw-bold mt-2  me-4">Nº de habitaciones</label><span class="text-primary fw-bold" id="output_habitaciones"></span>
-            <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones" id="num_habitaciones" value="0">
-            <span id="output_habitaciones"></span>
+            <label for="num_habitaciones" class="form-label fw-bold mt-2  me-4">Nº de habitaciones</label>
+            <span class="text-primary fw-bold" id="output_habitaciones"></span>
+            <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones" id="num_habitaciones" 
+            value=@if(isset($filtros['num_habitaciones'])) {{$filtros['num_habitaciones'];}} @else "0" @endif>
 
-            <label for="num_aseos" class="form-label fw-bold me-4">Nº de aseos</label><span class="text-primary fw-bold" id="output_aseos"></span>
-            <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos" id="num_aseos" value="0">
+            <label for="num_aseos" class="form-label fw-bold me-4">Nº de aseos</label>
+            <span class="text-primary fw-bold" id="output_aseos"></span>
+            <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos" id="num_aseos" 
+            value=@if(isset($filtros['num_aseos'])) {{$filtros['num_aseos'];}} @else "0" @endif>
+
+            <label for="m2" class="form-label fw-bold mt-3">Superficie m2</label>
+            <p>Mín. <input type="number" class="form-control form-control-sm" name="m2Min" min="1" 
+              @if(isset($filtros['m2Min'])) value={{$filtros['m2Min'];}} @endif></p>
+            <p>Máx. <input type="number" class="form-control form-control-sm mt-1" name="m2Max" min="1" 
+              @if(isset($filtros['m2Max'])) value={{$filtros['m2Max'];}} @endif></p>
             
-
             <label for="fumadores" class="form-label fw-bold">Fumadores</label><br>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="fumadores" value="1">
+              <input class="form-check-input" type="radio" name="fumadores" value="1" 
+              @if(isset($filtros['fumadores']) && $filtros['fumadores'] == 1) checked @endif>
               <label class="form-check-label" for="fumadores">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="fumadores" value="0">
+              <input class="form-check-input" type="radio" name="fumadores" value="0"
+              @if(isset($filtros['fumadores']) && $filtros['fumadores'] == 0) checked @endif>
               <label class="form-check-label" for="fumadores">No</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="fumadores" value="2"
+              @if(isset($filtros['fumadores']) && $filtros['fumadores'] == 2) checked @endif>
+              <label class="form-check-label" for="fumadores">Todo</label>
             </div>
 
             <br><label for="animales" class="form-label fw-bold">Animales domésticos</label><br>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="animales" value="1">
+              <input class="form-check-input" type="radio" name="animales" value="1"
+              @if(isset($filtros['animales']) && $filtros['animales'] == 1) checked @endif>
               <label class="form-check-label" for="animales">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="animales" value="0">
+              <input class="form-check-input" type="radio" name="animales" value="0"
+              @if(isset($filtros['animales']) && $filtros['animales'] == 0) checked @endif>
               <label class="form-check-label" for="animales">No</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="animales" value="2"
+              @if(isset($filtros['animales']) && $filtros['animales'] == 2) checked @endif>
+              <label class="form-check-label" for="animales">Todo</label>
             </div>
             
             <br><label for="sexo" class="form-label fw-bold">Compañeros de piso</label><br>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="sexoHombre" value="hombre">
-              <label class="form-check-label" for="sexoHombre">Hombre</label>
+              <input class="form-check-input" type="radio" name="sexo" value="hombre" 
+              @if(isset($filtros['sexo']) && $filtros['sexo'] == "hombre") checked @endif>
+              <label class="form-check-label" for="sexo">Hombre</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="sexoMujer" value="mujer">
-              <label class="form-check-label" for="sexoMujer">Mujer</label>
+              <input class="form-check-input" type="radio" name="sexo" value="mujer" 
+              @if(isset($filtros['sexo']) && $filtros['sexo'] == "mujer") checked @endif>
+              <label class="form-check-label" for="sexo">Mujer</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="sexoMixto" value="mixto">
-              <label class="form-check-label" for="sexoMixto">Mixto</label>
+              <input class="form-check-input" type="radio" name="sexo" value="mixto" 
+              @if(isset($filtros['sexo']) && $filtros['sexo'] == "mixto") checked @endif>
+              <label class="form-check-label" for="sexo">Mixto</label>
             </div>
-            <br><button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary mt-3">
               <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
                 <use xlink:href="#bi-search"/>
-              </svg>Ver resultados</button>
-            <br><a href="{{ route('pisos.index') }}" class="btn btn-primary mt-3">
+              </svg>Ver resultados
+            </button>
+            @if(isset($filtros))
+            <a href="{{ route('pisos.index') }}" class="btn btn-primary mt-3">
               <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img">
                 <use xlink:href="#bi-x"/>
               </svg>Quitar filtros
             </a>
+            @endif
           </form>
         </div>
       </div>
@@ -112,7 +145,7 @@
             {{-- @foreach($pisosPagina as $piso) --}}
               <div class="col-md-12 col-lg-12">
                 <div class="card h-100">
-                  <div id="{{ '#carousel'.$i }}" class="carousel carousel-dark slide">
+                  <div id="{{ 'carousel'.$i }}" class="carousel carousel-dark slide">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="{{ '#carouselIndicators'.$i }}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="{{ '#carouselIndicators'.$i }}" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -214,12 +247,19 @@
             
             </div>
           @else 
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+            <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+              <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img" aria-label="Danger:">
+                {{-- ICONO EXCLAMACIÓN --}}
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                  </symbol>
+                </svg>
                 <use xlink:href="#exclamation-triangle-fill"/>
               </svg>
               <div>
                 No se han encontrado pisos.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             </div>
           @endif
@@ -358,6 +398,9 @@
         });
       @endfor
     @endif
+  </script>
+  <script>
+
   </script>
 @endsection
 
