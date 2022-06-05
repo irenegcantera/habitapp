@@ -48,11 +48,11 @@
             <input type="number" class="form-control form-control-sm mt-2" name="precioMax" min="151" max="1000">
 
             <label for="num_habitaciones" class="form-label fw-bold mt-2">Nº de habitaciones</label>
-            <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones" id="num_habitaciones" value="0">
+            <input type="range" class="form-range" data-popup-enabled="true" data-show-value="true" min="0" max="6" step="1" name="num_habitaciones" id="num_habitaciones" value="0">
             <span id="output"></span>
   
             <label for="num_aseos" class="form-label fw-bold">Nº de aseos</label>
-            <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos" id="num_aseos" value="0">
+            <input type="range" class="form-range" data-popup-enabled="true" data-show-value="true" min="0" max="3" step="1" name="num_aseos" id="num_aseos" value="0">
             <span id="output"></span>
 
             <label for="fumadores" class="form-label fw-bold">Fumadores</label><br>

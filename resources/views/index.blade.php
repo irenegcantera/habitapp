@@ -83,7 +83,7 @@
             <div class="col">
               <a id="link-style" href="{{ route('filter.searched','barcelona') }}">
                 <div class="cards" id="card-shadow">
-                  <img src="{{ asset('img/barcelona.jpg') }}" class="card-img-top" alt="...">
+                  <img src="{{ asset('img/barcelona.jpg') }}" class="card-img-cover" alt="...">
                   <div class="card-body">
                     <p class="text-center fw-light fs-4">Barcelona</p>
                   </div>
@@ -93,7 +93,7 @@
             <div class="col">
               <a id="link-style" href="{{ route('filter.searched','madrid') }}">
                 <div class="cards" id="card-shadow">
-                  <img src="{{ asset('img/madrid.jpg') }}" class="card-img-top" alt="...">
+                  <img src="{{ asset('img/madrid.jpg') }}" class="card-img-cover" alt="...">
                   <div class="card-body">
                     <p class="text-center fw-light fs-4">Madrid</p>
                   </div>
@@ -103,7 +103,7 @@
             <div class="col">
               <a id="link-style" href="{{ route('filter.searched','Valencia') }}">
                 <div class="cards" id="card-shadow">
-                  <img src="{{ asset('img/valencia.jpg') }}" class="card-img-top" alt="...">
+                  <img src="{{ asset('img/valencia.jpg') }}" class="card-img-cover" alt="...">
                   <div class="card-body">
                     <p class="text-center fw-light fs-4">Valencia</p>
                   </div>
@@ -113,7 +113,7 @@
             <div class="col">
               <a id="link-style" href="{{ route('filter.searched','Bilbao') }}">
                 <div class="cards" id="card-shadow">
-                  <img src="{{ asset('img/bilbao.jpg') }}" class="card-img-top" alt="...">
+                  <img src="{{ asset('img/bilbao.jpg') }}" class="card-img-cover" alt="...">
                   <div class="card-body">
                     <p class="text-center fw-light fs-4">Bilbao</p>
                   </div>
@@ -123,7 +123,7 @@
             <div class="col">
               <a id="link-style" href="{{ route('filter.searched','Sevilla') }}">
                 <div class="cards" id="card-shadow">
-                  <img src="{{ asset('img/sevilla.jpg') }}" class="card-img-top" alt="...">
+                  <img src="{{ asset('img/sevilla.jpg') }}" class="card-img-cover" alt="...">
                   <div class="card-body">
                     <p class="text-center fw-light fs-4">Sevilla</p>
                   </div>
@@ -134,14 +134,4 @@
     </div>
 </section>
 
-@endsection
-
-@section('scripts')
-    <script>
-      $( "#buscar" ).click(function() {
-        localStorage.setItem('comunidad', $( "#comunidad" ));
-        localStorage.setItem('provincia', $( "#provincia" ));
-        localStorage.setItem('municipio', $( "#municipio" ));
-      });
-    </script>
 @endsection

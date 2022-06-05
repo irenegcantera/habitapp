@@ -2,11 +2,15 @@
 
 @section('title','Piso')
 
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cards.css') }}"/>
+@endsection
+
 @section('content')
 <div class="me-4 ms-4 mt-2 mb-2">
     <div class="row d-flex justify-content-around">  
         <div class="col-8">
-            <div class="card mb-3">
+            <div class="card white-card mb-3">
                 <div id="carouselExampleIndicators" class="carousel slide carousel-fade carousel-dark" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -58,7 +62,9 @@
                             <p class="card-text fs-5 fw-bold">Compañeros de piso</p>
                             @if(!isset($inquilinos))
                                 @foreach ($inquilinos as $inquilino)
-                                    <a href="" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""><img src="{{ asset('logo/perfil.png') }}" width="40"></a>
+                                    <a href="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">
+                                        <img src="{{ asset('logo/perfil.png') }}" width="40">
+                                    </a>
                                 @endforeach
                             @else
                                 @for($i = 0; $i < $piso->num_habitaciones; $i++)
@@ -80,10 +86,10 @@
                             <div class="mt-3 mb-5" id="map"></div>
                         </div>
                         <div class="col-lg-5">
-                            <div class="card border-light mb-3" id="card-shadow">
+                            <div class="card white-card border-light mb-3" id="card-shadow">
                                 <div class="card-header fs-4 fw-bold">Datos arrendatario</div>
                                 <div class="card-body">
-                                    <img src="{{ asset('logo/perfil.png') }}" class="card-img-top" alt="...">
+                                    <img src="{{ asset('logo/perfil.png') }}" class="card-img-contain" alt="...">
                                     <p class="card-text">{{ $arrendatario->nombre." ".$arrendatario->apellidos }}</p>
                                     <p class="card-text fs-5 fw-bold">Sobre mí</p>
                                     <p class="card-text">{{ $arrendatario->info }}</p>

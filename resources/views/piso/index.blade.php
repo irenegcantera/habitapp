@@ -47,13 +47,13 @@
             <input type="number" class="form-control form-control-sm" name="precioMin" min="150" max="999">
             <input type="number" class="form-control form-control-sm mt-2" name="precioMax" min="151" max="1000">
 
-            <label for="num_habitaciones" class="form-label fw-bold mt-2">Nº de habitaciones</label>
+            <label for="num_habitaciones" class="form-label fw-bold mt-2  me-4">Nº de habitaciones</label><span class="text-primary fw-bold" id="output_habitaciones"></span>
             <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones" id="num_habitaciones" value="0">
-            <span id="output"></span>
+            <span id="output_habitaciones"></span>
 
-            <label for="num_aseos" class="form-label fw-bold">Nº de aseos</label>
+            <label for="num_aseos" class="form-label fw-bold me-4">Nº de aseos</label><span class="text-primary fw-bold" id="output_aseos"></span>
             <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos" id="num_aseos" value="0">
-            <span id="output"></span>
+            
 
             <label for="fumadores" class="form-label fw-bold">Fumadores</label><br>
             <div class="form-check form-check-inline">
@@ -328,16 +328,19 @@
   <script>
     var aseos = document.getElementById("num_aseos");
     var habitaciones = document.getElementById("num_habitaciones");
-    var output = document.getElementById("output");
-    output.innerHTML = slider.value; // Display the default slider value
+    var output_aseos = document.getElementById("output_aseos");
+    var output_habitaciones = document.getElementById("output_habitaciones");
+
+    output_aseos.innerHTML = aseos.value; // Display the default slider value
+    output_habitaciones.innerHTML = habitaciones.value; // Display the default slider value
 
     // Update the current slider value (each time you drag the slider handle)
     aseos.oninput = function() {
-      output.innerHTML = this.value;
+      output_aseos.innerHTML = this.value;
     }
 
     habitaciones.oninput = function() {
-      output.innerHTML = this.value;
+      output_habitaciones.innerHTML = this.value;
     }
   </script>
   <script>
@@ -355,11 +358,6 @@
         });
       @endfor
     @endif
-  </script>
-  <script>
-      $("#comunidad").val(localStorage.getItem('comunidad'));
-      $("#provincia").val(localStorage.getItem('provincia'));
-      $("#municipio").val(localStorage.getItem('municipio'));
   </script>
 @endsection
 

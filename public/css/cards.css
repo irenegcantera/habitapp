@@ -32,3 +32,15 @@ a#link-style:link {
 a#link-style:visited {
     color: black;
 }
+
+.card-img-contain {
+    width: 100%;
+    height: 15em;
+    object-fit: contain;
+}
+
+.card-img-cover {
+    width: 100%;
+    height: 15em;
+    object-fit: cover;
+}

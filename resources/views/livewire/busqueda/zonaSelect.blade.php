@@ -1,8 +1,13 @@
 <div>
     <select class="form-select form-select-sm mb-3" name="comunidades" id="comunidad" wire:model="selectedComunidad">
         <option value="0">Comunidad...</option>
+        
         @foreach($comunidades as $comunidad)
-            <option value="{{ $comunidad['CCOM'] }}">{{ $comunidad['COM'] }}</option>
+            @if($comunidad['COM'] == Cache::get('comunidad'))
+                <option value="{{ $comunidad['CCOM'] }}" selected>{{ $comunidad['COM'] }}</option>
+            @else
+                <option value="{{ $comunidad['CCOM'] }}">{{ $comunidad['COM'] }}</option>
+            @endif
         @endforeach
     </select>
 

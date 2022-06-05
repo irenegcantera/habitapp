@@ -65,8 +65,6 @@ class FilterController extends Controller
                 $pisosFiltrados = $pisosFiltrados->where('animales', $request->animales); 
                 $filtros[] = ['Animales' => 'No permitidos'];  
             }
-
-            
         }
 
         if(!empty($request->sexoHombre))
@@ -149,16 +147,11 @@ class FilterController extends Controller
     {
         $data[] = DB::table('pisos')->join('direcciones','pisos.id', '=', 'direcciones.piso_id')
                                     ->where('municipio', '=', $ciudad)->get();
-        //dd($data);
         $fotos = Foto::all();
 
-        if(!$data){
-            dd($data);
+        if($data){
             foreach($data as $key => $value){
-                //dd($data);
                 foreach($value as $k => $v){
-                    
-    
                     $atributos = [
                         "id" => $v->id,
                         "longitud" => $v->longitud,
@@ -189,6 +182,27 @@ class FilterController extends Controller
                     ];
     
                     $direcciones[] = new Direccion($atributos);
+
+                    if(Cache::has('comunidad')){
+                        Cache::pull('comunidad');
+                        Cache::put('comunidad',$v->comunidad, now()->addMinutes(10));
+                    }else{
+                        Cache::put('comunidad',$v->comunidad, now()->addMinutes(10));
+                    }
+        
+                    if(Cache::has('provincia')){
+                        Cache::pull('provincia');
+                        Cache::put('provincia',$v->provincia, now()->addMinutes(10));
+                    }else{
+                        Cache::put('provincia',$v->provincia, now()->addMinutes(10));
+                    }
+        
+                    if(Cache::has('municipio')){
+                        Cache::pull('municipio');
+                        Cache::put('municipio',$v->municipio, now()->addMinutes(10));
+                    }else{
+                        Cache::put('municipio',$v->municipio, now()->addMinutes(10));
+                    }
                 }
             }
 
@@ -226,9 +240,9 @@ class FilterController extends Controller
                 Cache::pull('municipio');
             }
 
-            Cache::put('comunidad',$request->comunidades);
-            Cache::put('provincia',$request->provincias);
-            Cache::put('municipio',$request->municipios);
+            Cache::put('comunidad',$request->comunidades, now()->addMinutes(10));
+            Cache::put('provincia',$request->provincias, now()->addMinutes(10));
+            Cache::put('municipio',$request->municipios, now()->addMinutes(10));
 
             return view('piso.index',compact('pisos'));
         }else{

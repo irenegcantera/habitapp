@@ -22,9 +22,9 @@ class Autosearch extends Component
 
     public function mount()
     { 
-        // if(Cache::has('comunidad')){
-        //     $this->selectedComunidad = Cache::get('comunidad');
-        // }
+        if(Cache::has('comunidad')){
+            $this->selectedComunidad = Cache::get('comunidad');
+        }
 
         $this->comunidades = Http::get(env('GEO_API_URL')."comunidades?",[
             "type" => env('GEO_API_TYPE'),
