@@ -11,7 +11,8 @@
   <div id="buscador-sm">
       <div class="white-card" id="card-shadow">
           <div class="card-body m-4">
-            <form action="{{ route('filter.search') }}" method="get">
+            <form action="{{ route('filter.index') }}" method="post">
+              @csrf
               @if(isset($informacion))
                 <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert" id="aviso">
                   <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img" aria-label="Danger:">

@@ -186,7 +186,7 @@ class PisoController extends Controller
     {
         $direccion = Direccion::where('piso_id', '=', $piso->id);
         $piso->delete();
-        $direccion->index();
-        return redirect()->route('perfil.index')->with('informacion','Se eliminado correctamente.');
+        $direccion->delete();
+        return redirect()->route('perfil.index')->with('informacion','Se ha eliminado correctamente.');
     }
 }

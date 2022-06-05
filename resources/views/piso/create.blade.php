@@ -32,7 +32,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <label class="form-label fw-bold" for="num_habitaciones">Número de habitaciones</label>
+                        <label class="form-label fw-bold" for="num_habitaciones">Número de habitaciones <span class="text-danger fw-bold">(*)</span></label>
                         <select class="form-select" name="num_habitaciones" id="num_habitaciones">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -43,7 +43,7 @@
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label fw-bold" for="num_aseos">Número de aseos</label>
+                        <label class="form-label fw-bold" for="num_aseos">Número de aseos <span class="text-danger fw-bold">(*)</span></label>
                         <select class="form-select" name="num_aseos" id="num_aseos">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <label class="form-label fw-bold" for="m2">Superficie m2</label>
+                        <label class="form-label fw-bold" for="m2">Superficie m2 <span class="text-danger fw-bold">(*)</span></label>
                         <input class="form-control" type="number" name="m2" id="m2"  value="{{ old('m2') }}">
                     </div>
                     <div class="col">
@@ -63,25 +63,27 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col">
-                        <label class="form-label fw-bold" for="fumadores">Fumadores</label>
+                        <label class="form-label fw-bold" for="fumadores">Fumadores <span class="text-danger fw-bold">(*)</span></label>
                         <select class="form-select" name="fumadores" id="fumadores">
                             <option value="0">No</option>
                             <option value="1">Sí</option>
+                            <option value="2">Indiferente</option>
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label fw-bold" for="animales">Animales domésticos</label>
+                        <label class="form-label fw-bold" for="animales">Animales domésticos <span class="text-danger fw-bold">(*)</span></label>
                         <select class="form-select" name="animales" id="animales">
                             <option value="0">No</option>
                             <option value="1">Sí</option>
+                            <option value="2">Indiferente</option>
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label fw-bold" for="sexo">Compañeros de piso</label>
+                        <label class="form-label fw-bold" for="sexo">Compañeros de piso <span class="text-danger fw-bold">(*)</span></label>
                         <select class="form-select" name="sexo" id="sexo">
                             <option value="hombre">Hombre</option>
                             <option value="mujer">Mujer</option>
-                            <option value="mixto">Mixto</option>
+                            <option value="mixto">Indiferente</option>
                         </select>
                     </div>
                 </div>
