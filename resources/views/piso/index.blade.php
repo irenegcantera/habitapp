@@ -22,28 +22,21 @@
         <div class="card-body filter-card" >
           <form action="{{ route('filter.index') }}" method="post"> 
             @csrf         
-            <div class="dropdown mb-3">
-              <button class="btn btn-primary btn-order" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill me-2" viewBox="0 0 16 16">
-                  <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"></path>
-                </svg>
-                Ordenar por...</button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li class="m-2">
-                  <input type="radio" class="btn-check" name="order" id="danger-outlined" value="0" autocomplete="off">
-                  <label class="btn btn-outline-lightblue btn-order" for="danger-outlined">Relevancia</label>
-                </li>
-                <li class="m-2">
-                  <input type="radio" class="btn-check" name="order" id="danger-outlined" value="1" autocomplete="off">
-                  <label class="btn btn-outline-lightblue btn-order" for="danger-outlined">Precio de menor a mayor</label>
-                </li>
-                <li class="m-2">
-                  <input type="radio" class="btn-check" name="order" id="danger-outlined" value="2" autocomplete="off">
-                  <label class="btn btn-outline-lightblue btn-order" for="danger-outlined">Precio de mayor a menor</label>
-                </li>
-              </ul>
-            </div>
+            
+            <label class="form-label fw-bold" for="order">Ordenar por...</label>
+            <select class="form-select mb-3" name="order">
+                <option value="0" selected>
+                  {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill me-2" viewBox="0 0 16 16">
+                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"></path>
+                  </svg> --}}
+                  Seleccione...</option>
+                <option value="1">Relevancia</option>
+                <option value="2">Precio de menor a mayor</option>
+                <option value="3">Precio de mayor a menor</option>
+            </select>
+
             {{-- Livewire select dynamic zonas geográficas--}}
+            <label class="form-label fw-bold" for="zona">Zona geográfica</label>
             @livewire('busqueda.autosearch')
 
             <label for="precio" class="form-label fw-bold">Precio</label>

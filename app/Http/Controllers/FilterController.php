@@ -23,6 +23,7 @@ class FilterController extends Controller
         $direcciones = FilterController::filterByGeography($request); // query con las direcciones
         
         $filtros = [
+            
             'precioMin' => $request->precioMin,
             'precioMax' => $request->precioMax,
             'num_habitaciones' => $request->num_habitaciones,
