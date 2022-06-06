@@ -22,7 +22,7 @@
         <div class="card-body filter-card" >
           <form action="{{ route('filter.index') }}" method="get">
             <label class="form-label fw-bold" for="order">Ordenar por...</label>
-            <select class="form-select mb-3" name="order">
+            <select class="form-select form-select-sm mb-3" name="order">
                 <option value=null @if(empty($order)) selected @endif> Seleccione...</option>
                 <option value="1" @if(isset($filtros['order']) && $filtros['order'] == 1) selected @endif>Relevancia</option>
                 <option value="2" @if(isset($filtros['order']) && $filtros['order'] == 2) selected @endif>Precio de menor a mayor</option>
