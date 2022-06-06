@@ -36,6 +36,7 @@
                 <div class="card-body">
                     <div class="row mt-4">
                         <div class="col-lg-7">
+                            
                             <h1 class="card-title mb-4">{{ $piso->titulo }}</h1>
                             <p class="card-text fs-4 fw-bold">Descripción</p>
                             <p class="card-text mb-3">{{ $piso->descripcion }}</p>
@@ -135,7 +136,7 @@
                                     {{ $direccion[0]->municipio }},
                                 @endif
                                 {{ $direccion[0]->provincia }},
-                                {{ $direccion[0]->comunidad }},
+                                {{ $direccion[0]->comunidad }}
                             </p>
                             <div class="mt-3 mb-5" id="map"></div>
                         </div>

@@ -23,7 +23,7 @@ class FilterController extends Controller
         $direcciones = FilterController::filterByGeography($request); // query con las direcciones
         
         $filtros = [
-            
+            'order' => $request->order,
             'precioMin' => $request->precioMin,
             'precioMax' => $request->precioMax,
             'num_habitaciones' => $request->num_habitaciones,
@@ -261,9 +261,9 @@ class FilterController extends Controller
         }
         
         if(!empty($request->order)){
-            if($request->order == 0){
+            if($request->order == 1){
                 $pisosFiltrados = $pisosFiltrados->orderBy('user_id','asc')->get();
-            }elseif($request->order == 1){
+            }elseif($request->order == 2){
                 $pisosFiltrados = $pisosFiltrados->orderBy('precio','asc')->get();
             }else{
                 $pisosFiltrados = $pisosFiltrados->orderBy('precio','desc')->get();

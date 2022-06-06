@@ -25,14 +25,10 @@
             
             <label class="form-label fw-bold" for="order">Ordenar por...</label>
             <select class="form-select mb-3" name="order">
-                <option value="0" selected>
-                  {{-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill me-2" viewBox="0 0 16 16">
-                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"></path>
-                  </svg> --}}
-                  Seleccione...</option>
-                <option value="1">Relevancia</option>
-                <option value="2">Precio de menor a mayor</option>
-                <option value="3">Precio de mayor a menor</option>
+                <option value=null @if(empty($order)) selected @endif> Seleccione...</option>
+                <option value="1" @if(isset($filtros['order']) && $filtros['order'] == 1) selected @endif>Relevancia</option>
+                <option value="2" @if(isset($filtros['order']) && $filtros['order'] == 2) selected @endif>Precio de menor a mayor</option>
+                <option value="3" @if(isset($filtros['order']) && $filtros['order'] == 3) selected @endif>Precio de mayor a menor</option>
             </select>
 
             {{-- Livewire select dynamic zonas geográficas--}}
