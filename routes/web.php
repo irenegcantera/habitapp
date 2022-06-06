@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
 Route::resource('pisos', PisoController::class);
 Route::get('direcciones/{direcciones}/edit', [DireccionController::class,'edit'])->name('direccion.edit');
 
-Route::post('filter', [FilterController::class, 'index'])->name('filter.index');
+Route::get('filter', [FilterController::class, 'index'])->name('filter.index');
 // Route::get('busqueda', [FilterController::class, 'search'])->name('filter.search');
 
 Route::get('busqueda/{ciudad}', [FilterController::class, 'searchedCities'])->name('filter.searched');

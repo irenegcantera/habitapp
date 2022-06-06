@@ -20,9 +20,7 @@
     <div class="row mt-3">
       <div class="col-lg-2 card white-card h-100 d-none d-xxl-block">
         <div class="card-body filter-card" >
-          <form action="{{ route('filter.index') }}" method="post"> 
-            @csrf         
-            
+          <form action="{{ route('filter.index') }}" method="get">
             <label class="form-label fw-bold" for="order">Ordenar por...</label>
             <select class="form-select mb-3" name="order">
                 <option value=null @if(empty($order)) selected @endif> Seleccione...</option>

@@ -34,9 +34,16 @@
                     </button>
                 </div>
                 <div class="card-body">
-                    <div class="row mt-4">
+                    <div class="row mt-2">
                         <div class="col-lg-7">
-                            
+                            <a class="btn btn-outline-primary me-3 mb-3" href="{{ url()->previous() }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-arrow-left">
+                                    <symbol id="bi-arrow-left" fill="currentColor" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                    </symbol>
+                                    <use xlink:href="#bi-arrow-left"/>
+                                </svg>&nbsp;Volver atrás
+                            </a>
                             <h1 class="card-title mb-4">{{ $piso->titulo }}</h1>
                             <p class="card-text fs-4 fw-bold">Descripción</p>
                             <p class="card-text mb-3">{{ $piso->descripcion }}</p>
@@ -140,7 +147,7 @@
                             </p>
                             <div class="mt-3 mb-5" id="map"></div>
                         </div>
-                        <div class="col-lg-5">
+                        <div class="col-lg-5 mt-5">
                             <div class="card white-card border-light mb-5" id="card-shadow">
                                 <div class="card-header fs-4 fw-bold">Datos arrendatario</div>
                                 <div class="card-body">
