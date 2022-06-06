@@ -19,7 +19,7 @@ class PisoController extends Controller
      */
     public function index()
     {
-        $pisosPagina=Piso::paginate(8);
+        $pisosPagina=Piso::paginate(6);
         $pisos=Piso::all();
         $fotos=Foto::all();
 

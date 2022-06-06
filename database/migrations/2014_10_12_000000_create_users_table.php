@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('rol', ['admin', 'arrendatario', 'inquilino'])->default('inquilino');
             $table->string('nombre');
             $table->string('apellidos')->nullable();
+            $table->string('telefono');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('info')->nullable();

@@ -24,6 +24,7 @@ class UserFactory extends Factory
             'rol' => $this->faker->randomElement(['admin','arrendatario','inquilino']),
             'nombre' => $this->faker->name(),
             'apellidos' => $this->faker->name(),
+            'telefono' => $this->faker->unique()->numerify('#########'),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'info' => $this->faker-> paragraph(true),

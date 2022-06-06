@@ -155,8 +155,14 @@
                                     <p class="card-text">{{ $arrendatario->nombre." ".$arrendatario->apellidos }}</p>
                                     <p class="card-text fs-5 fw-bold">Sobre mí</p>
                                     <p class="card-text">{{ $arrendatario->info }}</p>
+                                    @if (auth()->check())
+                                        <a href="https://api.whatsapp.com/send?phone=34{{ $arrendatario->telefono }}&text=Piso%20{{ $piso->id }}%20'{{ $piso->titulo }}':%20">
+                                            <img class="me-3" src="{{ asset('img/iconos/whatsapp.png') }}"  width="35" height="35" alt="">Contactar vía WhatsApp
+                                        </a>
+
+                                    @endif
                                 </div>
-                                {{-- <p class="card-text"><a href="{{ route('pisos.index') }}">Ver más pisos</a></p> --}}
+                                
                             </div>
                             <form action="{{ route('mensajes.store') }}" method="post" enctype="multipart/form-data">
                                 @if (auth()->check())

@@ -31,6 +31,7 @@
 
             {{-- Livewire select dynamic zonas geográficas--}}
             <label class="form-label fw-bold" for="zona">Zona geográfica</label>
+            
             @livewire('busqueda.autosearch')
 
             <label for="precio" class="form-label fw-bold">Precio</label>

@@ -38,7 +38,7 @@ class FilterController extends Controller
             'municipio' => $request->municipio,
         ];
 
-        // dd($filtros);
+        dd($filtros);
 
         if(!empty($direcciones))
         {
