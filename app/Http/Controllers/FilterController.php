@@ -38,11 +38,6 @@ class FilterController extends Controller
             'municipio' => $request->municipio,
         ];
 
-<<<<<<< HEAD
-=======
-        // dd($filtros);
-
->>>>>>> feature/notificacion_email
         if(!empty($direcciones))
         {
             $direcciones = $direcciones[sizeof($direcciones) - 1]->get();
