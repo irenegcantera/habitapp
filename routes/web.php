@@ -29,7 +29,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('pisos', PisoController::class);
-Route::get('direcciones/{direcciones}/edit', [DireccionController::class,'edit'])->name('direccion.edit');
+
+Route::put('direcciones/{direccion}', [DireccionController::class,'update'])->name('direcciones.update');
+Route::get('direcciones/{direccion}/edit', [DireccionController::class,'edit'])->name('direcciones.edit');
 
 Route::get('filter', [FilterController::class, 'index'])->name('filter.index');
 // Route::get('busqueda', [FilterController::class, 'search'])->name('filter.search');

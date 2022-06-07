@@ -15,15 +15,6 @@
 <div class="container">
     <div class="card white-card rounded-3 border border-2 ">
         <div class="card-body">
-            {{-- <div class="row d-flex align-items-center justify-content-evenly">
-                <div class="col">
-                    <a class="btn btn-outline-primary" href="{{ route('logout') }}">
-                        <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
-                            <use xlink:href="#bi-arrow-left"/>
-                        </svg>&nbsp;Volver al inicio</a>
-                    <a class="btn btn-primary" href="{{ route('logout') }}">Cerra sesión</a>
-                </div>
-            </div> --}}
             <div class="row d-flex align-items-center justify-content-evenly">
                 <div class="col-md-3">
                     <img src="{{ asset('logo/perfil.png') }}" alt="" width="200">
@@ -79,7 +70,7 @@
                                         <td>{{ $direcciones[$i][0]->calle.", ".$direcciones[$i][0]->numero.", ".$direcciones[$i][0]->cod_postal.", "
                                         .$direcciones[$i][0]->municipio.", ".$direcciones[$i][0]->provincia.", ".$direcciones[$i][0]->comunidad; }}</td> 
                                     @else
-                                        <td>{{ $direcciones[$i][0]->calle.", ".$direcciones[$i][0]->numero.", ".$direcciones[$i][0]->cod_postal.", "
+                                        <td>{{ $direcciones[$i][0]->calle.", ".$direcciones[$i][0]->numero.", ".$direcciones[$i][0]->portal.", "
                                         .$direcciones[$i][0]->cod_postal.", ".$direcciones[$i][0]->municipio.", ".$direcciones[$i][0]->provincia.", "
                                         .$direcciones[$i][0]->comunidad; }}</td> 
                                     @endif
@@ -95,8 +86,9 @@
                                         </div>
                                         <div class="row mt-1">
                                             <div class="col">
-                                                <form action="{{ route('direccion.edit', $direcciones[$i][0]) }}" method="get">
-                                                    <button type="submit" class="btn btn-warning btn-sm fw-bold" disabled>Dirección</button>
+                                      
+                                                <form action="{{ route('direcciones.edit', $direcciones[$i][0]->id) }}" method="get">
+                                                    <button type="submit" class="btn btn-warning btn-sm fw-bold">Dirección</button>
                                                 </form>
                                             </div>
                                         </div>

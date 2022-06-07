@@ -55,8 +55,9 @@ class DireccionController extends Controller
      * @param  \App\Models\Direccion  $direccion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Direccion $direccion)
+    public function edit($id)
     {
+        $direccion = Direccion::find($id);
         return view('direccion.edit',compact('direccion'));
     }
 
@@ -64,12 +65,34 @@ class DireccionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Direccion  $direccion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Direccion $direccion)
+    public function update(Request $request)
     {
-        //
+        $direccion = Direccion::find($request->id);
+
+        $direccion->comunidad = $request->comunidades;
+        $direccion->provincia = $request->provincias;
+        $direccion->municipio = $request->municipios;
+        $direccion->calle = $request->calle;
+        $direccion->numero = $request->numero;
+        $direccion->portal = $request->portal;
+        $direccion->cod_postal = $request->cod_postal;
+
+        if($request->comunidades != 0 && $request->provincias != 0){
+            $direccion->comunidad = GeoApiController::getNombreComunidad($request->comunidades);
+            $direccion->provincia = GeoApiController::getNombreProvincia($request->comunidades, $request->provincias);
+            ($request->municipios != 0) ? $direccion->municipio = GeoApiController::getNombreMunicipio($request->provincias, $request->municipios) : null;
+        }else{
+            return redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors(['Debe seleccionar la comunidad y la provincia como mínimo.', 'error']);
+        }
+        
+        $direccion->update();
+
+        return redirect()->route('perfil.index')->with('informacion','Se ha actualizado correctamente.');
     }
 
     /**

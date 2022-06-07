@@ -87,30 +87,36 @@
                         </select>
                     </div>
                 </div>
-                
-            </div>
-            <div class="col-lg-6">
                 <div class="mb-3">
                     <label class="form-label fw-bold" for="fotos">Subir fotos</label>
                     <input class="form-control" type="file" name="fotos[]" id="fotos" accept="image/*"  multiple>
                 </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="fw-bold mb-2" for="direccion">Dirección</label><br>
                 @livewire('direccion-form')
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-8">
                         <label class="form-label" for="calle">Calle <span class="text-danger fw-bold">(*)</span></label>
                         <input class="form-control" type="text" name="calle" id="calle" value="{{ old('calle') }}" required>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
+                        <label class="form-label" for="cod_postal">Código postal <span class="text-danger fw-bold">(*)</span></label>
+                        <input class="form-control" type="text" name="cod_postal" id="cod_postal" value="{{ old('cod_postal') }}" required>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
                         <label class="form-label" for="numero">Número <span class="text-danger fw-bold">(*)</span></label>
                         <input class="form-control" type="number" name="numero" id="numero" value="{{ old('numero') }}" required>
                     </div>
-                    <div class="col-2">
+                    <div class="col-6">
                         <label class="form-label" for="portal">Portal</label>
                         <input class="form-control" type="text" name="portal" id="portal" value="{{ old('portal') }}">
                     </div>
                 </div>
                 
-                <div class="d-flex justify-content-end mt-4">
+                <div class="d-flex justify-content-end mt-5">
                     <a class="btn btn-outline-primary me-3" href="{{ route('perfil.index') }}">
                         <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
                             <use xlink:href="#bi-arrow-left"/>
@@ -126,8 +132,3 @@
 
 @endsection
 
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-arrow-left">
-    <symbol id="bi-arrow-left" fill="currentColor" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-    </symbol>
-</svg>

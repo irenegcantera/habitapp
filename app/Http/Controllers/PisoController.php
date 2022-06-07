@@ -144,8 +144,7 @@ class PisoController extends Controller
      */
     public function edit(Piso $piso)
     {
-        $direccion = Direccion::find($piso->id);
-        return view('piso.edit',compact('piso','direccion'));
+        return view('piso.edit',compact('piso'));
     }
 
     /**
