@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Direccion;
+use App\Models\Piso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DireccionController extends Controller
 {
@@ -91,6 +93,15 @@ class DireccionController extends Controller
         }
         
         $direccion->update();
+
+        $piso = Piso::find($direccion->piso_id);
+
+        $coordenadas = GeocoderApiController::getCoordenadas($direccion);
+
+        $piso->longitud = $coordenadas['geometry']['lng'];
+        $piso->latitud = $coordenadas['geometry']['lat'];
+
+        $piso->update();
 
         return redirect()->route('perfil.index')->with('informacion','Se ha actualizado correctamente.');
     }
