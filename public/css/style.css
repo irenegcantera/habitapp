@@ -244,3 +244,8 @@ a#titulo-piso-link:hover {
     border-radius: 0.25rem;
     border-color: #b6d4fe;
 }
+
+#tooltip{
+    color: #0d6efd;
+    text-decoration: none;
+}

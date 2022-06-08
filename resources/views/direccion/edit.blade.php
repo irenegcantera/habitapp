@@ -51,7 +51,7 @@
                         </div>
                         <div class="col">
                             <label class="form-label" for="cod_postal">Código postal <span class="text-danger fw-bold">(*)</span></label>
-                            <input class="form-control" type="text" name="cod_postal" id="cod_postal" value="{{  $direccion->cod_postal }}" required>
+                            <input class="form-control" type="number" name="cod_postal" id="cod_postal" value="{{  $direccion->cod_postal }}" required>
                         </div>
                     </div>
                     

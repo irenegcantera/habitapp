@@ -54,7 +54,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label class="form-label fw-bold" for="m2">Superficie m2 <span class="text-danger fw-bold">(*)</span></label>
-                        <input class="form-control" type="number" name="m2" id="m2"  value="{{ old('m2') }}">
+                        <input class="form-control" type="number" name="m2" id="m2"  value="{{ old('m2') }}" required>
                     </div>
                     <div class="col">
                         <label class="form-label fw-bold" for="precio">Precio €/mes <span class="text-danger">(*)</span></label>
@@ -102,7 +102,7 @@
                     </div>
                     <div class="col-4">
                         <label class="form-label" for="cod_postal">Código postal <span class="text-danger fw-bold">(*)</span></label>
-                        <input class="form-control" type="text" name="cod_postal" id="cod_postal" value="{{ old('cod_postal') }}" required>
+                        <input class="form-control" type="number" name="cod_postal" id="cod_postal" value="{{ old('cod_postal') }}" required>
                     </div>
                 </div>
                 <div class="row mt-3">

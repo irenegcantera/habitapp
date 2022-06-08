@@ -34,7 +34,7 @@ Route::put('direcciones/{direccion}', [DireccionController::class,'update'])->na
 Route::get('direcciones/{direccion}/edit', [DireccionController::class,'edit'])->name('direcciones.edit');
 
 Route::get('filter', [FilterController::class, 'index'])->name('filter.index');
-// Route::get('busqueda', [FilterController::class, 'search'])->name('filter.search');
+Route::get('busqueda', [FilterController::class, 'search'])->name('filter.search');
 
 Route::get('busqueda/{ciudad}', [FilterController::class, 'searchedCities'])->name('filter.searched');
 // Route::get('busqueda/{ciudad}/filter', [FilterController::class, 'filterCity'])->name('filter.ciudad');

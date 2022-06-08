@@ -11,10 +11,10 @@
     <div class="row d-flex justify-content-around">  
         <div class="col-12 col-sm-10 col-md-10 col-lg-8">
             <div class="card white-card mb-3">
-                <div id="carouselExampleIndicators" class="carousel slide carousel-fade carousel-dark" data-bs-ride="carousel">
+                <div id="carousel" class="carousel carousel-dark slide">
                     <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -24,15 +24,15 @@
                         <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" id="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" id="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
-                </div>
+                  </div>
                 <div class="card-body">
                     <div class="row mt-2">
                         <div class="col-lg-7">
@@ -48,7 +48,7 @@
                             <p class="card-text fs-4 fw-bold">Descripción</p>
                             <p class="card-text mb-3">{{ $piso->descripcion }}</p>
                             <p class="card-text fs-4 fw-bold">Detalles del piso</p>
-                            <div class="row justify-content-around mb-3">
+                            <div class="row justify-content-around text-center mb-3">
                                 <div class="col">
                                     <img src="{{ asset('img/iconos/room.png') }}" alt="" width="40" height="40">
                                     <p class="card-text fs-6 text-muted">
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                             <p class="card-text fs-4 fw-bold">Normas del piso</p>
-                            <div class="row justify-content-around mb-3">
+                            <div class="row justify-content-around text-center mb-3">
                                 <div class="col">
                                     @if($piso->sexo == "mujer")
                                         <img src="{{ asset('img/iconos/woman.png') }}" alt="" width="40" height="40">
@@ -110,26 +110,34 @@
                                 </div>
                             </div>
                             <p class="card-text fs-4 fw-bold">Alquiler mensual</p>
-                            <p class="card-text fw-bold">{{ $piso->precio }} €/mes</p>
+                            <p class="card-text fs-5 fw-light">{{ $piso->precio }} €/mes</p>
 
                             <p class="card-text fs-4 fw-bold">Compañeros de piso</p>
-                            @if(isset($inquilinos))
+                            <div>
+                                @if(isset($inquilinos))
                                 @foreach ($inquilinos as $inquilino)
-                                    <img src="{{ asset('logo/perfil.png') }}" width="40">
+                                    <a class="me-3" id="tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $inquilino->username }}">
+                                        <img src="{{ asset('logo/perfil.png') }}" width="50">
+                                    </a>
+                                    
                                 @endforeach
-                            @endif
-                            @for($i = 0; $i < $habitaciones_libres; $i++)
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                                    {{-- ICONO LIBRE --}}
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-plus-circle">
-                                        <symbol id="plus-circle" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                        </symbol>
-                                    </svg>
-                                    <use xlink:href="#plus-circle"/>
-                                </svg>
-                            @endfor
+                                @endif
+                                @for($i = 0; $i < $habitaciones_libres; $i++)
+                                    <a class="me-3" id="tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Libre">
+                                        <svg class="bi flex-shrink-0 me-2" width="35" height="35" role="img" aria-label="Info:">
+                                            {{-- ICONO LIBRE --}}
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-plus-circle">
+                                                <symbol id="plus-circle" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                </symbol>
+                                            </svg>
+                                            <use xlink:href="#plus-circle"/>
+                                        </svg>
+                                    </a>
+                                @endfor
+                            </div>
+                            
                             
                             <p class="card-text fs-4 fw-bold mt-3">Ubicación</p>
                             <p class="card-text fs-6 text-muted">
@@ -212,10 +220,20 @@
 
 @section('scripts')
     <script>
-        // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        // var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        //     return new bootstrap.Tooltip(tooltipTriggerEl)
-        // })
+        $('#prev').click(function(){
+          $('#carousel').carousel("prev");
+        });
+      
+        // Cycles to the next item
+        $('#next').click(function(){
+          $('#carousel').carousel("next");
+        });
+    </script>
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
     </script>
      <script>
         let latlng = L.latLng([{{ $piso->longitud}}, {{ $piso->latitud}} ]);
