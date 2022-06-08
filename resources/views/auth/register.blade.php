@@ -36,6 +36,12 @@
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
+            <!-- Teléfono -->
+            <div class="mt-4">
+                <x-label for="telefono" :value="__('Teléfono')" />
+                <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required />
+            </div>
+
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
@@ -71,7 +77,6 @@
                         ease-in-out
                         m-0
                         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" required autofocus>
-                    <option selected>Selecciona tipo de usuario</option>
                     <option value="inquilino">Inquilino</option>
                     <option value="arrendatario">Arrendatario</option>
                 </select>

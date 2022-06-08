@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('telefono');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('info')->nullable();
+            $table->string('info')->default('Persona ordenada y responsable que busca compartir su piso.');
             $table->string('avatar')->default('logo/perfil.png');
             $table->timestamps();
         });
