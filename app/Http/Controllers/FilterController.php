@@ -85,11 +85,11 @@ class FilterController extends Controller
      */
     public function searchedCities(String $ciudad)
     {
-        $data[] = DB::table('pisos')->join('direcciones','pisos.id', '=', 'direcciones.piso_id')
+        $data = DB::table('pisos')->join('direcciones','pisos.id', '=', 'direcciones.piso_id')
                                     ->where('municipio', '=', $ciudad)->get();
         $fotos = Foto::all();
 
-        if($data){
+        if(sizeof($data) != 0){
             foreach($data as $key => $value){
                 foreach($value as $k => $v){
                     $atributos = [
@@ -110,26 +110,14 @@ class FilterController extends Controller
     
                     $pisos[] = new Piso($atributos);
     
-                    $atributos = [
-                        'calle' => $v->calle,
-                        'numero' => $v->numero,
-                        'portal' => $v->portal,
-                        'cod_postal' => $v->cod_postal,
-                        'municipio' => $v->municipio,
-                        'provincia' => $v->provincia,
-                        'comunidad' => $v->comunidad,
-                        'piso_id' => $v->piso_id,
-                    ];
-    
-                    $direcciones[] = new Direccion($atributos);
                 }
             }
 
-            return view('ciudades.index',compact('pisos', 'direcciones', 'fotos'));
+            return view('piso.index',compact('pisos', 'fotos'));
         }
 
         $informacion = "No se han encontrado pisos.";
-        return view('ciudades.index',compact('fotos','informacion'));  
+        return view('piso.index',compact('fotos','informacion'));  
         
     }
 
@@ -149,7 +137,11 @@ class FilterController extends Controller
             } 
             return view('piso.index',compact('pisos'));
         }else{
-            $informacion = "No se han encontrado pisos.";
+            if($request->comunidad == 0){
+                $informacion = "Debe seleccionar al menos la comunidad.";
+            }else{
+                $informacion = "No se han encontrado pisos.";
+            }
             return view('index',compact('informacion'));
         }
     }

@@ -24,25 +24,17 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::resource('pisos', PisoController::class);
 
-Route::put('direcciones/{direccion}', [DireccionController::class,'update'])->name('direcciones.update');
-Route::get('direcciones/{direccion}/edit', [DireccionController::class,'edit'])->name('direcciones.edit');
+Route::put('direcciones/{direccion}', [DireccionController::class,'update'])->middleware('auth')->name('direcciones.update');
+Route::get('direcciones/{direccion}/edit', [DireccionController::class,'edit'])->middleware('auth')->name('direcciones.edit');
 
 Route::get('filter', [FilterController::class, 'index'])->name('filter.index');
 Route::get('busqueda', [FilterController::class, 'search'])->name('filter.search');
 
 Route::get('busqueda/{ciudad}', [FilterController::class, 'searchedCities'])->name('filter.searched');
-// Route::get('busqueda/{ciudad}/filter', [FilterController::class, 'filterCity'])->name('filter.ciudad');
 
-// Route::get('madrid', [FilterController::class, 'searchMadrid'])->name('search.madrid');
-// Route::get('madrid/filter', [FilterController::class, 'filterCity'])->name('filter.ciudad');
-
-Route::resource('mensajes', MensajeController::class);
+Route::resource('mensajes', MensajeController::class)->middleware('auth');
 Route::resource('perfil', UserController::class)->middleware('auth');
 
 // RUTAS LIVEWIRE
@@ -53,3 +45,4 @@ Route::get('buscar', Autosearch::class);
 Route::get('/logout',[LoginController::class,'destroy'])->name('login.destroy');
 
 require __DIR__.'/auth.php';
+require __DIR__.'/view.php';

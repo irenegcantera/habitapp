@@ -46,7 +46,7 @@
                             </a>
                             <h1 class="card-title mb-4">{{ $piso->titulo }}</h1>
                             <p class="card-text fs-4 fw-bold">Descripción</p>
-                            <p class="card-text mb-3">{{ $piso->descripcion }}</p>
+                            <p class="card-text fs-6 mb-3">{{ $piso->descripcion }}</p>
                             <p class="card-text fs-4 fw-bold">Detalles del piso</p>
                             <div class="row justify-content-around text-center mb-3">
                                 <div class="col">
@@ -160,9 +160,9 @@
                                 <div class="card-header fs-4 fw-bold">Datos arrendatario</div>
                                 <div class="card-body">
                                     <img src="{{ asset('logo/perfil.png') }}" class="card-img-contain" alt="...">
-                                    <p class="card-text">{{ $arrendatario->nombre." ".$arrendatario->apellidos }}</p>
-                                    <p class="card-text fs-5 fw-bold">Sobre mí</p>
-                                    <p class="card-text">{{ $arrendatario->info }}</p>
+                                    <p class="card-text fs-3">{{ $arrendatario->nombre." ".$arrendatario->apellidos }}</p>
+                                    <p class="card-text fs-4 fw-bold">Sobre mí</p>
+                                    <p class="card-text fs-6">{{ $arrendatario->info }}</p>
                                     @if (auth()->check())
                                         <a href="https://api.whatsapp.com/send?phone=34{{ $arrendatario->telefono }}&text=Piso%20{{ $piso->id }}%20'{{ $piso->titulo }}':%20">
                                             <img class="me-3" src="{{ asset('img/iconos/whatsapp.png') }}"  width="35" height="35" alt="">Contactar vía WhatsApp
@@ -179,7 +179,7 @@
                                     <label for="from_user" class="form-label">User</label>
                                     <input type="text" class="form-control" value="{{ auth()->user()->username }}" readonly>
                                     <label for="contenido" class="form-label mt-3">Mensaje</label>
-                                    <textarea name="contenido" class="form-control" rows="7"></textarea>
+                                    <textarea name="contenido" class="form-control" rows="5"></textarea>
                                     <button class="btn btn-primary mt-4" wire:click="enviarMensaje">Enviar</button>
                                     @if(session('informacion'))
                                         <div class="alert alert-success alert-dismissible fade show d-flex align-items-center mt-4" role="alert" id="aviso">

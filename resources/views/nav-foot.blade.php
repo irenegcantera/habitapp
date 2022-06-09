@@ -11,10 +11,6 @@
   {{-- JQuery --}}
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="{{ asset('vendor/jquery-ui-1.13.1/jquery-ui.min.css') }}"/>
-  {{-- DataTables --}}
-  @yield('css')
-  {{-- Propia hoja de estilos --}}
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}"/>
   {{-- Leaflet --}}
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
@@ -22,11 +18,12 @@
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
   <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
   <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
-  {{-- Otro más --}}
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
   {{-- Livewire --}}
   @livewireStyles
   @livewireScripts
+  @yield('css')
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}"/>
 </head>
 
 <body class="d-flex flex-column h-100 bg-light">
@@ -90,22 +87,27 @@
   </nav>
 
   @yield('content')
-  <br>
-  <footer class="footer mt-auto py-3 bg-white border-top">
 
-    <div class="container">
+  <footer class="footer mt-5 py-3 bg-white border-top">
+    <div class="container mt-4">
       <div class="row">
-        <div class="col-md">
-          <h5>HABITAPP</h5>
+        <div class="col-lg">
+          <img src="{{ asset('logo/logo.png') }}" alt="" width="200" height="60" >
           <p>Aplicación destinada a la búsqueda de pisos de alquiler y de compañeros de piso.</p>
         </div>
-        <div class="col-md">
-          <h5>Contacta con nosotros</h5>
-          <p>Preguntas frecuentes</p>
-          <p>ETC.</p>
+        <div class="col-lg">
+          <h5 class="mb-3">CONTACTA CON NOSOTROS</h5>
+          <p><a id="links-footer" href="{{ route('contacto.preguntas') }}">Preguntas frecuentes</a></p>
+          <p><a id="links-footer" href="{{ route('contacto.formulario') }}">Formulario de contacto</a></p>
         </div>
-        <div class="col-md">
-          <div class="row">
+        <div class="col-lg">
+          <h5 class="mb-3">LEGAL</h5>
+          <p><a id="links-footer" href="{{ route('legal.privacidad') }}">Política de privacidad</a></p>
+          <p><a id="links-footer" href="{{ route('legal.aviso') }}">Aviso legal</a></p>
+          <p><a id="links-footer" href="{{ route('legal.cookies') }}">Política de cookies</a></p>
+        </div>
+        <div class="col-lg">
+          <div class="row mb-5">
             <div class="col-2">
               <a id="social-media" href="https://www.linkedin.com/">
                 <svg class="bi flex-shrink-0 me-2" width="25" height="25" role="img">
@@ -161,24 +163,19 @@
           </div>
           <div class="row mt-2">
             <span>&copy; Habitapp, S.L</span>
-            <p class="text-muted">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad adipisci praesentium odio? Iusto ut quae id?</p>
+            <p class="text-muted">
+              Este sitio está protegido por reCAPTCHA y se aplican la Política de Privacidad.
+            </p>
           </div>
         </div>
       </div>
     </div>
   </footer>
-  {{-- Livewire --}}
-  @livewireScripts
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
   @yield('scripts')
-    {{-- DataTables --}}
-  @yield('js')
-
-
-  @yield('svg')
 
 </body>
 </html>
