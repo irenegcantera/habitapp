@@ -27,8 +27,10 @@ class GeocoderApiController extends Controller
             $coordenadas = $resultado['results'][0];
             //print $coordenadas['geometry']['lng'] . ';' . $coordenadas['geometry']['lat'] . ';' . $resultado['formatted'] . "\n";
             # 4.360081;43.8316276;6 Rue Massillon, 30020 Nîmes, Frankreich
+            return $coordenadas;
         }
 
-        return $coordenadas;
+        return null;
+        
     }
 }

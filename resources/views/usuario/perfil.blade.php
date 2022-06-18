@@ -51,6 +51,17 @@
                             </div>
                         </div>
                     @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert" id="aviso">
+                            <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
+                            <use xlink:href="#check-circle-fill"/>
+                            </svg>
+                            <div>
+                                {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    @endif
                     <table class="display table table-bordered table-hover align-middle text-center">
                         <thead class="table-light align-middle">
                             <tr>
@@ -132,23 +143,25 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        @if(isset($pisos) && isset($rents) /*&& isset($propietarios)*/)
+                        @if(isset($pisos) && isset($rents))
                             @for($i = 0; $i < sizeof($pisos); $i++)
                                 <tr>
                                     <td>{{ $pisos[$i][0]->titulo }}</td>
-                                    {{-- Dirección: calle+municipio+codPostal+provincia+comunidad --}}
-                                    <td>{{ $pisos[$i][0]->calle.', '.$pisos[$i][0]->cod_postal }}</td> 
+                                    @if($pisos[$i][0]->portal == null)
+                                        <td>{{ $pisos[$i][0]->calle.", ".$pisos[$i][0]->numero.", ".$pisos[$i][0]->cod_postal.", "
+                                        .$pisos[$i][0]->municipio.", ".$pisos[$i][0]->provincia.", ".$pisos[$i][0]->comunidad; }}</td> 
+                                    @else
+                                        <td>{{ $pisos[$i][0]->calle.", ".$pisos[$i][0]->numero.", ".$pisos[$i][0]->portal.", "
+                                        .$pisos[$i][0]->cod_postal.", ".$pisos[$i][0]->municipio.", ".$pisos[$i][0]->provincia.", "
+                                        .$pisos[$i][0]->comunidad; }}</td> 
+                                    @endif
                                     @foreach ($rents as $rent)
                                         @if($rent->piso_id == $pisos[$i][0]->piso_id)
                                             <td>{{ $rent->fecha_inicio }}</td>
                                             <td>{{ $rent->fecha_fin }}</td>
                                         @endif
                                     @endforeach
-                                    {{-- @foreach ($propietarios as $propietario) --}}
-                                        {{-- @if($propietario->id == $piso->user_id) --}}
-                                            <td>{{ $pisos[$i][0]->nombre.' '.$pisos[$i][0]->apellidos }}</td>
-                                        {{-- @endif --}}
-                                    {{-- @endforeach --}}
+                                    <td>{{ $pisos[$i][0]->nombre.' '.$pisos[$i][0]->apellidos }}</td>
                                     <td>
                                         <form action="{{ route('pisos.show', $pisosShow[$i])}}" method="get">
                                             <button type="submit" class="btn btn-info btn-sm fw-bold">Ver Piso</button>

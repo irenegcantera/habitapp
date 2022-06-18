@@ -37,21 +37,21 @@
             <div class="col">
                 <div class="mb-3">
                     <label class="form-label" for="calle">Calle <span class="text-danger fw-bold">(*)</span></label>
-                    <input class="form-control" type="text" name="calle" id="calle" value="{{ $direccion->calle }}" required>
+                    <input class="form-control" type="text" name="calle" id="calle" maxlength="255" value="{{ $direccion->calle }}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="numero">Número <span class="text-danger fw-bold">(*)</span></label>
-                    <input class="form-control" type="number" name="numero" id="numero" value="{{ $direccion->numero }}" required>
+                    <input class="form-control" type="number" name="numero" id="numero" min="1" max="300" value="{{ $direccion->numero }}" required>
                 </div>
                 <div class="mb-3">
                     <div class="row">
                         <div class="col">
                             <label class="form-label" for="portal">Portal</label>
-                            <input class="form-control" type="text" name="portal" id="portal" value="{{ $direccion->portal }}">
+                            <input class="form-control" type="text" name="portal" id="portal" maxlength="10" value="{{ $direccion->portal }}">
                         </div>
                         <div class="col">
                             <label class="form-label" for="cod_postal">Código postal <span class="text-danger fw-bold">(*)</span></label>
-                            <input class="form-control" type="number" name="cod_postal" id="cod_postal" value="{{  $direccion->cod_postal }}" required>
+                            <input class="form-control" type="text" pattern="^(0[1-9]|[1-4][0-9]|5[0-2])[0-9]{3}$" title="Recuerda que debe tener 5 dígitos y coincidir con un código postal existente." name="cod_postal" id="cod_postal" minlength="5" maxlength="5" value="{{ $direccion->cod_postal }}" required>
                         </div>
                     </div>
                     

@@ -23,8 +23,6 @@ class PisoController extends Controller
         $pisos=Piso::all();
         $fotos=Foto::all();
 
-        // dump($pisosPagina);
-
         return view('piso.index',compact('pisosPagina', 'pisos', 'fotos'));
     }
 
@@ -46,6 +44,13 @@ class PisoController extends Controller
      */
     public function store(Request $request)
     {
+        if (strlen(trim($request->calle)) == 0 || strlen(trim($request->titulo)) == 0 || strlen(trim($request->descripcion)) == 0){
+            return redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors(['Los campos no pueden tener solo espacios en blanco.', 'error']);
+        }
+
         // Guardando dirección
         $direccion = new Direccion();
 
@@ -73,8 +78,12 @@ class PisoController extends Controller
         $piso = new Piso();
 
         $piso->titulo = $request->titulo;
-        $piso->longitud = $coordenadas['geometry']['lat'];
-        $piso->latitud = $coordenadas['geometry']['lng'];
+
+        if($coordenadas != null){
+            $piso->longitud = $coordenadas['geometry']['lat'];
+            $piso->latitud = $coordenadas['geometry']['lng'];
+        }
+        
         $piso->descripcion = $request->descripcion;
         $piso->num_habitaciones = $request->num_habitaciones;
         $piso->num_aseos = $request->num_aseos;
@@ -85,29 +94,34 @@ class PisoController extends Controller
         $piso->precio = $request->precio;
         $piso->user_id = $request->user_id;
 
-        $piso->save();
-
-        $direccion->piso_id = $piso->id;
-        $direccion->update();
-
-        // Guardando fotos multiples
-        if($request->has('fotos')){
-            $i = 0;
-            foreach($request->file('fotos') as $file)
-            {
-                $nombre = time().'_'.$i.'.'.$file->extension();
-                $file->storeAs('public/img/pisos', $nombre);
-                
-                $foto = new Foto();
-                $foto->nombre = $nombre;
-                $foto->piso_id = $piso->id;
-                $foto->save();
-
-                $i++;
+        if($piso->save()){
+            $direccion->piso_id = $piso->id;
+            $direccion->update();
+    
+            // Guardando fotos multiples
+            if($request->has('fotos')){
+                $i = 0;
+                foreach($request->file('fotos') as $file)
+                {
+                    $nombre = time().'_'.$i.'.'.$file->extension();
+                    $file->storeAs('public/img/pisos', $nombre);
+                    
+                    $foto = new Foto();
+                    $foto->nombre = $nombre;
+                    $foto->piso_id = $piso->id;
+                    $foto->save();
+    
+                    $i++;
+                }
             }
+            
+            return redirect()->route('perfil.index')->with('informacion','Se ha creado correctamente.');
+        }else{
+            return redirect()->route('perfil.index')->with('error','No se ha podido dar de alta el piso.');
         }
         
-        return redirect()->route('perfil.index')->with('informacion','Se ha creado correctamente.');
+
+        
     }
 
     /**

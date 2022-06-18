@@ -14,7 +14,7 @@
           <div class="col">
               <div class="mb-3">
                 <label class="form-label fw-bold" for="titulo">Título <span class="text-danger">(*)</span></label>
-                <input class="form-control" type="text" name="titulo" id="titulo" value="{{ $piso->titulo }}" required>
+                <input class="form-control" type="text" name="titulo" id="titulo" maxlength="255" value="{{ $piso->titulo }}" required>
               </div>
           </div>
           <div class="col">
@@ -25,7 +25,7 @@
           </div>
           <div class="mb-3">
             <label class="form-label fw-bold" for="descripcion">Descripción <span class="text-danger">(*)</span></label>
-            <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="3">{{ $piso->descripcion }}</textarea>
+            <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="3" maxlength="1000" required>{{ $piso->descripcion }}</textarea>
           </div>
           <div class="row mb-3">
               <div class="col">
@@ -56,11 +56,11 @@
           <div class="row mb-3">
               <div class="col">
                   <label class="form-label fw-bold" for="m2">Superficie m2 <span class="text-danger fw-bold">(*)</span></label>
-                  <input class="form-control" type="number" name="m2" id="m2" value="{{ $piso->m2 }}" required>
+                  <input class="form-control" type="number" name="m2" id="m2" min="1" max="1000" value="{{ $piso->m2 }}" required>
               </div>
               <div class="col">
                   <label class="form-label fw-bold" for="precio">Precio €/mes <span class="text-danger">(*)</span></label>
-                  <input class="form-control" type="number" name="precio" id="precio" value="{{ $piso->precio }}" required>
+                  <input class="form-control" type="number" name="precio" id="precio" min="1" max="999999999" step="0.05" value="{{ $piso->precio }}" required>
               </div>
           </div>
           <div class="row mb-3">

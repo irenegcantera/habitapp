@@ -10,6 +10,10 @@ Route::get('/contacto', function () {
     return view('contacto.formulario');
 })->name('contacto.formulario');
 
+Route::post('/contacto', function () {
+    
+})->name('contacto.form_enviado');
+
 Route::get('/politica-de-cookies', function () {
     return view('legal.cookies');
 })->name('legal.cookies');

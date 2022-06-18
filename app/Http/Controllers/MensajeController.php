@@ -21,6 +21,20 @@ class MensajeController extends Controller
     {
         $mensaje = new Mensaje();
 
+        if (strlen(trim($request->contenido)) == 0){
+            return redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors(['Debe rellenar los campos', 'error_mensaje']);
+        }
+
+        if(strlen(trim($request->username)) == 0){
+            return redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors(['Debe rellenar los campos', 'error_mensaje']);
+        }
+
         $mensaje->contenido = $request->contenido;
         $mensaje->fecha_enviado = Carbon::now();
         $mensaje->fecha_leido = null;
@@ -29,12 +43,14 @@ class MensajeController extends Controller
         $mensaje->to_user = $request->to_user;
         $mensaje->piso_id = $request->piso_id;
         
-        $mensaje->save();
+        if($mensaje->save()){
+            // ENVIAR NOTIFICACIÓN
+            $user = User::find($request->to_user);
+            $user->notify(new MensajeNotification($request->piso_id));
 
-        // ENVIAR NOTIFICACIÓN
-        $user = User::find($request->to_user);
-        $user->notify(new MensajeNotification($request->piso_id, $request->from_user));
-
-        return redirect()->back()->with('informacion','Se ha enviado correctamente.');
+            return redirect()->back()->with('informacion','Se ha enviado correctamente.');
+        }else{
+            return redirect()->back()->with('error','El mensaje no se ha podido enviar correctamente.');
+        }
     }
 }

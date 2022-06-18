@@ -15,31 +15,31 @@
             <!-- Nombre -->
             <div class="mt-4">
                 <x-label for="nombre" :value="__('Nombre')" />
-                <x-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required autofocus />
+                <x-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" maxlength="100" :value="old('nombre')" required autofocus />
             </div>
 
             <!-- Apellidos -->
             <div class="mt-4">
                 <x-label for="apellidos" :value="__('Apellidos')" />
-                <x-input id="apellidos" class="block mt-1 w-full" type="text" name="apellidos" :value="old('apellidos')" required autofocus />
+                <x-input id="apellidos" class="block mt-1 w-full" type="text" name="apellidos" maxlength="100" :value="old('apellidos')" required autofocus />
             </div>
     
             <!-- Username -->
             <div class="mt-4">
                 <x-label for="username" :value="__('Username')" />
-                <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus />
+                <x-input id="username" class="block mt-1 w-full" type="text" name="username" maxlength="50" :value="old('username')" required autofocus />
             </div>
 
             <!-- Email Address -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" maxlength="150" :value="old('email')" required />
             </div>
 
             <!-- Teléfono -->
             <div class="mt-4">
                 <x-label for="telefono" :value="__('Teléfono')" />
-                <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" :value="old('telefono')" required />
+                <x-input id="telefono" class="block mt-1 w-full" type="text" name="telefono" pattern="[0-9]{9}$" title="Recuerda que debe tener 9 dígitos y solo numéricos." minlength="9" maxlength="9" :value="old('telefono')" required />
             </div>
 
             <!-- Password -->
@@ -50,6 +50,7 @@
                                 name="password"
                                 required autocomplete="new-password" />
             </div>
+            <div id="passwordHelp" class="form-text">Debe de contener min 8 carácteres.</div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
@@ -58,6 +59,7 @@
                                 type="password"
                                 name="password_confirmation" required />
             </div>
+            <div id="passwordHelp" class="form-text">Debe de contener min 8 carácteres.</div>
 
             <!-- Select rol -->
             <div class="mt-4">

@@ -98,8 +98,8 @@ class DireccionController extends Controller
 
         $coordenadas = GeocoderApiController::getCoordenadas($direccion);
 
-        $piso->longitud = $coordenadas['geometry']['lng'];
-        $piso->latitud = $coordenadas['geometry']['lat'];
+        $piso->latitud = $coordenadas['geometry']['lng'];
+        $piso->longitud = $coordenadas['geometry']['lat'];
 
         $piso->update();
 

@@ -33,10 +33,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (strlen(trim($request->nombre)) == 0 || strlen(trim($request->apellidos)) == 0){
+            return redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors(['El campo no puede contener solo espacios en blanco.']);
+        }
+
         $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:150', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'telefono' => ['required', 'unique:users'],
             'rol' => ['required', 'string']
         ]);
 

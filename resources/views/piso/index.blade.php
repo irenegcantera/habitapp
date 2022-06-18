@@ -17,13 +17,13 @@
       </div>
     </div>
     <br>
-    <div class="row mt-3">
+    <div class="row mt-3" id="container-responsive">
       <div class="col-lg-2 card white-card h-100 d-none d-xxl-block">
         <div class="card-body filter-card" >
           <form action="{{ route('filter.index') }}" method="get">
             <label class="form-label fw-bold" for="order">Ordenar por...</label>
             <select class="form-select form-select-sm mb-3" name="order">
-                <option value=null @if(empty($order)) selected @endif> Seleccione...</option>
+                <option value="0" @if(empty($order)) selected @endif> Seleccione...</option>
                 <option value="1" @if(isset($filtros['order']) && $filtros['order'] == 1) selected @endif>Relevancia</option>
                 <option value="2" @if(isset($filtros['order']) && $filtros['order'] == 2) selected @endif>Precio de menor a mayor</option>
                 <option value="3" @if(isset($filtros['order']) && $filtros['order'] == 3) selected @endif>Precio de mayor a menor</option>
@@ -35,9 +35,9 @@
             @livewire('busqueda.autosearch')
 
             <label for="precio" class="form-label fw-bold">Precio</label>
-            <p>Mín. <input type="number" class="form-control form-control-sm" name="precioMin" min="1" 
+            <p>Mín. <input type="number" class="form-control form-control-sm" name="precioMin" min="1" max="999999999" step="0.05" 
               @if(isset($filtros['precioMin'])) value={{$filtros['precioMin'];}} @endif></p>
-            <p>Máx. <input type="number" class="form-control form-control-sm mt-1" name="precioMax" min="1"
+            <p>Máx. <input type="number" class="form-control form-control-sm mt-1" name="precioMax" min="1" max="999999999" step="0.05"
                @if(isset($filtros['precioMax'])) value={{$filtros['precioMax'];}} @endif></p>
 
             <label for="num_habitaciones" class="form-label fw-bold mt-2  me-4">Nº de habitaciones</label>
@@ -51,9 +51,9 @@
             value=@if(isset($filtros['num_aseos'])) {{$filtros['num_aseos'];}} @else "0" @endif>
 
             <label for="m2" class="form-label fw-bold mt-3">Superficie m2</label>
-            <p>Mín. <input type="number" class="form-control form-control-sm" name="m2Min" min="1" 
+            <p>Mín. <input type="number" class="form-control form-control-sm" name="m2Min" min="1" max="1000" 
               @if(isset($filtros['m2Min'])) value={{$filtros['m2Min'];}} @endif></p>
-            <p>Máx. <input type="number" class="form-control form-control-sm mt-1" name="m2Max" min="1" 
+            <p>Máx. <input type="number" class="form-control form-control-sm mt-1" name="m2Max" min="1" max="1000" 
               @if(isset($filtros['m2Max'])) value={{$filtros['m2Max'];}} @endif></p>
             
             <label for="fumadores" class="form-label fw-bold">Fumadores</label><br>
@@ -132,10 +132,10 @@
           </form>
         </div>
       </div>
-      <div class="col-sm-6 col-md-6 col-lg-5 d-none d-md-block">
+      <div class="col-sm-6 col-md-6 col-lg-5 d-none d-md-block col-lg-6">
         <div id="map2"></div>
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-5" id="global">
+      <div class="col-sm-12 col-md-6 col-lg-5 col-lg-6">
 
         @if(isset($pisosPagina))
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-4">
@@ -150,12 +150,12 @@
                         <button type="button" data-bs-target="{{ '#carouselIndicators'.$i }}" data-bs-slide-to="1" aria-label="Slide 2"></button>
                     </div>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
+                      <div class="carousel-item active">
                         <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
+                      </div>
+                      <div class="carousel-item">
                         <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
-                        </div>
+                      </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="{{ '#carouselIndicators'.$i }}" id="{{ 'prev'.$i }}">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -195,7 +195,7 @@
           </div>
         @else
 
-          @if(!empty($pisos))
+          @if(isset($pisos) && !empty($pisos))
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-4">
               @foreach($pisos as $piso)
                 <div class="col">
@@ -277,63 +277,115 @@
       </div>
       <div class="offcanvas-body">
         <div class="card-body">
-          <form action="{{ route('filter.index') }}" method="get">          
+          <form action="{{ route('filter.index') }}" method="get">
+            <label class="form-label fw-bold" for="order">Ordenar por...</label>
+            <select class="form-select form-select-sm mb-3" name="order">
+                <option value="0" @if(empty($order)) selected @endif> Seleccione...</option>
+                <option value="1" @if(isset($filtros['order']) && $filtros['order'] == 1) selected @endif>Relevancia</option>
+                <option value="2" @if(isset($filtros['order']) && $filtros['order'] == 2) selected @endif>Precio de menor a mayor</option>
+                <option value="3" @if(isset($filtros['order']) && $filtros['order'] == 3) selected @endif>Precio de mayor a menor</option>
+            </select>
+
             {{-- Livewire select dynamic zonas geográficas--}}
+            <label class="form-label fw-bold" for="zona">Zona geográfica</label>
+            
             @livewire('busqueda.autosearch')
-            {{-- <h1>{{ $first['geometry']['lng'] . ';' . $first['geometry']['lat'] }}</h1> --}}
+
             <label for="precio" class="form-label fw-bold">Precio</label>
-            <input type="number" class="form-control form-control-sm" name="precioMin" max="1000">
-            <input type="number" class="form-control form-control-sm mt-2" name="precioMax" max="1000">
+            <p>Mín. <input type="number" class="form-control form-control-sm" name="precioMin" min="1" max="999999999" step="0.05" 
+              @if(isset($filtros['precioMin'])) value={{$filtros['precioMin'];}} @endif></p>
+            <p>Máx. <input type="number" class="form-control form-control-sm mt-1" name="precioMax" min="1" max="999999999" step="0.05"
+               @if(isset($filtros['precioMax'])) value={{$filtros['precioMax'];}} @endif></p>
 
-            <label for="num_habitaciones" class="form-label fw-bold mt-2">Número de habitaciones</label>
-            <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones">
-            <p id="output1"></p>
+            <label for="num_habitaciones" class="form-label fw-bold mt-2  me-4">Nº de habitaciones</label>
+            <span class="text-primary fw-bold" id="output_habitaciones"></span>
+            <input type="range" class="form-range" min="0" max="6" step="1" name="num_habitaciones" id="num_habitaciones" 
+            value=@if(isset($filtros['num_habitaciones'])) {{$filtros['num_habitaciones'];}} @else "0" @endif>
 
-            <label for="num_aseos" class="form-label fw-bold">Número de aseos</label>
-            <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos" id="num_aseos">
+            <label for="num_aseos" class="form-label fw-bold me-4">Nº de aseos</label>
+            <span class="text-primary fw-bold" id="output_aseos"></span>
+            <input type="range" class="form-range" min="0" max="3" step="1" name="num_aseos" id="num_aseos" 
+            value=@if(isset($filtros['num_aseos'])) {{$filtros['num_aseos'];}} @else "0" @endif>
 
+            <label for="m2" class="form-label fw-bold mt-3">Superficie m2</label>
+            <p>Mín. <input type="number" class="form-control form-control-sm" name="m2Min" min="1" max="1000" 
+              @if(isset($filtros['m2Min'])) value={{$filtros['m2Min'];}} @endif></p>
+            <p>Máx. <input type="number" class="form-control form-control-sm mt-1" name="m2Max" min="1" max="1000" 
+              @if(isset($filtros['m2Max'])) value={{$filtros['m2Max'];}} @endif></p>
+            
             <label for="fumadores" class="form-label fw-bold">Fumadores</label><br>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="fumadores" value="1">
+              <input class="form-check-input" type="radio" name="fumadores" value="1" 
+              @if(isset($filtros['fumadores']) && $filtros['fumadores'] == 1) checked @endif>
               <label class="form-check-label" for="fumadores">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="fumadores" value="0">
+              <input class="form-check-input" type="radio" name="fumadores" value="0"
+              @if(isset($filtros['fumadores']) && $filtros['fumadores'] == 0) checked @endif>
               <label class="form-check-label" for="fumadores">No</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="fumadores" value="2"
+              @if(isset($filtros['fumadores']) && $filtros['fumadores'] == 2) checked @endif>
+              <label class="form-check-label" for="fumadores">Todo</label>
             </div>
 
             <br><label for="animales" class="form-label fw-bold">Animales domésticos</label><br>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="animales" value="1">
+              <input class="form-check-input" type="radio" name="animales" value="1"
+              @if(isset($filtros['animales']) && $filtros['animales'] == 1) checked @endif>
               <label class="form-check-label" for="animales">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" name="animales" value="0">
+              <input class="form-check-input" type="radio" name="animales" value="0"
+              @if(isset($filtros['animales']) && $filtros['animales'] == 0) checked @endif>
               <label class="form-check-label" for="animales">No</label>
             </div>
-
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="animales" value="2"
+              @if(isset($filtros['animales']) && $filtros['animales'] == 2) checked @endif>
+              <label class="form-check-label" for="animales">Todo</label>
+            </div>
+            
             <br><label for="sexo" class="form-label fw-bold">Compañeros de piso</label><br>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="sexoHombre" value="hombre">
-              <label class="form-check-label" for="sexoHombre">Hombre</label>
+              <input class="form-check-input" type="radio" name="sexo" value="hombre" 
+              @if(isset($filtros['sexo']) && $filtros['sexo'] == "hombre") checked @endif>
+              <label class="form-check-label" for="sexo">Hombre</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="sexoMujer" value="mujer">
-              <label class="form-check-label" for="sexoMujer">Mujer</label>
+              <input class="form-check-input" type="radio" name="sexo" value="mujer" 
+              @if(isset($filtros['sexo']) && $filtros['sexo'] == "mujer") checked @endif>
+              <label class="form-check-label" for="sexo">Mujer</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="sexoMixto" value="mixto">
-              <label class="form-check-label" for="sexoMixto">Mixto</label>
+              <input class="form-check-input" type="radio" name="sexo" value="mixto" 
+              @if(isset($filtros['sexo']) && $filtros['sexo'] == "mixto") checked @endif>
+              <label class="form-check-label" for="sexo">Mixto</label>
             </div>
-            <br><button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary mt-3">
               <svg class="bi flex-shrink-0 me-2" width="16" height="16" role="img">
+                {{-- ICONO LUPA --}}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-search">
+                  <symbol id="bi-search" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </symbol>
+                </svg>
                 <use xlink:href="#bi-search"/>
-              </svg>Ver resultados</button>
-            <br><a href="{{ route('pisos.index') }}" class="btn btn-primary mt-3">
+              </svg>Ver resultados
+            </button>
+            @if(isset($filtros))
+            <a href="{{ route('pisos.index') }}" class="btn btn-primary mt-3">
               <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-x">
+                  <symbol id="bi-x" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </symbol>
+                </svg>
                 <use xlink:href="#bi-x"/>
               </svg>Quitar filtros
             </a>
+            @endif
           </form>
       </div>
     </div>
@@ -383,7 +435,6 @@
     }
   </script>
   <script>
-    
     @if(isset($pisosPagina) )
       @for($i = 0; $i < count($pisosPagina); $i++)
         // Cycles to the previous item
@@ -397,8 +448,5 @@
         });
       @endfor
     @endif
-  </script>
-  <script>
-
   </script>
 @endsection

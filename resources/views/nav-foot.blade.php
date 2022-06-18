@@ -164,7 +164,7 @@
           <div class="row mt-2">
             <span>&copy; Habitapp, S.L</span>
             <p class="text-muted">
-              Este sitio está protegido por reCAPTCHA y se aplican la Política de Privacidad.
+              Este sitio está protegido por reCAPTCHA y se aplica la Política de Privacidad.
             </p>
           </div>
         </div>
