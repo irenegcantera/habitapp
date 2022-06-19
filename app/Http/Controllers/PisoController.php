@@ -170,6 +170,13 @@ class PisoController extends Controller
     public function update(Request $request)
     {
 
+        if (strlen(trim($request->descripcion)) == 0 || strlen(trim($request->titulo)) == 0 ){
+            return redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors(['Los campos no pueden tener solo espacios en blanco.', 'error']);
+        }
+
         $piso = Piso::find($request->id);
 
         $piso->titulo = $request->titulo;

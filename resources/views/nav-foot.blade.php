@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>@yield('title')</title>
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon-habitapp.ico') }}">
   {{-- Boostrap CSS --}}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   {{-- JQuery --}}
@@ -31,9 +32,20 @@
     <div class="container">   
       <div class="row">
         <div class="col">
-          <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="{{ asset('logo/logo.png') }}" alt="" width="180" height="50" class="d-inline-block align-text-top">
-          </a>
+          @if(auth()->check())
+            @if(auth()->user()->rol != 'arrendatario')
+              <a class="navbar-brand" href="{{ route('index') }}">
+                <img src="{{ asset('logo/logo.png') }}" alt="" width="180" height="50" class="d-inline-block align-text-top">
+              </a>
+            @else
+              <img src="{{ asset('logo/logo.png') }}" alt="" width="180" height="50" class="d-inline-block align-text-top">
+            @endif
+          @else
+            <a class="navbar-brand" href="{{ route('index') }}">
+              <img src="{{ asset('logo/logo.png') }}" alt="" width="180" height="50" class="d-inline-block align-text-top">
+            </a>
+          @endif
+          
         </div>
       </div>
      
@@ -51,9 +63,19 @@
                   <a class="nav-link btn" href="{{ route('registrar') }}">Registrarse</a>
                 </li>
               @endif
-              <li class="nav-item mt-2 me-3">
-                <a class="nav-link btn btn-outline-primary p-2" id="localizar-pisos-btn" href="{{ route('pisos.index') }}">Localizar pisos</a>
-              </li>
+
+              @if(auth()->check())
+                @if(auth()->user()->rol != 'arrendatario')
+                  <li class="nav-item mt-2 me-3">
+                    <a class="nav-link btn btn-outline-primary p-2" id="localizar-pisos-btn" href="{{ route('pisos.index') }}">Localizar pisos</a>
+                  </li>
+                @endif
+              @else
+                <li class="nav-item mt-2 me-3">
+                  <a class="nav-link btn btn-outline-primary p-2" id="localizar-pisos-btn" href="{{ route('pisos.index') }}">Localizar pisos</a>
+                </li>
+              @endif
+              
 
               @if (auth()->check())
                 <li class="nav-item mt-2 me-3 d-md-block d-lg-none">
@@ -95,19 +117,20 @@
           <img src="{{ asset('logo/logo.png') }}" alt="" width="200" height="60" >
           <p>Aplicación destinada a la búsqueda de pisos de alquiler y de compañeros de piso.</p>
         </div>
-        <div class="col-lg">
+        <div class="col-lg mt-2">
           <h5 class="mb-3">CONTACTA CON NOSOTROS</h5>
           <p><a id="links-footer" href="{{ route('contacto.preguntas') }}">Preguntas frecuentes</a></p>
           <p><a id="links-footer" href="{{ route('contacto.formulario') }}">Formulario de contacto</a></p>
         </div>
-        <div class="col-lg">
+        <div class="col-lg mt-2">
           <h5 class="mb-3">LEGAL</h5>
           <p><a id="links-footer" href="{{ route('legal.privacidad') }}">Política de privacidad</a></p>
           <p><a id="links-footer" href="{{ route('legal.aviso') }}">Aviso legal</a></p>
           <p><a id="links-footer" href="{{ route('legal.cookies') }}">Política de cookies</a></p>
         </div>
-        <div class="col-lg">
-          <div class="row mb-5">
+        <div class="col-lg mt-2">
+          <h5 class="mb-4">REDES SOCIALES</h5>
+          <div class="row">
             <div class="col-2">
               <a id="social-media" href="https://www.linkedin.com/">
                 <svg class="bi flex-shrink-0 me-2" width="25" height="25" role="img">

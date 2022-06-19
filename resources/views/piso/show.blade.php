@@ -1,6 +1,6 @@
 @extends('nav-foot')
 
-@section('title','Piso')
+@section('title','HabitApp - Piso')
 
 @section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cards.css') }}"/>
@@ -15,13 +15,17 @@
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                        <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
+                            <img src="{{ asset('img/pisos/room1.jpg') }}" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                        <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
+                            <img src="{{ asset('img/pisos/room2.jpg') }}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('img/pisos/room3.jpg') }}" class="d-block w-100" alt="...">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" id="prev">
@@ -261,7 +265,7 @@
     </script>
      <script>
         let latlng = L.latLng([{{ $piso->longitud}}, {{ $piso->latitud}} ]);
-        let map = L.map('map').setView(latlng, 6.5);
+        let map = L.map('map').setView(latlng, 11);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
         {
@@ -272,7 +276,6 @@
         var marker = L.marker([{{ $piso->longitud }}, {{ $piso->latitud }}], markerOptions).addTo(map);
 
         map.addControl(new L.Control.Fullscreen());
-
       </script>
 @endsection
 

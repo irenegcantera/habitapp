@@ -71,6 +71,13 @@ class DireccionController extends Controller
      */
     public function update(Request $request)
     {
+        if (strlen(trim($request->calle)) == 0){
+            return redirect()
+                    ->back()
+                    ->withInput($request->input())
+                    ->withErrors(['Los campos no pueden tener solo espacios en blanco.', 'error']);
+        } 
+
         $direccion = Direccion::find($request->id);
 
         $direccion->comunidad = $request->comunidades;

@@ -1,6 +1,6 @@
 @extends('nav-foot')
 
-@section('title','Pisos App - Perfil')
+@section('title','HabitApp - Perfil')
 
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">

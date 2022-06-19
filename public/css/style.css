@@ -227,7 +227,7 @@ a#titulo-piso-link:visited {
 }
 
 a#titulo-piso-link:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .form-check-inline {

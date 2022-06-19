@@ -1,6 +1,6 @@
 @extends('nav-foot')
 
-@section('title','Pisos')
+@section('title','HabitApp - Pisos')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/cards.css') }}"/>
@@ -141,20 +141,23 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-4">
 
             @for($i = 0; $i < count($pisosPagina); $i++)
-            {{-- @foreach($pisosPagina as $piso) --}}
               <div class="col-md-12 col-lg-12">
-                <div class="card h-100">
+                <div class="card cards h-100">
                   <div id="{{ 'carousel'.$i }}" class="carousel carousel-dark slide">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="{{ '#carouselIndicators'.$i }}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="{{ '#carouselIndicators'.$i }}" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="{{ '#carouselIndicators'.$i }}" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
                       <div class="carousel-item active">
-                        <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
+                        <img src="{{ asset('img/pisos/room1.jpg') }}" class="d-block w-100" alt="...">
                       </div>
                       <div class="carousel-item">
-                        <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
+                          <img src="{{ asset('img/pisos/room2.jpg') }}" class="d-block w-100" alt="...">
+                      </div>
+                      <div class="carousel-item">
+                          <img src="{{ asset('img/pisos/room3.jpg') }}" class="d-block w-100" alt="...">
                       </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="{{ '#carouselIndicators'.$i }}" id="{{ 'prev'.$i }}">
@@ -166,27 +169,28 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                   </div>
-                  <div class="card-body">
-                    <h5 class="card-title"><a id="titulo-piso-link" href="{{ route('pisos.show', $pisosPagina[$i]) }}">{{ $pisosPagina[$i]->titulo }}</a></h5>
-                    <p class="card-text">
-                      @if($pisosPagina[$i]->num_habitaciones == 1)
-                        {{ $pisosPagina[$i]->num_habitaciones }} habitacion · 
-                      @else
-                        {{ $pisosPagina[$i]->num_habitaciones }} habitaciones · 
-                      @endif
-                      @if($pisosPagina[$i]->num_aseos == 1)
-                        {{ $pisosPagina[$i]->num_aseos }} aseo 
-                      @else
-                        {{ $pisosPagina[$i]->num_aseos }} aseos 
-                      @endif
-                      · {{ $pisosPagina[$i]->m2 }} m2</p>
-                    <p class="card-text">
-                      <span class="fs-6 fw-light">PRECIO</span><br>
-                      {{ $pisosPagina[$i]->precio }} €/mes</p>
-                  </div>
+                  <a id="titulo-piso-link" href="{{ route('pisos.show', $pisosPagina[$i]) }}">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ $pisosPagina[$i]->titulo }}</h5>
+                      <p class="card-text">
+                        @if($pisosPagina[$i]->num_habitaciones == 1)
+                          {{ $pisosPagina[$i]->num_habitaciones }} habitacion · 
+                        @else
+                          {{ $pisosPagina[$i]->num_habitaciones }} habitaciones · 
+                        @endif
+                        @if($pisosPagina[$i]->num_aseos == 1)
+                          {{ $pisosPagina[$i]->num_aseos }} aseo 
+                        @else
+                          {{ $pisosPagina[$i]->num_aseos }} aseos 
+                        @endif
+                        · {{ $pisosPagina[$i]->m2 }} m2</p>
+                      <p class="card-text">
+                        <span class="fs-6 fw-light">PRECIO</span><br>
+                        {{ $pisosPagina[$i]->precio }} €/mes</p>
+                    </div>
+                  </a>
                 </div>
               </div>
-            {{-- @endforeach --}}
             @endfor
         
           </div>
@@ -197,52 +201,58 @@
 
           @if(isset($pisos) && !empty($pisos))
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 g-4">
-              @foreach($pisos as $piso)
+              @for($i = 0; $i < count($pisos); $i++)
                 <div class="col">
-                  <div class="card h-100">
-                    <div id="carouselExampleIndicators" class="carousel slide carousel-fade carousel-dark">
+                  <div class="card cards h-100">
+                    <div id="{{ 'carousel2'.$i }}" class="carousel carousel-dark slide">
                       <div class="carousel-indicators">
-                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                          <button type="button" data-bs-target="{{ '#carouselIndicators2'.$i }}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                          <button type="button" data-bs-target="{{ '#carouselIndicators2'.$i }}" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                          <button type="button" data-bs-target="{{ '#carouselIndicators2'.$i }}" data-bs-slide-to="2" aria-label="Slide 3"></button>
                       </div>
                       <div class="carousel-inner">
-                          <div class="carousel-item active">
-                          <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
-                          </div>
-                          <div class="carousel-item">
-                          <img src="{{ asset('img/pisos/prueba_piso.jpg') }}" class="d-block w-100" alt="...">
-                          </div>
+                        <div class="carousel-item active">
+                          <img src="{{ asset('img/pisos/room1.jpg') }}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('img/pisos/room2.jpg') }}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('img/pisos/room3.jpg') }}" class="d-block w-100" alt="...">
+                        </div>
                       </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                      <button class="carousel-control-prev" type="button" data-bs-target="{{ '#carouselIndicators2'.$i }}" id="{{ 'prev2'.$i }}">
                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                           <span class="visually-hidden">Previous</span>
                       </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                      <button class="carousel-control-next" type="button" data-bs-target="{{ '#carouselIndicators2'.$i }}" id="{{ 'next2'.$i }}">
                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
                           <span class="visually-hidden">Next</span>
                       </button>
                     </div>
-                    <div class="card-body">
-                      <h5 class="card-title"><a id="titulo-piso-link" href="{{ route('pisos.show', $piso) }}"> {{ $piso->titulo }}</a></h5> 
-                      <p class="card-text">
-                        @if($piso->num_habitaciones == 1)
-                          {{ $piso->num_habitaciones }} habitacion · 
-                        @else
-                          {{ $piso->num_habitaciones }} habitaciones · 
-                        @endif
-                        @if($piso->num_aseos == 1)
-                          {{ $piso->num_aseos }} aseo 
-                        @else
-                          {{ $piso->num_aseos }} aseos 
-                        @endif
-                        · {{ $piso->m2 }} m2</p>
-                      <p class="card-text">
-                        <span class="fs-6 fw-light">PRECIO</span><br>
-                        {{ $piso->precio }} €/mes</p>
-                    </div>
+                    <a id="titulo-piso-link" href="{{ route('pisos.show', $pisos[$i]) }}">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ $pisos[$i]->titulo }}</h5>
+                        <p class="card-text">
+                          @if($pisos[$i]->num_habitaciones == 1)
+                            {{ $pisos[$i]->num_habitaciones }} habitacion · 
+                          @else
+                            {{ $pisos[$i]->num_habitaciones }} habitaciones · 
+                          @endif
+                          @if($pisos[$i]->num_aseos == 1)
+                            {{ $pisos[$i]->num_aseos }} aseo 
+                          @else
+                            {{ $pisos[$i]->num_aseos }} aseos 
+                          @endif
+                          · {{ $pisos[$i]->m2 }} m2</p>
+                        <p class="card-text">
+                          <span class="fs-6 fw-light">PRECIO</span><br>
+                          {{ $pisos[$i]->precio }} €/mes</p>
+                      </div>
+                    </a>
                   </div>
                 </div>
-              @endforeach
+              @endfor
             
             </div>
           @else 
@@ -409,7 +419,9 @@
     @if(!empty($pisos))
       @foreach($pisos as $piso)
         @if($loop)
-          var marker = L.marker([{{ $piso->longitud }}, {{ $piso->latitud }}], markerOptions).addTo(map);
+          var marker = L.marker([{{ $piso->longitud }}, {{ $piso->latitud }}], markerOptions)
+                        .addTo(map)
+                        .bindTooltip('<span class="fs-5 fw-bold">{{ $piso->precio }} €</span>');
         @endif
       @endforeach
     @endif
@@ -445,6 +457,21 @@
         // Cycles to the next item
         $('{{ '#next'.$i }}').click(function(){
           $('{{ '#carousel'.$i }}').carousel("next");
+        });
+      @endfor
+    @endif
+  </script>
+  <script>
+    @if(isset($pisos) )
+      @for($i = 0; $i < count($pisos); $i++)
+        // Cycles to the previous item
+        $('{{ '#prev2'.$i }}').click(function(){
+          $('{{ '#carousel2'.$i }}').carousel("prev");
+        });
+      
+        // Cycles to the next item
+        $('{{ '#next2'.$i }}').click(function(){
+          $('{{ '#carousel2'.$i }}').carousel("next");
         });
       @endfor
     @endif

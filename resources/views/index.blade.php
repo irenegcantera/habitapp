@@ -1,6 +1,6 @@
 @extends('nav-foot')
 
-@section('title','PISOSAPP')
+@section('title','HabitApp')
 
 @section('css')
   <link rel="stylesheet" type="text/css" href="{{ asset('css/cards.css') }}"/>

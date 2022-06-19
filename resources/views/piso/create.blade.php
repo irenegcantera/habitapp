@@ -1,6 +1,6 @@
 @extends('nav-foot')
 
-@section('title','Pisos App - Crear piso')
+@section('title','HabitApp - Crear piso')
 
 @section('content')
 

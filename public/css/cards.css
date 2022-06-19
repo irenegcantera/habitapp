@@ -14,7 +14,7 @@
 }
 
 .cards:hover{
-    box-shadow: 4px 5px 5px 1px #e9ecef;
+    box-shadow: 4px 5px 5px 1px #a1a1a1;
     transform: scale(1.05);
 }
 
@@ -43,4 +43,32 @@ a#link-style:visited {
     width: 100%;
     height: 15em;
     object-fit: cover;
+}
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    div#card-perfil {
+        justify-content: space-between;
+    }
+}
+
+/* Medium  devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    div#card-perfil {
+        justify-content: space-between;
+    }
+}
+
+/* Large  devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    div#card-perfil {
+        justify-content: space-between;
+    }
+}
+
+/* X-Large  devices (desktops, 992px and up) */
+@media (min-width: 1400px) {
+    div#card-perfil {
+        justify-content: space-between;
+    }
 }

@@ -50,7 +50,7 @@
                                 name="password"
                                 required autocomplete="new-password" />
             </div>
-            <div id="passwordHelp" class="form-text">Debe de contener min 8 carácteres.</div>
+            <div id="passwordHelp" class="form-text">Debe contener min 8 carácteres.</div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
@@ -59,7 +59,7 @@
                                 type="password"
                                 name="password_confirmation" required />
             </div>
-            <div id="passwordHelp" class="form-text">Debe de contener min 8 carácteres.</div>
+            <div id="passwordHelp" class="form-text">Debe contener min 8 carácteres.</div>
 
             <!-- Select rol -->
             <div class="mt-4">

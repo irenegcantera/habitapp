@@ -43,11 +43,9 @@ class FilterController extends Controller
         
         if(!empty($direcciones))
         {
-            // dd($direcciones);
             $direcciones = $direcciones[sizeof($direcciones) - 1]->get();
-            // dd($direcciones);
+
             if($pisosFiltrados != null){
-                // dd($pisosFiltrados);
                 foreach ($pisosFiltrados as $pisoFiltrado){
                     foreach ($direcciones as $direccion){
                         if($pisoFiltrado->id == $direccion->piso_id)
@@ -77,12 +75,23 @@ class FilterController extends Controller
         }else{
             
             if(!empty($pisosFiltrados)){
-                if(sizeof($pisosTotales) != sizeof($pisosFiltrados)){
+                if($request->orden == 0){
+                    if(sizeof($pisosTotales) != sizeof($pisosFiltrados)){
+                        foreach ($pisosFiltrados as $pisoFiltrado){
+                            $pisos[] = Piso::create($pisoFiltrado);
+                        }
+                        return view('piso.index',compact('pisos', 'fotos', 'filtros'));
+                    }else{
+                        return view('piso.index',compact('filtros'));
+                    }
+                }else{
                     foreach ($pisosFiltrados as $pisoFiltrado){
                         $pisos[] = Piso::create($pisoFiltrado);
                     }
+                    return view('piso.index',compact('pisos', 'fotos', 'filtros'));
                 }
-                return view('piso.index',compact('pisos', 'fotos', 'filtros'));
+                
+                // return view('piso.index',compact('pisos', 'fotos', 'filtros'));
             }
 
             return view('piso.index',compact('filtros'));
